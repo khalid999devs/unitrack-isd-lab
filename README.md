@@ -44,3 +44,42 @@ Project documentation is available inside the `docs` folder.
 2. `docs/GIT_WORKFLOW.md`
 3. `docs/JIRA_WORKFLOW.md`
 4. `docs/TEAM_ROLES.md`
+5. `docs/System_and_Functional_Requirements.md`
+6. `docs/Design_and_Technical_Requirements.md`
+7. `docs/UI_and_UX_Design_Specification.md`
+
+## Branch Management Quick Notice
+
+Repository URL:
+
+```bash
+https://github.com/khalid999devs/unitrack-isd-lab.git
+```
+
+Clone the `dev` branch directly:
+
+```bash
+git clone -b dev --single-branch https://github.com/khalid999devs/unitrack-isd-lab.git
+cd unitrack-isd-lab
+```
+
+Before starting a new task, always create a feature branch from the latest `dev` branch:
+
+```bash
+git checkout dev
+git pull origin dev
+git checkout -b feature/SCRUM-ID-short-task-name
+```
+
+Example:
+
+```bash
+git checkout -b feature/SCRUM-8-login-ui
+```
+
+Short rules:
+
+1. Do not push directly to `main` or `dev`.
+2. Create one feature branch for each Jira task.
+3. Include the Jira task ID in branch names and commit messages.
+4. Push the feature branch and create a pull request into `dev`.
