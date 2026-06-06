@@ -25,11 +25,11 @@ Scrum will help the team:
 
 ## Team Members
 
-| Roll | Name | Jira Role | Project Role |
-|---|---|---|---|
+| Roll    | Name   | Jira Role              | Project Role                        |
+| ------- | ------ | ---------------------- | ----------------------------------- |
 | 2207035 | Khalid | Administrator / Member | Scrum Master + Full Stack Developer |
-| 2207036 | Sadik | Member | Frontend Developer |
-| 2207031 | Siyam | Member | Backend Developer |
+| 2207036 | Sadik  | Member                 | Frontend Developer                  |
+| 2207031 | Siyam  | Member                 | Backend Developer                   |
 
 ## Jira Work Types
 
@@ -108,7 +108,7 @@ The task is completed, reviewed, tested, and accepted.
 Sprint goal:
 
 ```text
-Set up the UniTrack project foundation, prepare Jira workflow, create GitHub branch workflow, and complete initial requirement documentation.
+Set up the UniTrack project foundation, prepare Jira and GitHub workflow, complete requirement/design documentation, initialize the Laravel codebase, and prepare the frontend, backend, and database structure.
 ```
 
 Main tasks:
@@ -116,9 +116,10 @@ Main tasks:
 1. Set up Jira board, sprint, and initial backlog
 2. Set up GitHub repository and branch workflow
 3. Prepare initial requirement and feature documentation
-4. Create frontend project structure
-5. Create backend project structure
-6. Design initial database schema
+4. Initialize Laravel codebase with Blade and Tailwind
+5. Create frontend project structure and base UI components
+6. Create backend project structure, models, and middleware plan
+7. Design initial MySQL database schema and migrations
 
 ### Sprint 2: Core Module Development
 
@@ -173,12 +174,12 @@ Each task should have:
 
 Story points are used to estimate task difficulty.
 
-| Story Point | Meaning |
-|---|---|
-| 1 | Very easy task |
-| 2 | Easy task |
-| 3 | Medium task |
-| 5 | Larger or more complex task |
+| Story Point | Meaning                     |
+| ----------- | --------------------------- |
+| 1           | Very easy task              |
+| 2           | Easy task                   |
+| 3           | Medium task                 |
+| 5           | Larger or more complex task |
 
 Example:
 
