@@ -32,11 +32,37 @@ It helps organize courses, class routines, notices, study materials, and assignm
 
 Install these tools before running the project:
 
-1. PHP 8.3 or newer
+1. PHP 8.4.1 or newer
 2. Composer
 3. Node.js
 4. npm
 5. MySQL
+
+## Code Quality and Pull Request Checks
+
+Run these commands before opening a pull request:
+
+```bash
+composer install
+npm install
+npm run build
+./vendor/bin/pint --test
+php artisan test
+```
+
+Use Pint to fix PHP formatting when needed:
+
+```bash
+./vendor/bin/pint
+```
+
+Command purpose:
+
+1. `./vendor/bin/pint --test` checks PHP formatting without changing files.
+2. `./vendor/bin/pint` fixes PHP formatting.
+3. `npm run build` verifies the frontend asset build.
+4. `php artisan test` runs Laravel tests.
+5. GitHub Actions automatically runs checks on pull requests.
 
 ## Local Setup
 
@@ -164,8 +190,10 @@ Project documentation is available inside the `docs` folder.
 5. `docs/System_and_Functional_Requirements.md`
 6. `docs/Design_and_Technical_Requirements.md`
 7. `docs/UI_and_UX_Design_Specification.md`
-8. `docs/sprint-notes/SCRUM-8-laravel-setup.md`
-9. `docs/sprint-notes/SCRUM-9-database-schema.md`
+8. `docs/CODING_RULES.md`
+9. `docs/sprint-notes/SCRUM-8-laravel-setup.md`
+10. `docs/sprint-notes/SCRUM-9-database-schema.md`
+11. `docs/sprint-notes/SCRUM-14-code-quality-and-coding-rules.md`
 
 ## Branch Management Quick Notice
 
