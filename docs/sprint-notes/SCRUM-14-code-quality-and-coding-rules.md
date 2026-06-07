@@ -75,5 +75,6 @@ CI-style SQLite test          # passed
 
 1. SCRUM-14 is the Jira issue ID for this branch.
 2. Laravel Pint is already present as a development dependency.
-3. SQLite is used only for CI checks; local development remains MySQL by default.
-4. This task does not change application features or database schema.
+3. The current dependency lock requires PHP 8.4.1 or newer.
+4. SQLite is used only for CI checks; local development remains MySQL by default.
+5. This task does not change application features or database schema.

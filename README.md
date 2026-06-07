@@ -32,7 +32,7 @@ It helps organize courses, class routines, notices, study materials, and assignm
 
 Install these tools before running the project:
 
-1. PHP 8.3 or newer
+1. PHP 8.4.1 or newer
 2. Composer
 3. Node.js
 4. npm
