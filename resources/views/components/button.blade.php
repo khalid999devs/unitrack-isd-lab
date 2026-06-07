@@ -6,12 +6,12 @@
 
 @php
     $classes = [
-        'primary' => 'bg-primary-blue text-white hover:bg-royal-blue',
-        'secondary' => 'border border-slate-300 bg-white text-slate-700 hover:bg-slate-100',
-        'danger' => 'bg-error text-white hover:bg-red-700',
-    ][$variant] ?? 'bg-primary-blue text-white hover:bg-royal-blue';
+        'primary' => 'bg-primary-blue text-on-primary hover:bg-royal-blue',
+        'secondary' => 'border border-input-border bg-card-bg text-secondary-action-text hover:bg-muted-bg',
+        'danger' => 'bg-error text-on-primary hover:bg-danger-hover',
+    ][$variant] ?? 'bg-primary-blue text-on-primary hover:bg-royal-blue';
 
-    $baseClasses = $classes.' inline-flex h-11 items-center justify-center rounded-[10px] px-4 text-sm font-bold transition focus:outline-none focus:ring-4 focus:ring-blue-200';
+    $baseClasses = $classes.' inline-flex h-11 items-center justify-center rounded-[10px] px-4 text-sm font-bold transition focus:outline-none focus:ring-4 focus:ring-focus-ring';
 @endphp
 
 @if ($href)

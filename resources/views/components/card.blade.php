@@ -4,7 +4,7 @@
     'value' => null,
 ])
 
-<section {{ $attributes->merge(['class' => 'rounded-2xl border border-border-soft bg-white p-6 shadow-[0_8px_24px_rgba(15,23,42,0.06)]']) }}>
+<section {{ $attributes->merge(['class' => 'rounded-2xl border border-border-soft bg-card-bg p-6 shadow-card']) }}>
     @if ($title || $description || $value !== null)
         <div class="mb-4">
             @if ($title)

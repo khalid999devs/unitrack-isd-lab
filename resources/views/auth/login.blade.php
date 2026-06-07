@@ -3,7 +3,7 @@
 @section('title', 'Login - UniTrack')
 
 @section('content')
-    <section class="w-full max-w-[420px] rounded-[20px] border border-border-soft bg-white p-8 shadow-[0_18px_60px_rgba(15,23,42,0.10)]">
+    <section class="w-full max-w-[420px] rounded-[20px] border border-border-soft bg-card-bg p-8 shadow-auth-card">
         <div class="mb-8 text-center">
             <p class="text-sm font-bold uppercase tracking-[0.18em] text-primary-blue">UniTrack</p>
             <h1 class="mt-3 text-3xl font-bold text-primary-navy">Academic Login</h1>
@@ -22,7 +22,7 @@
                     name="email"
                     type="email"
                     placeholder="name@example.com"
-                    class="h-11 w-full rounded-[10px] border border-slate-300 px-3 text-sm outline-none transition placeholder:text-slate-400 focus:border-primary-blue focus:ring-4 focus:ring-blue-100"
+                    class="h-11 w-full rounded-[10px] border border-input-border px-3 text-sm outline-none transition placeholder:text-placeholder-text focus:border-primary-blue focus:ring-4 focus:ring-focus-ring"
                 >
             </div>
 
@@ -33,7 +33,7 @@
                     name="password"
                     type="password"
                     placeholder="Enter password"
-                    class="h-11 w-full rounded-[10px] border border-slate-300 px-3 text-sm outline-none transition placeholder:text-slate-400 focus:border-primary-blue focus:ring-4 focus:ring-blue-100"
+                    class="h-11 w-full rounded-[10px] border border-input-border px-3 text-sm outline-none transition placeholder:text-placeholder-text focus:border-primary-blue focus:ring-4 focus:ring-focus-ring"
                 >
             </div>
 

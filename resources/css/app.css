@@ -8,20 +8,66 @@
 
 @theme {
     --font-sans: Inter, ui-sans-serif, system-ui, sans-serif;
+
+    /* Primary brand colors from the UniTrack UI specification. */
     --color-primary-navy: #0F172A;
     --color-primary-blue: #2563EB;
     --color-royal-blue: #1D4ED8;
+    --color-soft-blue-bg: #EFF6FF;
+    --color-indigo-accent: #4F46E5;
+
+    /* Neutral interface colors. */
     --color-page-bg: #F8FAFC;
     --color-card-bg: #FFFFFF;
     --color-border-soft: #E2E8F0;
+    --color-muted-bg: #F1F5F9;
     --color-main-text: #111827;
     --color-secondary-text: #64748B;
+    --color-placeholder-text: #94A3B8;
+    --color-on-primary: #FFFFFF;
+
+    /* Forms and secondary actions. */
+    --color-input-border: #CBD5E1;
+    --color-secondary-action-text: #334155;
+    --color-focus-ring: rgba(37, 99, 235, 0.15);
+
+    /* Sidebar colors. */
+    --color-sidebar-text: #CBD5E1;
+    --color-sidebar-divider: rgba(255, 255, 255, 0.10);
+    --color-sidebar-hover-bg: rgba(255, 255, 255, 0.10);
+
+    /* Status and alert colors. */
     --color-success: #16A34A;
+    --color-success-bg: #DCFCE7;
+    --color-success-text: #166534;
+    --color-success-border: #BBF7D0;
     --color-error: #DC2626;
+    --color-error-bg: #FEE2E2;
+    --color-error-text: #991B1B;
+    --color-error-border: #FECACA;
+    --color-danger-hover: #B91C1C;
     --color-warning: #F59E0B;
+    --color-warning-bg: #FEF3C7;
+    --color-warning-text: #92400E;
+    --color-warning-border: #FDE68A;
+    --color-info-bg: #EFF6FF;
+    --color-info-text: #1D4ED8;
+    --color-info-border: #DBEAFE;
+
+    /* Role badges from the UniTrack badge specification. */
+    --color-role-student-bg: #DBEAFE;
+    --color-role-student-text: #1D4ED8;
+    --color-role-teacher-bg: #EDE9FE;
+    --color-role-teacher-text: #6D28D9;
+    --color-role-admin-bg: #FEE2E2;
+    --color-role-admin-text: #B91C1C;
+
+    /* Shared shadows from the component specification. */
+    --shadow-card: 0 8px 24px rgba(15, 23, 42, 0.06);
+    --shadow-auth-card: 0 18px 60px rgba(15, 23, 42, 0.10);
 }
 
 body {
-    background: #F8FAFC;
-    color: #111827;
+    background: var(--color-page-bg);
+    color: var(--color-main-text);
 }

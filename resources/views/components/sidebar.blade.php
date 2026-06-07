@@ -33,13 +33,13 @@
     ][$role] ?? [];
 @endphp
 
-<aside class="bg-primary-navy px-4 py-5 text-slate-300 lg:min-h-screen lg:w-[260px] lg:shrink-0">
+<aside class="bg-primary-navy px-4 py-5 text-sidebar-text lg:min-h-screen lg:w-[260px] lg:shrink-0">
     <div class="flex items-center justify-between lg:block">
         <div>
-            <a href="{{ route('login') }}" class="text-xl font-bold text-white">UniTrack</a>
-            <p class="mt-1 text-xs font-semibold uppercase tracking-wide text-slate-400">{{ $roleLabel }} Panel</p>
+            <a href="{{ route('login') }}" class="text-xl font-bold text-on-primary">UniTrack</a>
+            <p class="mt-1 text-xs font-semibold uppercase tracking-wide text-placeholder-text">{{ $roleLabel }} Panel</p>
         </div>
-        <a href="{{ route('login') }}" class="rounded-lg border border-white/10 px-3 py-2 text-sm font-semibold text-white lg:hidden">
+        <a href="{{ route('login') }}" class="rounded-lg border border-sidebar-divider px-3 py-2 text-sm font-semibold text-on-primary lg:hidden">
             Login
         </a>
     </div>
@@ -48,7 +48,7 @@
         @foreach ($items as $item)
             <a
                 href="{{ $item['href'] }}"
-                class="{{ $active === $item['key'] ? 'bg-primary-blue text-white' : 'text-slate-300 hover:bg-white/10 hover:text-white' }} rounded-[10px] px-4 py-3 text-sm font-semibold transition"
+                class="{{ $active === $item['key'] ? 'bg-primary-blue text-on-primary' : 'text-sidebar-text hover:bg-sidebar-hover-bg hover:text-on-primary' }} rounded-[10px] px-4 py-3 text-sm font-semibold transition"
             >
                 {{ $item['label'] }}
             </a>
