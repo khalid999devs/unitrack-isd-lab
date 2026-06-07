@@ -63,7 +63,7 @@ npm install
 
 ## MySQL Database Setup
 
-This project is configured for MAMP MySQL by default.
+This project works with any local MySQL server, including MAMP on macOS, XAMPP on Windows, Laragon, or a direct MySQL installation.
 
 Create a MySQL database named:
 
@@ -71,16 +71,33 @@ Create a MySQL database named:
 unitrack_db
 ```
 
-Then update `.env` with your local MySQL credentials:
+The `.env.example` file uses common XAMPP/MySQL defaults:
 
 ```env
 DB_CONNECTION=mysql
 DB_HOST=127.0.0.1
-DB_PORT=8889
+DB_PORT=3306
 DB_DATABASE=unitrack_db
 DB_USERNAME=root
+DB_PASSWORD=
+DB_SOCKET=
+```
+
+For MAMP on macOS, update only these values in your local `.env`:
+
+```env
+DB_PORT=8889
 DB_PASSWORD=root
 DB_SOCKET=/Applications/MAMP/tmp/mysql/mysql.sock
+```
+
+For XAMPP on Windows, the usual local values are:
+
+```env
+DB_PORT=3306
+DB_USERNAME=root
+DB_PASSWORD=
+DB_SOCKET=
 ```
 
 Run migrations after database configuration:
@@ -89,7 +106,13 @@ Run migrations after database configuration:
 php artisan migrate
 ```
 
-If the database does not exist yet, create it manually in phpMyAdmin/Adminer or run:
+For a fresh local database with demo seed data:
+
+```bash
+php artisan migrate:fresh --seed
+```
+
+If the database does not exist yet, create it manually in phpMyAdmin/Adminer. MAMP users can also run:
 
 ```bash
 php -r '$pdo = new PDO("mysql:unix_socket=/Applications/MAMP/tmp/mysql/mysql.sock;charset=utf8mb4", "root", "root"); $pdo->exec("CREATE DATABASE IF NOT EXISTS `unitrack_db` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci");'
@@ -141,6 +164,8 @@ Project documentation is available inside the `docs` folder.
 5. `docs/System_and_Functional_Requirements.md`
 6. `docs/Design_and_Technical_Requirements.md`
 7. `docs/UI_and_UX_Design_Specification.md`
+8. `docs/sprint-notes/SCRUM-8-laravel-setup.md`
+9. `docs/sprint-notes/SCRUM-9-database-schema.md`
 
 ## Branch Management Quick Notice
 
@@ -189,3 +214,50 @@ Suggested commit message:
 ```bash
 SCRUM-8 Initialize Laravel codebase with Blade and Tailwind
 ```
+
+## Pull Request Management Quick Notice
+
+Create a pull request only after the feature branch is pushed.
+
+Pull request direction:
+
+```text
+feature/SCRUM-ID-short-task-name -> dev
+```
+
+Pull request title format:
+
+```text
+SCRUM-ID: Short task title
+```
+
+Example:
+
+```text
+SCRUM-9: Design initial MySQL database schema and migrations
+```
+
+Pull request description should include:
+
+```md
+## What was done
+
+- Short list of completed work
+
+## Testing / Verification
+
+- Commands or checks that were run
+
+## Related Jira task
+
+SCRUM-ID
+```
+
+PR rules:
+
+1. Do not create pull requests into `main` for feature work.
+2. Always target `dev`.
+3. Keep the PR focused on one Jira task.
+4. Mention the Jira task ID in the PR title and description.
+5. Include testing or verification notes.
+6. Wait for review before merging.

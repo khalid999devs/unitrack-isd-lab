@@ -17,7 +17,7 @@ Initialize Laravel codebase with Blade and Tailwind
 5. Added reusable starter components for sidebar, navbar, alert, button, and card.
 6. Configured Tailwind CSS through Vite using UniTrack design colors.
 7. Added starter web routes for `/login`, `/student/dashboard`, `/teacher/dashboard`, and `/admin/dashboard`.
-8. Configured `.env.example` with MAMP MySQL settings for `unitrack_db`.
+8. Configured `.env.example` with local MySQL settings for `unitrack_db`.
 9. Updated README with local setup and run instructions.
 
 ## How To Run Locally
@@ -39,14 +39,22 @@ unitrack_db
 
 Then update `.env` if your local MySQL username or password is different.
 
-Default local database settings:
+Default local database settings for XAMPP, Laragon, or a direct MySQL installation:
 
 ```env
 DB_CONNECTION=mysql
 DB_HOST=127.0.0.1
-DB_PORT=8889
+DB_PORT=3306
 DB_DATABASE=unitrack_db
 DB_USERNAME=root
+DB_PASSWORD=
+DB_SOCKET=
+```
+
+For MAMP on macOS, use:
+
+```env
+DB_PORT=8889
 DB_PASSWORD=root
 DB_SOCKET=/Applications/MAMP/tmp/mysql/mysql.sock
 ```
