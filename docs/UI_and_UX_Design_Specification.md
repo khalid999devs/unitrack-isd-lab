@@ -269,6 +269,57 @@ Hex:
 #FEF3C7
 ```
 
+## Implementation Theme Token Reference
+
+The Laravel Blade and Tailwind implementation must keep the following theme tokens in `resources/css/app.css`.
+These tokens are the single source of truth for app colors, role badges, status messages, focus states, and shared shadows.
+
+| Token | Value | Use |
+|---|---|---|
+| `--color-primary-navy` | `#0F172A` | Sidebar background, main headings, premium dark sections |
+| `--color-primary-blue` | `#2563EB` | Primary buttons, active menu item, links, focus states |
+| `--color-royal-blue` | `#1D4ED8` | Button hover, active states, link hover |
+| `--color-soft-blue-bg` | `#EFF6FF` | Light info cards, selected backgrounds, soft blue highlights |
+| `--color-indigo-accent` | `#4F46E5` | Dashboard highlights, secondary emphasis, decorative accents |
+| `--color-page-bg` | `#F8FAFC` | Main page and dashboard background |
+| `--color-card-bg` | `#FFFFFF` | Cards, forms, tables, modals, navbar background |
+| `--color-border-soft` | `#E2E8F0` | Card borders, table dividers, navbar border |
+| `--color-muted-bg` | `#F1F5F9` | Table headers, disabled fields, secondary button hover |
+| `--color-main-text` | `#111827` | Headings and primary content text |
+| `--color-secondary-text` | `#64748B` | Descriptions, helper text, table subtext |
+| `--color-placeholder-text` | `#94A3B8` | Input placeholders and disabled text |
+| `--color-on-primary` | `#FFFFFF` | Text on primary, danger, and active dark/blue surfaces |
+| `--color-input-border` | `#CBD5E1` | Form input border and secondary button border |
+| `--color-secondary-action-text` | `#334155` | Secondary button text |
+| `--color-focus-ring` | `rgba(37, 99, 235, 0.15)` | Form and button focus ring |
+| `--color-sidebar-text` | `#CBD5E1` | Default sidebar navigation text |
+| `--color-sidebar-divider` | `rgba(255, 255, 255, 0.10)` | Subtle border on sidebar controls |
+| `--color-sidebar-hover-bg` | `rgba(255, 255, 255, 0.10)` | Sidebar item hover background |
+| `--color-success` | `#16A34A` | Success icon or primary success indicator |
+| `--color-success-bg` | `#DCFCE7` | Success alert and success badge background |
+| `--color-success-text` | `#166534` | Success alert and success badge text |
+| `--color-success-border` | `#BBF7D0` | Success alert and success badge border |
+| `--color-error` | `#DC2626` | Danger button, errors, destructive actions |
+| `--color-error-bg` | `#FEE2E2` | Error alert and admin badge background |
+| `--color-error-text` | `#991B1B` | Error alert text |
+| `--color-error-border` | `#FECACA` | Error alert border |
+| `--color-danger-hover` | `#B91C1C` | Danger button hover and admin badge text |
+| `--color-warning` | `#F59E0B` | Deadline warning and pending status indicator |
+| `--color-warning-bg` | `#FEF3C7` | Warning alert and warning badge background |
+| `--color-warning-text` | `#92400E` | Warning alert and warning badge text |
+| `--color-warning-border` | `#FDE68A` | Warning alert and warning badge border |
+| `--color-info-bg` | `#EFF6FF` | Info alert background |
+| `--color-info-text` | `#1D4ED8` | Info alert text |
+| `--color-info-border` | `#DBEAFE` | Info alert border and student badge background |
+| `--color-role-student-bg` | `#DBEAFE` | Student role badge background |
+| `--color-role-student-text` | `#1D4ED8` | Student role badge text |
+| `--color-role-teacher-bg` | `#EDE9FE` | Teacher role badge background |
+| `--color-role-teacher-text` | `#6D28D9` | Teacher role badge text |
+| `--color-role-admin-bg` | `#FEE2E2` | Admin role badge background |
+| `--color-role-admin-text` | `#B91C1C` | Admin role badge text |
+| `--shadow-card` | `0 8px 24px rgba(15, 23, 42, 0.06)` | Standard dashboard and content card shadow |
+| `--shadow-auth-card` | `0 18px 60px rgba(15, 23, 42, 0.10)` | Larger login/authentication card shadow |
+
 ## Typography
 
 ## Font Family
@@ -715,7 +766,7 @@ Login card:
 2. Padding: 32px
 3. Border radius: 20px
 4. Background: #FFFFFF
-5. Shadow: soft large shadow
+5. Shadow: 0 18px 60px rgba(15, 23, 42, 0.10)
 
 Login title:
 
