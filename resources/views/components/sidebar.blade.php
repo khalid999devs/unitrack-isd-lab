@@ -44,10 +44,13 @@
             </a>
             <p class="mt-1 text-xs font-semibold uppercase tracking-wide text-blue-200">{{ $roleLabel }} Panel</p>
         </div>
-        <a href="{{ route('login') }}" class="inline-flex items-center gap-2 rounded-lg border border-white/40 px-3 py-2 text-sm font-semibold text-white lg:hidden">
-            <i class="ti ti-logout text-base"></i>
-            Logout
-        </a>
+        <form method="POST" action="{{ route('logout') }}" class="lg:hidden">
+            @csrf
+            <button type="submit" class="inline-flex items-center gap-2 rounded-lg border border-white/40 px-3 py-2 text-sm font-semibold text-white">
+                <i class="ti ti-logout text-base"></i>
+                Logout
+            </button>
+        </form>
     </div>
 
     <nav class="mt-6 grid gap-1 sm:grid-cols-2 lg:grid-cols-1">
