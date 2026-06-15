@@ -23,10 +23,153 @@ It helps organize courses, class routines, notices, study materials, and assignm
 
 - Frontend: Laravel Blade, Tailwind CSS
 - Backend: Laravel
-- Database: Oracle Database or MySQL
+- Database: MySQL
 - Version Control: Git and GitHub
 - Project Management: Jira Scrum Board
 - Methodology: Agile Scrum
+
+## Local Development Requirements
+
+Install these tools before running the project:
+
+1. PHP 8.4.1 or newer
+2. Composer
+3. Node.js
+4. npm
+5. MySQL
+
+## Code Quality and Pull Request Checks
+
+Run these commands before opening a pull request:
+
+```bash
+composer install
+npm install
+npm run build
+./vendor/bin/pint --test
+php artisan test
+```
+
+Use Pint to fix PHP formatting when needed:
+
+```bash
+./vendor/bin/pint
+```
+
+Command purpose:
+
+1. `./vendor/bin/pint --test` checks PHP formatting without changing files.
+2. `./vendor/bin/pint` fixes PHP formatting.
+3. `npm run build` verifies the frontend asset build.
+4. `php artisan test` runs Laravel tests.
+5. GitHub Actions automatically runs checks on pull requests.
+
+## Local Setup
+
+Clone the project and install backend dependencies:
+
+```bash
+git clone -b dev --single-branch https://github.com/khalid999devs/unitrack-isd-lab.git
+cd unitrack-isd-lab
+composer install
+```
+
+Create the local environment file and application key:
+
+```bash
+cp .env.example .env
+php artisan key:generate
+```
+
+Install frontend dependencies:
+
+```bash
+npm install
+```
+
+## MySQL Database Setup
+
+This project works with any local MySQL server, including MAMP on macOS, XAMPP on Windows, Laragon, or a direct MySQL installation.
+
+Create a MySQL database named:
+
+```text
+unitrack_db
+```
+
+The `.env.example` file uses common XAMPP/MySQL defaults:
+
+```env
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=unitrack_db
+DB_USERNAME=root
+DB_PASSWORD=
+DB_SOCKET=
+```
+
+For MAMP on macOS, update only these values in your local `.env`:
+
+```env
+DB_PORT=8889
+DB_PASSWORD=root
+DB_SOCKET=/Applications/MAMP/tmp/mysql/mysql.sock
+```
+
+For XAMPP on Windows, the usual local values are:
+
+```env
+DB_PORT=3306
+DB_USERNAME=root
+DB_PASSWORD=
+DB_SOCKET=
+```
+
+Run migrations after database configuration:
+
+```bash
+php artisan migrate
+```
+
+For a fresh local database with demo seed data:
+
+```bash
+php artisan migrate:fresh --seed
+```
+
+If the database does not exist yet, create it manually in phpMyAdmin/Adminer. MAMP users can also run:
+
+```bash
+php -r '$pdo = new PDO("mysql:unix_socket=/Applications/MAMP/tmp/mysql/mysql.sock;charset=utf8mb4", "root", "root"); $pdo->exec("CREATE DATABASE IF NOT EXISTS `unitrack_db` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci");'
+```
+
+## Run The Project
+
+Start the Vite development server:
+
+```bash
+npm run dev
+```
+
+In another terminal, start the Laravel development server:
+
+```bash
+php artisan serve
+```
+
+Open the application:
+
+```text
+http://127.0.0.1:8000/login
+```
+
+Starter routes:
+
+1. `/login`
+2. `/student/dashboard`
+3. `/teacher/dashboard`
+4. `/admin/dashboard`
 
 ## Team Members
 
@@ -47,6 +190,10 @@ Project documentation is available inside the `docs` folder.
 5. `docs/System_and_Functional_Requirements.md`
 6. `docs/Design_and_Technical_Requirements.md`
 7. `docs/UI_and_UX_Design_Specification.md`
+8. `docs/CODING_RULES.md`
+9. `docs/sprint-notes/SCRUM-8-laravel-setup.md`
+10. `docs/sprint-notes/SCRUM-9-database-schema.md`
+11. `docs/sprint-notes/SCRUM-14-code-quality-and-coding-rules.md`
 
 ## Branch Management Quick Notice
 
@@ -83,3 +230,62 @@ Short rules:
 2. Create one feature branch for each Jira task.
 3. Include the Jira task ID in branch names and commit messages.
 4. Push the feature branch and create a pull request into `dev`.
+
+For SCRUM-8, use this branch name:
+
+```bash
+feature/SCRUM-8-laravel-blade-tailwind-setup
+```
+
+Suggested commit message:
+
+```bash
+SCRUM-8 Initialize Laravel codebase with Blade and Tailwind
+```
+
+## Pull Request Management Quick Notice
+
+Create a pull request only after the feature branch is pushed.
+
+Pull request direction:
+
+```text
+feature/SCRUM-ID-short-task-name -> dev
+```
+
+Pull request title format:
+
+```text
+SCRUM-ID: Short task title
+```
+
+Example:
+
+```text
+SCRUM-9: Design initial MySQL database schema and migrations
+```
+
+Pull request description should include:
+
+```md
+## What was done
+
+- Short list of completed work
+
+## Testing / Verification
+
+- Commands or checks that were run
+
+## Related Jira task
+
+SCRUM-ID
+```
+
+PR rules:
+
+1. Do not create pull requests into `main` for feature work.
+2. Always target `dev`.
+3. Keep the PR focused on one Jira task.
+4. Mention the Jira task ID in the PR title and description.
+5. Include testing or verification notes.
+6. Wait for review before merging.
