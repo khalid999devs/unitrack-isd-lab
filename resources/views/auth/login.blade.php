@@ -10,18 +10,24 @@
             <p class="mt-2 text-sm leading-6 text-secondary-text">Student Academic Resource Management System</p>
         </div>
 
-        <x-alert type="info" class="mb-6">
-            Starter login screen prepared for SCRUM-8. Authentication will be connected in a later sprint.
-        </x-alert>
+        @if ($errors->any())
+            <x-alert type="error" class="mb-6">
+                {{ $errors->first() }}
+            </x-alert>
+        @endif
 
-        <form class="space-y-5">
+        <form method="POST" action="{{ route('login.store') }}" class="space-y-5">
+            @csrf
+
             <div>
                 <label for="email" class="mb-2 block text-sm font-semibold text-main-text">Email</label>
                 <input
                     id="email"
                     name="email"
                     type="email"
+                    value="{{ old('email') }}"
                     placeholder="name@example.com"
+                    required
                     class="h-11 w-full rounded-[10px] border border-input-border px-3 text-sm outline-none transition placeholder:text-placeholder-text focus:border-primary-blue focus:ring-4 focus:ring-focus-ring"
                 >
             </div>
@@ -33,11 +39,12 @@
                     name="password"
                     type="password"
                     placeholder="Enter password"
+                    required
                     class="h-11 w-full rounded-[10px] border border-input-border px-3 text-sm outline-none transition placeholder:text-placeholder-text focus:border-primary-blue focus:ring-4 focus:ring-focus-ring"
                 >
             </div>
 
-            <x-button type="button" class="w-full">Login</x-button>
+            <x-button type="submit" class="w-full">Login</x-button>
         </form>
 
         <div class="mt-6 grid gap-3 sm:grid-cols-3">
