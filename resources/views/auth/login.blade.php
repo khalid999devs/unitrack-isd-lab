@@ -27,14 +27,24 @@
                         <p class="mt-2 text-xs leading-5 text-secondary-text md:text-sm md:leading-6">Student Academic Resource Management System</p>
                     </div>
 
-                    <form class="space-y-4 md:space-y-5">
+                    @if ($errors->any())
+                        <x-alert type="error" class="mb-6">
+                            {{ $errors->first() }}
+                        </x-alert>
+                    @endif
+
+                    <form method="POST" action="{{ route('login.store') }}" class="space-y-4 md:space-y-5">
+                        @csrf
+
                         <div>
                             <label for="email" class="mb-2 block text-xs font-semibold text-main-text md:text-sm">Email</label>
                             <input
                                 id="email"
                                 name="email"
                                 type="email"
+                                value="{{ old('email') }}"
                                 placeholder="name@example.com"
+                                required
                                 class="h-10 w-full rounded-[10px] border border-input-border px-3 text-sm outline-none transition placeholder:text-placeholder-text focus:border-primary-blue focus:ring-4 focus:ring-focus-ring md:h-11"
                             >
                         </div>
@@ -46,11 +56,12 @@
                                 name="password"
                                 type="password"
                                 placeholder="Enter password"
+                                required
                                 class="h-10 w-full rounded-[10px] border border-input-border px-3 text-sm outline-none transition placeholder:text-placeholder-text focus:border-primary-blue focus:ring-4 focus:ring-focus-ring md:h-11"
                             >
                         </div>
 
-                        <x-button type="button" class="w-full">Login</x-button>
+                        <x-button type="submit" class="w-full">Login</x-button>
                     </form>
 
                     <div class="mt-5 grid gap-2 sm:grid-cols-3 md:mt-6 md:gap-3">
