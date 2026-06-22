@@ -18,9 +18,15 @@
     @endphp
 
     <div class="space-y-6">
-        <section class="rounded-2xl border border-border-soft bg-card-bg p-6 shadow-card">
-            <p class="text-sm font-bold uppercase tracking-[0.2em] text-[#3B5BDB]">Assignments</p>
-            <h1 class="mt-2 text-2xl font-bold text-main-text">Manage coursework and submissions</h1>
+        <section class="flex flex-col gap-4 rounded-2xl border border-border-soft bg-card-bg p-6 shadow-card sm:flex-row sm:items-center sm:justify-between">
+            <div>
+                <p class="text-sm font-bold uppercase tracking-[0.2em] text-[#3B5BDB]">Assignments</p>
+                <h1 class="mt-2 text-2xl font-bold text-main-text">Manage coursework and submissions</h1>
+            </div>
+            <button type="button" class="inline-flex items-center justify-center gap-2 rounded-[10px] bg-[#3B5BDB] px-4 py-2 text-sm font-bold text-white transition hover:bg-[#2F49C6]">
+                <i class="ti ti-plus text-base"></i>
+                Add Assignment
+            </button>
         </section>
 
         <section class="grid gap-6 lg:grid-cols-2">
