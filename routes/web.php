@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardPageController;
+use App\Http\Controllers\StudentController;
+use App\Http\Controllers\TeacherController;
 use Illuminate\Support\Facades\Route;
 
 Route::redirect('/', '/login');
@@ -48,9 +50,15 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
         return view('admin.dashboard');
     })->name('dashboard');
 
+    Route::resource('students', StudentController::class)->names([
+        'index' => 'students',
+    ]);
+
+    Route::resource('teachers', TeacherController::class)->names([
+        'index' => 'teachers',
+    ]);
+
     Route::controller(DashboardPageController::class)->group(function () {
-        Route::get('/students', 'adminStudents')->name('students');
-        Route::get('/teachers', 'adminTeachers')->name('teachers');
         Route::get('/courses', 'adminCourses')->name('courses');
         Route::get('/routines', 'adminRoutines')->name('routines');
         Route::get('/notices', 'adminNotices')->name('notices');
