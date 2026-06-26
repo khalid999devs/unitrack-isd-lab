@@ -20,17 +20,21 @@
         @endif
 
         <tbody>
-            @forelse ($rows as $row)
-                <tr class="{{ $hoverable ? 'hover:bg-muted-bg transition' : '' }} border-b border-border-soft last:border-b-0">
-                    {{ $slot }}
-                </tr>
-            @empty
+            @if (!empty($rows))
+                @foreach ($rows as $row)
+                    <tr class="{{ $hoverable ? 'hover:bg-muted-bg transition' : '' }} border-b border-border-soft last:border-b-0">
+                        {{ $slot }}
+                    </tr>
+                @endforeach
+            @elseif (!$slot->isEmpty())
+                {{ $slot }}
+            @else
                 <tr>
                     <td colspan="{{ count($headers) ?: 1 }}" class="px-4 py-8 text-center text-sm text-secondary-text">
                         {{ $emptyMessage }}
                     </td>
                 </tr>
-            @endforelse
+            @endif
         </tbody>
     </table>
 </div>
