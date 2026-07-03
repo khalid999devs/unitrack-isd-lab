@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CourseController;
 use App\Http\Controllers\DashboardPageController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\TeacherController;
@@ -58,8 +59,11 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
         'index' => 'teachers',
     ]);
 
+    Route::resource('courses', CourseController::class)->names([
+        'index' => 'courses',
+    ]);
+
     Route::controller(DashboardPageController::class)->group(function () {
-        Route::get('/courses', 'adminCourses')->name('courses');
         Route::get('/routines', 'adminRoutines')->name('routines');
         Route::get('/notices', 'adminNotices')->name('notices');
     });
