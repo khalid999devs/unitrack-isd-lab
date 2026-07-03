@@ -20,11 +20,8 @@ Route::post('/logout', [AuthController::class, 'logout'])
     ->name('logout');
 
 Route::middleware(['auth', 'role:student'])->prefix('student')->name('student.')->group(function () {
-    Route::get('/dashboard', function () {
-        return view('student.dashboard');
-    })->name('dashboard');
-
     Route::controller(DashboardPageController::class)->group(function () {
+        Route::get('/dashboard', 'studentDashboard')->name('dashboard');
         Route::get('/courses', 'studentCourses')->name('courses');
         Route::get('/routine', 'studentRoutine')->name('routine');
         Route::get('/notices', 'studentNotices')->name('notices');
@@ -34,11 +31,8 @@ Route::middleware(['auth', 'role:student'])->prefix('student')->name('student.')
 });
 
 Route::middleware(['auth', 'role:teacher'])->prefix('teacher')->name('teacher.')->group(function () {
-    Route::get('/dashboard', function () {
-        return view('teacher.dashboard');
-    })->name('dashboard');
-
     Route::controller(DashboardPageController::class)->group(function () {
+        Route::get('/dashboard', 'teacherDashboard')->name('dashboard');
         Route::get('/courses', 'teacherCourses')->name('courses');
         Route::get('/routine', 'teacherRoutine')->name('routine');
         Route::get('/materials', 'teacherMaterials')->name('materials');
@@ -48,9 +42,7 @@ Route::middleware(['auth', 'role:teacher'])->prefix('teacher')->name('teacher.')
 });
 
 Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
-    Route::get('/dashboard', function () {
-        return view('admin.dashboard');
-    })->name('dashboard');
+    Route::get('/dashboard', [DashboardPageController::class, 'adminDashboard'])->name('dashboard');
 
     Route::resource('students', StudentController::class)->names([
         'index' => 'students',
