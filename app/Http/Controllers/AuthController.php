@@ -19,9 +19,13 @@ class AuthController extends Controller
         $credentials = $request->validate([
             'email' => ['required', 'email'],
             'password' => ['required', 'string'],
+        ], [
+            'email.required' => 'Email address is required.',
+            'email.email' => 'Enter a valid email address.',
+            'password.required' => 'Password is required.',
         ]);
 
-        if (! Auth::attempt($credentials)) {
+        if (! Auth::attempt($credentials, $request->boolean('remember'))) {
             return back()
                 ->withErrors(['email' => 'The provided credentials do not match our records.'])
                 ->onlyInput('email');
@@ -29,7 +33,20 @@ class AuthController extends Controller
 
         $request->session()->regenerate();
 
-        return redirect()->intended($this->dashboardPathFor(Auth::user()->role));
+        $dashboardRoute = $this->dashboardRouteFor(Auth::user()->role);
+
+        if ($dashboardRoute === null) {
+            Auth::logout();
+
+            $request->session()->invalidate();
+            $request->session()->regenerateToken();
+
+            return redirect()->route('login')
+                ->withErrors(['email' => 'This account role is not supported. Please contact an administrator.'])
+                ->onlyInput('email');
+        }
+
+        return redirect()->route($dashboardRoute);
     }
 
     public function logout(Request $request): RedirectResponse
@@ -42,12 +59,13 @@ class AuthController extends Controller
         return redirect()->route('login');
     }
 
-    private function dashboardPathFor(string $role): string
+    private function dashboardRouteFor(string $role): ?string
     {
         return match ($role) {
-            'admin' => route('admin.dashboard'),
-            'teacher' => route('teacher.dashboard'),
-            default => route('student.dashboard'),
+            'admin' => 'admin.dashboard',
+            'teacher' => 'teacher.dashboard',
+            'student' => 'student.dashboard',
+            default => null,
         };
     }
 }

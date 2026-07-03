@@ -22,30 +22,38 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        $admin = User::create([
-            'name' => 'Admin User',
-            'email' => 'admin@unitrack.test',
+        $admin = User::updateOrCreate(['email' => 'admin@unitrack.test'], [
+            'name' => 'Ayesha Rahman',
             'password' => 'password',
             'role' => 'admin',
         ]);
 
-        $studentUser = User::create([
-            'name' => 'Student User',
-            'email' => 'student@unitrack.test',
+        $studentUser = User::updateOrCreate(['email' => 'student@unitrack.test'], [
+            'name' => 'Khalid Ahmed',
             'password' => 'password',
             'role' => 'student',
         ]);
 
-        $teacherUser = User::create([
-            'name' => 'Teacher User',
-            'email' => 'teacher@unitrack.test',
+        $secondStudentUser = User::updateOrCreate(['email' => 'student2@unitrack.test'], [
+            'name' => 'Nusrat Jahan',
+            'password' => 'password',
+            'role' => 'student',
+        ]);
+
+        $teacherUser = User::updateOrCreate(['email' => 'teacher@unitrack.test'], [
+            'name' => 'Dr. Farhana Rahman',
             'password' => 'password',
             'role' => 'teacher',
         ]);
 
-        Student::create([
+        $secondTeacherUser = User::updateOrCreate(['email' => 'teacher2@unitrack.test'], [
+            'name' => 'Hasan Mahmud',
+            'password' => 'password',
+            'role' => 'teacher',
+        ]);
+
+        Student::updateOrCreate(['student_id' => 'STU-2207035'], [
             'user_id' => $studentUser->id,
-            'student_id' => 'STU-2207035',
             'department' => 'Computer Science and Engineering',
             'semester' => '6th',
             'batch' => '2022',
@@ -53,16 +61,30 @@ class DatabaseSeeder extends Seeder
             'address' => 'KUET Campus, Khulna',
         ]);
 
-        $teacher = Teacher::create([
-            'user_id' => $teacherUser->id,
-            'teacher_id' => 'TCH-1001',
+        Student::updateOrCreate(['student_id' => 'STU-2207036'], [
+            'user_id' => $secondStudentUser->id,
             'department' => 'Computer Science and Engineering',
-            'designation' => 'Lecturer',
+            'semester' => '5th',
+            'batch' => '2023',
+            'phone' => '01700000003',
+            'address' => 'Fulbarigate, Khulna',
+        ]);
+
+        $teacher = Teacher::updateOrCreate(['teacher_id' => 'TCH-1001'], [
+            'user_id' => $teacherUser->id,
+            'department' => 'Computer Science and Engineering',
+            'designation' => 'Associate Professor',
             'phone' => '01700000002',
         ]);
 
-        $course = Course::create([
-            'course_code' => 'CSE-3200',
+        $secondTeacher = Teacher::updateOrCreate(['teacher_id' => 'TCH-1002'], [
+            'user_id' => $secondTeacherUser->id,
+            'department' => 'Computer Science and Engineering',
+            'designation' => 'Lecturer',
+            'phone' => '01700000004',
+        ]);
+
+        $isdLab = Course::updateOrCreate(['course_code' => 'CSE-3200'], [
             'course_title' => 'Information System Design Lab',
             'department' => 'Computer Science and Engineering',
             'semester' => '6th',
@@ -70,38 +92,222 @@ class DatabaseSeeder extends Seeder
             'teacher_id' => $teacher->id,
         ]);
 
-        Routine::create([
-            'course_id' => $course->id,
-            'teacher_id' => $teacher->id,
+        $databaseSystems = Course::updateOrCreate(['course_code' => 'CSE-3101'], [
+            'course_title' => 'Database Systems',
+            'department' => 'Computer Science and Engineering',
             'semester' => '6th',
-            'batch' => '2022',
-            'day' => 'Sunday',
-            'start_time' => '09:00:00',
-            'end_time' => '11:00:00',
-            'room' => 'CSE Lab 1',
+            'credit' => 3.0,
+            'teacher_id' => $secondTeacher->id,
         ]);
 
-        Notice::create([
-            'title' => 'Sprint 1 Database Setup',
-            'description' => 'Initial UniTrack database schema has been prepared for local testing.',
-            'posted_by' => $admin->id,
-            'target_role' => 'all',
-        ]);
-
-        StudyMaterial::create([
-            'course_id' => $course->id,
+        $softwareEngineering = Course::updateOrCreate(['course_code' => 'CSE-3102'], [
+            'course_title' => 'Software Engineering',
+            'department' => 'Computer Science and Engineering',
+            'semester' => '6th',
+            'credit' => 3.0,
             'teacher_id' => $teacher->id,
-            'title' => 'ISD Lab Starter Material',
-            'description' => 'Sample study material entry for verifying the study material schema.',
-            'file_path' => 'materials/isd-lab-starter.pdf',
         ]);
 
-        Assignment::create([
-            'course_id' => $course->id,
-            'teacher_id' => $teacher->id,
-            'title' => 'Prepare Database Schema Review',
-            'description' => 'Review the initial tables, keys, and relationships for UniTrack.',
-            'deadline' => now()->addWeek(),
+        $dataStructures = Course::updateOrCreate(['course_code' => 'CSE-2201'], [
+            'course_title' => 'Data Structures',
+            'department' => 'Computer Science and Engineering',
+            'semester' => '5th',
+            'credit' => 3.0,
+            'teacher_id' => $secondTeacher->id,
         ]);
+
+        $webProgramming = Course::updateOrCreate(['course_code' => 'CSE-2202'], [
+            'course_title' => 'Web Programming',
+            'department' => 'Computer Science and Engineering',
+            'semester' => '5th',
+            'credit' => 3.0,
+            'teacher_id' => $teacher->id,
+        ]);
+
+        $today = now()->format('l');
+
+        $routines = [
+            [
+                'course' => $isdLab,
+                'teacher' => $teacher,
+                'semester' => '6th',
+                'batch' => '2022',
+                'day' => $today,
+                'start_time' => '09:00:00',
+                'end_time' => '11:00:00',
+                'room' => 'CSE Lab 1',
+            ],
+            [
+                'course' => $databaseSystems,
+                'teacher' => $secondTeacher,
+                'semester' => '6th',
+                'batch' => '2022',
+                'day' => 'Monday',
+                'start_time' => '10:00:00',
+                'end_time' => '11:30:00',
+                'room' => 'Academic 204',
+            ],
+            [
+                'course' => $softwareEngineering,
+                'teacher' => $teacher,
+                'semester' => '6th',
+                'batch' => '2022',
+                'day' => 'Wednesday',
+                'start_time' => '12:00:00',
+                'end_time' => '13:30:00',
+                'room' => 'Academic 302',
+            ],
+            [
+                'course' => $dataStructures,
+                'teacher' => $secondTeacher,
+                'semester' => '5th',
+                'batch' => '2023',
+                'day' => 'Tuesday',
+                'start_time' => '09:00:00',
+                'end_time' => '10:30:00',
+                'room' => 'Academic 105',
+            ],
+            [
+                'course' => $webProgramming,
+                'teacher' => $teacher,
+                'semester' => '5th',
+                'batch' => '2023',
+                'day' => 'Thursday',
+                'start_time' => '14:00:00',
+                'end_time' => '15:30:00',
+                'room' => 'CSE Lab 2',
+            ],
+        ];
+
+        foreach ($routines as $routine) {
+            Routine::updateOrCreate([
+                'course_id' => $routine['course']->id,
+                'teacher_id' => $routine['teacher']->id,
+                'day' => $routine['day'],
+                'start_time' => $routine['start_time'],
+            ], [
+                'semester' => $routine['semester'],
+                'batch' => $routine['batch'],
+                'end_time' => $routine['end_time'],
+                'room' => $routine['room'],
+            ]);
+        }
+
+        $notices = [
+            [
+                'title' => 'Welcome to UniTrack V1',
+                'description' => 'Use UniTrack to review Student, Teacher, and Admin academic workflows.',
+                'target_role' => 'all',
+            ],
+            [
+                'title' => 'Student Routine Published',
+                'description' => 'Student class routines are available from the dashboard routine shortcut.',
+                'target_role' => 'student',
+            ],
+            [
+                'title' => 'Teacher Content Reminder',
+                'description' => 'Teachers can review assigned courses, routines, materials, and assignments.',
+                'target_role' => 'teacher',
+            ],
+            [
+                'title' => 'Admin Data Review',
+                'description' => 'Admins can review seeded students, teachers, courses, and routines.',
+                'target_role' => 'admin',
+            ],
+        ];
+
+        foreach ($notices as $notice) {
+            Notice::updateOrCreate([
+                'title' => $notice['title'],
+                'posted_by' => $admin->id,
+            ], [
+                'description' => $notice['description'],
+                'target_role' => $notice['target_role'],
+            ]);
+        }
+
+        $materials = [
+            [
+                'course' => $isdLab,
+                'teacher' => $teacher,
+                'title' => 'ISD Lab Starter Material',
+                'description' => 'Project setup, role flow, and V1 readiness checklist.',
+                'file_path' => null,
+            ],
+            [
+                'course' => $databaseSystems,
+                'teacher' => $secondTeacher,
+                'title' => 'Database Normalization Notes',
+                'description' => 'Introductory normalization and schema design notes.',
+                'file_path' => null,
+            ],
+            [
+                'course' => $softwareEngineering,
+                'teacher' => $teacher,
+                'title' => 'Software Engineering Sprint Guide',
+                'description' => 'Short guide for Agile sprint planning and review.',
+                'file_path' => null,
+            ],
+            [
+                'course' => $webProgramming,
+                'teacher' => $teacher,
+                'title' => 'Blade and Tailwind UI Notes',
+                'description' => 'Starter notes for Blade templates and Tailwind components.',
+                'file_path' => null,
+            ],
+        ];
+
+        foreach ($materials as $material) {
+            StudyMaterial::updateOrCreate([
+                'course_id' => $material['course']->id,
+                'title' => $material['title'],
+            ], [
+                'teacher_id' => $material['teacher']->id,
+                'description' => $material['description'],
+                'file_path' => $material['file_path'],
+            ]);
+        }
+
+        $assignments = [
+            [
+                'course' => $isdLab,
+                'teacher' => $teacher,
+                'title' => 'Review Role Dashboard Flow',
+                'description' => 'Verify Student, Teacher, and Admin routes using seeded role accounts.',
+                'deadline' => now()->addDays(5),
+            ],
+            [
+                'course' => $databaseSystems,
+                'teacher' => $secondTeacher,
+                'title' => 'Prepare ER Diagram Notes',
+                'description' => 'Create a short ER diagram summary for the UniTrack course module.',
+                'deadline' => now()->addWeek(),
+            ],
+            [
+                'course' => $softwareEngineering,
+                'teacher' => $teacher,
+                'title' => 'Write Sprint Review Summary',
+                'description' => 'Summarize completed work and blockers for the current sprint review.',
+                'deadline' => now()->addDays(10),
+            ],
+            [
+                'course' => $dataStructures,
+                'teacher' => $secondTeacher,
+                'title' => 'Practice Stack and Queue Problems',
+                'description' => 'Solve starter stack and queue exercises before the next class.',
+                'deadline' => now()->addDays(8),
+            ],
+        ];
+
+        foreach ($assignments as $assignment) {
+            Assignment::updateOrCreate([
+                'course_id' => $assignment['course']->id,
+                'title' => $assignment['title'],
+            ], [
+                'teacher_id' => $assignment['teacher']->id,
+                'description' => $assignment['description'],
+                'deadline' => $assignment['deadline'],
+            ]);
+        }
     }
 }

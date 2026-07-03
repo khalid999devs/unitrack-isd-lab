@@ -8,38 +8,40 @@
     $items = [
         'student' => [
             ['key' => 'dashboard', 'label' => 'Dashboard', 'href' => route('student.dashboard'), 'icon' => 'layout-dashboard'],
+            ['key' => 'profile', 'label' => 'Profile', 'href' => route('student.profile'), 'icon' => 'user-circle'],
             ['key' => 'courses', 'label' => 'Courses', 'href' => route('student.courses'), 'icon' => 'book-2'],
             ['key' => 'routine', 'label' => 'Routine', 'href' => route('student.routine'), 'icon' => 'calendar-event'],
             ['key' => 'notices', 'label' => 'Notices', 'href' => route('student.notices'), 'icon' => 'bell'],
             ['key' => 'materials', 'label' => 'Materials', 'href' => route('student.materials'), 'icon' => 'files'],
             ['key' => 'assignments', 'label' => 'Assignments', 'href' => route('student.assignments'), 'icon' => 'clipboard-list'],
-            ['key' => 'quick-links', 'label' => 'Quick Links', 'href' => '#', 'icon' => 'link'],
         ],
         'teacher' => [
             ['key' => 'dashboard', 'label' => 'Dashboard', 'href' => route('teacher.dashboard'), 'icon' => 'layout-dashboard'],
+            ['key' => 'profile', 'label' => 'Profile', 'href' => route('teacher.profile'), 'icon' => 'user-circle'],
             ['key' => 'courses', 'label' => 'Assigned Courses', 'href' => route('teacher.courses'), 'icon' => 'book-2'],
             ['key' => 'routine', 'label' => 'Routine', 'href' => route('teacher.routine'), 'icon' => 'calendar-event'],
             ['key' => 'materials', 'label' => 'Materials', 'href' => route('teacher.materials'), 'icon' => 'files'],
             ['key' => 'assignments', 'label' => 'Assignments', 'href' => route('teacher.assignments'), 'icon' => 'clipboard-list'],
             ['key' => 'notices', 'label' => 'Notices', 'href' => route('teacher.notices'), 'icon' => 'bell'],
-            ['key' => 'quick-links', 'label' => 'Quick Links', 'href' => '#', 'icon' => 'link'],
         ],
         'admin' => [
             ['key' => 'dashboard', 'label' => 'Dashboard', 'href' => route('admin.dashboard'), 'icon' => 'layout-dashboard'],
+            ['key' => 'registration-requests', 'label' => 'Registrations', 'href' => route('admin.registration-requests'), 'icon' => 'user-plus'],
             ['key' => 'students', 'label' => 'Students', 'href' => route('admin.students'), 'icon' => 'users'],
             ['key' => 'teachers', 'label' => 'Teachers', 'href' => route('admin.teachers'), 'icon' => 'user-star'],
             ['key' => 'courses', 'label' => 'Courses', 'href' => route('admin.courses'), 'icon' => 'book-2'],
             ['key' => 'routines', 'label' => 'Routines', 'href' => route('admin.routines'), 'icon' => 'calendar-stats'],
             ['key' => 'notices', 'label' => 'Notices', 'href' => route('admin.notices'), 'icon' => 'bell'],
-            ['key' => 'quick-links', 'label' => 'Quick Links', 'href' => '#', 'icon' => 'link'],
         ],
     ][$role] ?? [];
+
+    $dashboardHref = $items[0]['href'] ?? route('login');
 @endphp
 
 <aside class="bg-[#3B5BDB] px-4 py-5 text-white lg:min-h-screen lg:w-[260px] lg:shrink-0">
     <div class="flex items-center justify-between lg:block">
         <div>
-            <a href="{{ route('login') }}" class="text-xl font-bold uppercase tracking-[0.2em]">
+            <a href="{{ $dashboardHref }}" class="text-xl font-bold uppercase tracking-[0.2em]">
                 <span class="text-white">UNI</span><span class="text-blue-100">TRACK</span>
             </a>
             <p class="mt-1 text-xs font-semibold uppercase tracking-wide text-blue-200">{{ $roleLabel }} Panel</p>

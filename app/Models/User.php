@@ -33,6 +33,11 @@ class User extends Authenticatable
         return $this->hasMany(Notice::class, 'posted_by');
     }
 
+    public function reviewedRegistrationRequests(): HasMany
+    {
+        return $this->hasMany(RegistrationRequest::class, 'reviewed_by');
+    }
+
     /**
      * Get the attributes that should be cast.
      *

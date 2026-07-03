@@ -134,16 +134,16 @@ This setup creates the initial UniTrack database foundation for Sprint 2 and Spr
 
 ## Seeder Information
 
-The database seeder adds simple local testing data:
+The database seeder adds local V1 demo data:
 
 - One admin user
-- One student user with a student profile
-- One teacher user with a teacher profile
-- One sample course
-- One sample routine
-- One sample notice
-- One sample study material
-- One sample assignment
+- Two student users with student profiles
+- Two teacher users with teacher profiles
+- Five sample courses
+- Five sample routines
+- Four sample notices
+- Four sample study materials
+- Four sample assignments
 
 Demo accounts use the password:
 
