@@ -101,11 +101,6 @@ class DashboardPageController extends Controller
         return view('teacher.notices');
     }
 
-    public function adminCourses()
-    {
-        return view('admin.courses');
-    }
-
     public function adminNotices()
     {
         return view('admin.notices');
