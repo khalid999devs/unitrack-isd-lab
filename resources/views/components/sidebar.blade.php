@@ -8,6 +8,7 @@
     $items = [
         'student' => [
             ['key' => 'dashboard', 'label' => 'Dashboard', 'href' => route('student.dashboard'), 'icon' => 'layout-dashboard'],
+            ['key' => 'profile', 'label' => 'Profile', 'href' => route('student.profile'), 'icon' => 'user-circle'],
             ['key' => 'courses', 'label' => 'Courses', 'href' => route('student.courses'), 'icon' => 'book-2'],
             ['key' => 'routine', 'label' => 'Routine', 'href' => route('student.routine'), 'icon' => 'calendar-event'],
             ['key' => 'notices', 'label' => 'Notices', 'href' => route('student.notices'), 'icon' => 'bell'],
@@ -16,6 +17,7 @@
         ],
         'teacher' => [
             ['key' => 'dashboard', 'label' => 'Dashboard', 'href' => route('teacher.dashboard'), 'icon' => 'layout-dashboard'],
+            ['key' => 'profile', 'label' => 'Profile', 'href' => route('teacher.profile'), 'icon' => 'user-circle'],
             ['key' => 'courses', 'label' => 'Assigned Courses', 'href' => route('teacher.courses'), 'icon' => 'book-2'],
             ['key' => 'routine', 'label' => 'Routine', 'href' => route('teacher.routine'), 'icon' => 'calendar-event'],
             ['key' => 'materials', 'label' => 'Materials', 'href' => route('teacher.materials'), 'icon' => 'files'],

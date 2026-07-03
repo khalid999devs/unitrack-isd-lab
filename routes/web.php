@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\DashboardPageController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RoutineController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\TeacherController;
@@ -20,6 +21,9 @@ Route::post('/logout', [AuthController::class, 'logout'])
     ->name('logout');
 
 Route::middleware(['auth', 'role:student'])->prefix('student')->name('student.')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'showStudent'])->name('profile');
+    Route::post('/profile/update', [ProfileController::class, 'updateStudent'])->name('profile.update');
+
     Route::controller(DashboardPageController::class)->group(function () {
         Route::get('/dashboard', 'studentDashboard')->name('dashboard');
         Route::get('/courses', 'studentCourses')->name('courses');
@@ -31,6 +35,9 @@ Route::middleware(['auth', 'role:student'])->prefix('student')->name('student.')
 });
 
 Route::middleware(['auth', 'role:teacher'])->prefix('teacher')->name('teacher.')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'showTeacher'])->name('profile');
+    Route::post('/profile/update', [ProfileController::class, 'updateTeacher'])->name('profile.update');
+
     Route::controller(DashboardPageController::class)->group(function () {
         Route::get('/dashboard', 'teacherDashboard')->name('dashboard');
         Route::get('/courses', 'teacherCourses')->name('courses');
@@ -44,21 +51,29 @@ Route::middleware(['auth', 'role:teacher'])->prefix('teacher')->name('teacher.')
 Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/dashboard', [DashboardPageController::class, 'adminDashboard'])->name('dashboard');
 
-    Route::resource('students', StudentController::class)->names([
-        'index' => 'students',
-    ]);
+    Route::resource('students', StudentController::class)
+        ->except(['show'])
+        ->names([
+            'index' => 'students',
+        ]);
 
-    Route::resource('teachers', TeacherController::class)->names([
-        'index' => 'teachers',
-    ]);
+    Route::resource('teachers', TeacherController::class)
+        ->except(['show'])
+        ->names([
+            'index' => 'teachers',
+        ]);
 
-    Route::resource('courses', CourseController::class)->names([
-        'index' => 'courses',
-    ]);
+    Route::resource('courses', CourseController::class)
+        ->except(['show'])
+        ->names([
+            'index' => 'courses',
+        ]);
 
-    Route::resource('routines', RoutineController::class)->names([
-        'index' => 'routines',
-    ]);
+    Route::resource('routines', RoutineController::class)
+        ->except(['show'])
+        ->names([
+            'index' => 'routines',
+        ]);
 
     Route::controller(DashboardPageController::class)->group(function () {
         Route::get('/notices', 'adminNotices')->name('notices');

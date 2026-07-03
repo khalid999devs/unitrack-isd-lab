@@ -213,6 +213,7 @@ Project documentation is available inside the `docs` folder.
 10. `docs/sprint-notes/SCRUM-9-database-schema.md`
 11. `docs/sprint-notes/SCRUM-14-code-quality-and-coding-rules.md`
 12. `docs/sprint-notes/SCRUM-27-v1-seed-data-demo-accounts.md`
+13. `docs/sprint-notes/SCRUM-28-v1-core-flow-review.md`
 
 ## Branch Management Quick Notice
 

@@ -222,6 +222,7 @@ class RoleFlowIntegrationTest extends TestCase
     {
         return [
             'student.dashboard',
+            'student.profile',
             'student.courses',
             'student.routine',
             'student.notices',
@@ -237,6 +238,7 @@ class RoleFlowIntegrationTest extends TestCase
     {
         return [
             'teacher.dashboard',
+            'teacher.profile',
             'teacher.courses',
             'teacher.routine',
             'teacher.materials',
