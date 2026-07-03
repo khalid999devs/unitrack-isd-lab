@@ -138,6 +138,24 @@ For a fresh local database with demo seed data:
 php artisan migrate:fresh --seed
 ```
 
+## Demo Accounts and V1 Demo Flow
+
+After running `php artisan migrate:fresh --seed`, use these local demo accounts:
+
+| Role | Email | Password |
+|---|---|---|
+| Admin | `admin@unitrack.test` | `password` |
+| Student | `student@unitrack.test` | `password` |
+| Student | `student2@unitrack.test` | `password` |
+| Teacher | `teacher@unitrack.test` | `password` |
+| Teacher | `teacher2@unitrack.test` | `password` |
+
+Quick demo flow:
+
+1. Log in as `student@unitrack.test` and review dashboard counts, courses, and class routine.
+2. Log in as `teacher@unitrack.test` and review assigned courses, class routine, material count, and assignment count.
+3. Log in as `admin@unitrack.test` and review seeded students, teachers, courses, routines, and dashboard totals.
+
 If the database does not exist yet, create it manually in phpMyAdmin/Adminer. MAMP users can also run:
 
 ```bash
@@ -194,6 +212,7 @@ Project documentation is available inside the `docs` folder.
 9. `docs/sprint-notes/SCRUM-8-laravel-setup.md`
 10. `docs/sprint-notes/SCRUM-9-database-schema.md`
 11. `docs/sprint-notes/SCRUM-14-code-quality-and-coding-rules.md`
+12. `docs/sprint-notes/SCRUM-27-v1-seed-data-demo-accounts.md`
 
 ## Branch Management Quick Notice
 
