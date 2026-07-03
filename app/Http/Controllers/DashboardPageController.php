@@ -2,16 +2,69 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Assignment;
+use App\Models\Course;
+use App\Models\Notice;
 use App\Models\Routine;
+use App\Models\Student;
+use App\Models\StudyMaterial;
+use App\Models\Teacher;
+use Illuminate\Http\Request;
+use Illuminate\View\View;
 
 class DashboardPageController extends Controller
 {
-    public function studentCourses()
+    public function studentDashboard(): View
     {
-        return view('student.courses');
+        $student = auth()->user()->student;
+        $courseIds = $student
+            ? Course::where('semester', $student->semester)->pluck('id')
+            : collect();
+
+        return view('student.dashboard', [
+            'courseCount' => $courseIds->count(),
+            'todayClassCount' => $student
+                ? Routine::where('semester', $student->semester)
+                    ->where('batch', $student->batch)
+                    ->where('day', now()->format('l'))
+                    ->count()
+                : 0,
+            'noticeCount' => Notice::whereIn('target_role', ['all', 'student'])->count(),
+            'assignmentCount' => $courseIds->isNotEmpty()
+                ? Assignment::whereIn('course_id', $courseIds)
+                    ->where('deadline', '>=', now())
+                    ->count()
+                : 0,
+        ]);
     }
 
-    public function studentRoutine()
+    public function studentCourses(Request $request): View
+    {
+        $student = auth()->user()->student;
+        $courses = collect();
+
+        if ($student) {
+            $query = Course::with('teacher.user')
+                ->where('semester', $student->semester);
+
+            if ($request->filled('search')) {
+                $search = $request->input('search');
+                $query->where(function ($q) use ($search) {
+                    $q->where('course_code', 'like', "%{$search}%")
+                        ->orWhere('course_title', 'like', "%{$search}%")
+                        ->orWhereHas('teacher.user', function ($teacherQuery) use ($search) {
+                            $teacherQuery->where('name', 'like', "%{$search}%");
+                        });
+                });
+            }
+
+            $courses = $query->orderBy('course_code')->get();
+        }
+
+        return view('student.courses', compact('courses', 'student'));
+    }
+
+    public function studentRoutine(): View
     {
         $student = auth()->user()->student;
         $routines = collect();
@@ -39,27 +92,65 @@ class DashboardPageController extends Controller
         return view('student.routine', compact('routines'));
     }
 
-    public function studentNotices()
+    public function studentNotices(): View
     {
         return view('student.notices');
     }
 
-    public function studentMaterials()
+    public function studentMaterials(): View
     {
         return view('student.materials');
     }
 
-    public function studentAssignments()
+    public function studentAssignments(): View
     {
         return view('student.assignments');
     }
 
-    public function teacherCourses()
+    public function teacherDashboard(): View
     {
-        return view('teacher.courses');
+        $teacher = auth()->user()->teacher;
+
+        return view('teacher.dashboard', [
+            'courseCount' => $teacher ? $teacher->courses()->count() : 0,
+            'todayClassCount' => $teacher
+                ? $teacher->routines()
+                    ->where('day', now()->format('l'))
+                    ->count()
+                : 0,
+            'materialCount' => $teacher ? $teacher->studyMaterials()->count() : 0,
+            'assignmentCount' => $teacher
+                ? $teacher->assignments()
+                    ->where('deadline', '>=', now())
+                    ->count()
+                : 0,
+        ]);
     }
 
-    public function teacherRoutine()
+    public function teacherCourses(Request $request): View
+    {
+        $teacher = auth()->user()->teacher;
+        $courses = collect();
+
+        if ($teacher) {
+            $query = Course::where('teacher_id', $teacher->id);
+
+            if ($request->filled('search')) {
+                $search = $request->input('search');
+                $query->where(function ($q) use ($search) {
+                    $q->where('course_code', 'like', "%{$search}%")
+                        ->orWhere('course_title', 'like', "%{$search}%")
+                        ->orWhere('semester', 'like', "%{$search}%");
+                });
+            }
+
+            $courses = $query->orderBy('course_code')->get();
+        }
+
+        return view('teacher.courses', compact('courses', 'teacher'));
+    }
+
+    public function teacherRoutine(): View
     {
         $teacher = auth()->user()->teacher;
         $routines = collect();
@@ -86,22 +177,35 @@ class DashboardPageController extends Controller
         return view('teacher.routine', compact('routines'));
     }
 
-    public function teacherMaterials()
+    public function teacherMaterials(): View
     {
         return view('teacher.materials');
     }
 
-    public function teacherAssignments()
+    public function teacherAssignments(): View
     {
         return view('teacher.assignments');
     }
 
-    public function teacherNotices()
+    public function teacherNotices(): View
     {
         return view('teacher.notices');
     }
 
-    public function adminNotices()
+    public function adminDashboard(): View
+    {
+        return view('admin.dashboard', [
+            'studentCount' => Student::count(),
+            'teacherCount' => Teacher::count(),
+            'courseCount' => Course::count(),
+            'routineCount' => Routine::count(),
+            'noticeCount' => Notice::count(),
+            'materialCount' => StudyMaterial::count(),
+            'assignmentCount' => Assignment::count(),
+        ]);
+    }
+
+    public function adminNotices(): View
     {
         return view('admin.notices');
     }
