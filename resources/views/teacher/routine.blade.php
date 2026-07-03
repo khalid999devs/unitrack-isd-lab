@@ -11,20 +11,23 @@
 
 @section('content')
     <div class="space-y-6">
-        <div class="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
-            <div>
-                <h1 class="text-2xl font-bold text-main-text">My Class Routine</h1>
-                <p class="text-sm text-secondary-text">Weekly academic schedule for your assigned lectures and lab sessions.</p>
-            </div>
-            @if ($teacher)
-                <div class="inline-flex items-center gap-2 rounded-xl border border-border-soft bg-card-bg px-4 py-2 text-sm font-semibold shadow-card">
-                    <span class="text-secondary-text">Department:</span>
-                    <x-badge variant="info">{{ $teacher->department }}</x-badge>
-                    <span class="text-secondary-text ml-2">Designation:</span>
+        @if ($teacher)
+            <section class="flex flex-col gap-4 rounded-2xl border border-border-soft bg-card-bg p-5 shadow-card sm:flex-row sm:items-center sm:justify-between">
+                <div class="flex items-center gap-3">
+                    <div class="flex h-11 w-11 items-center justify-center rounded-xl bg-soft-blue-bg text-primary-blue">
+                        <i class="ti ti-calendar-event text-xl"></i>
+                    </div>
+                    <div>
+                        <p class="text-sm font-bold text-main-text">Assigned teaching schedule</p>
+                        <p class="text-xs text-secondary-text">{{ $teacher->department }}</p>
+                    </div>
+                </div>
+                <div class="flex flex-wrap gap-2">
+                    <x-badge variant="info">{{ $routines->count() }} classes</x-badge>
                     <x-badge variant="success">{{ $teacher->designation }}</x-badge>
                 </div>
-            @endif
-        </div>
+            </section>
+        @endif
 
         @if ($routines->isEmpty())
             <x-empty-state

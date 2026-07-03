@@ -73,7 +73,7 @@
                             </div>
 
                             <div class="mt-auto flex items-center justify-end gap-2">
-                                <x-button href="{{ route('teacher.materials') }}">Upload Material</x-button>
+                                <x-button href="{{ route('teacher.materials.create') }}">Upload Material</x-button>
                             </div>
                         </div>
                     </x-card>

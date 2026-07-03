@@ -6,8 +6,8 @@
     <title>@yield('title', 'UniTrack Login')</title>
     @vite(['resources/css/app.css'])
 </head>
-<body class="h-screen overflow-hidden font-sans text-main-text antialiased">
-    <main class="flex h-screen items-center justify-center overflow-hidden bg-gradient-to-br from-gray-300 to-white px-4 py-4 md:px-6 md:py-6">
+<body class="min-h-screen font-sans text-main-text antialiased">
+    <main class="flex min-h-screen items-center justify-center overflow-y-auto bg-gradient-to-br from-soft-blue-bg via-white to-muted-bg px-4 py-6 md:px-6">
         @yield('content')
     </main>
 </body>

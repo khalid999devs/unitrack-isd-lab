@@ -11,20 +11,23 @@
 
 @section('content')
     <div class="space-y-6">
-        <div class="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
-            <div>
-                <h1 class="text-2xl font-bold text-main-text">My Class Routine</h1>
-                <p class="text-sm text-secondary-text">Weekly academic schedule for your enrolled semester and batch.</p>
-            </div>
-            @if ($student)
-                <div class="inline-flex items-center gap-2 rounded-xl border border-border-soft bg-card-bg px-4 py-2 text-sm font-semibold shadow-card">
-                    <span class="text-secondary-text">Semester:</span>
-                    <x-badge variant="success">{{ $student->semester }}</x-badge>
-                    <span class="text-secondary-text ml-2">Batch:</span>
-                    <x-badge variant="info">{{ $student->batch }}</x-badge>
+        @if ($student)
+            <section class="flex flex-col gap-4 rounded-2xl border border-border-soft bg-card-bg p-5 shadow-card sm:flex-row sm:items-center sm:justify-between">
+                <div class="flex items-center gap-3">
+                    <div class="flex h-11 w-11 items-center justify-center rounded-xl bg-soft-blue-bg text-primary-blue">
+                        <i class="ti ti-calendar-stats text-xl"></i>
+                    </div>
+                    <div>
+                        <p class="text-sm font-bold text-main-text">Semester {{ $student->semester }} schedule</p>
+                        <p class="text-xs text-secondary-text">Batch {{ $student->batch }} class routine</p>
+                    </div>
                 </div>
-            @endif
-        </div>
+                <div class="flex flex-wrap gap-2">
+                    <x-badge variant="info">{{ $routines->count() }} classes</x-badge>
+                    <x-badge variant="success">Batch {{ $student->batch }}</x-badge>
+                </div>
+            </section>
+        @endif
 
         @if ($routines->isEmpty())
             <x-empty-state

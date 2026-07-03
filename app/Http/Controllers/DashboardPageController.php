@@ -94,17 +94,42 @@ class DashboardPageController extends Controller
 
     public function studentNotices(): View
     {
-        return view('student.notices');
+        $notices = Notice::with('postedBy')
+            ->whereIn('target_role', ['all', 'student'])
+            ->latest()
+            ->get();
+
+        return view('student.notices', compact('notices'));
     }
 
     public function studentMaterials(): View
     {
-        return view('student.materials');
+        $student = auth()->user()->student;
+        $courseIds = $student
+            ? Course::where('semester', $student->semester)->pluck('id')
+            : collect();
+
+        $materials = StudyMaterial::with(['course', 'teacher.user'])
+            ->whereIn('course_id', $courseIds)
+            ->latest()
+            ->get();
+
+        return view('student.materials', compact('materials'));
     }
 
     public function studentAssignments(): View
     {
-        return view('student.assignments');
+        $student = auth()->user()->student;
+        $courseIds = $student
+            ? Course::where('semester', $student->semester)->pluck('id')
+            : collect();
+
+        $assignments = Assignment::with('course')
+            ->whereIn('course_id', $courseIds)
+            ->orderBy('deadline')
+            ->get();
+
+        return view('student.assignments', compact('assignments'));
     }
 
     public function teacherDashboard(): View
@@ -177,21 +202,6 @@ class DashboardPageController extends Controller
         return view('teacher.routine', compact('routines'));
     }
 
-    public function teacherMaterials(): View
-    {
-        return view('teacher.materials');
-    }
-
-    public function teacherAssignments(): View
-    {
-        return view('teacher.assignments');
-    }
-
-    public function teacherNotices(): View
-    {
-        return view('teacher.notices');
-    }
-
     public function adminDashboard(): View
     {
         return view('admin.dashboard', [
@@ -203,10 +213,5 @@ class DashboardPageController extends Controller
             'materialCount' => StudyMaterial::count(),
             'assignmentCount' => Assignment::count(),
         ]);
-    }
-
-    public function adminNotices(): View
-    {
-        return view('admin.notices');
     }
 }

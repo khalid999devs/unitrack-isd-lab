@@ -2,6 +2,9 @@
     $role = 'student';
     $title = 'Student Profile';
     $active = 'profile';
+    $studentName = $student->user->name;
+    $nameParts = preg_split('/\s+/', trim($studentName)) ?: [];
+    $studentInitials = strtoupper(substr($nameParts[0] ?? 'S', 0, 1).substr($nameParts[1] ?? '', 0, 1));
 @endphp
 
 @extends('layouts.app')
@@ -10,16 +13,37 @@
 
 @section('content')
     <div class="space-y-6">
-        <div>
-            <h1 class="text-2xl font-bold text-primary-navy">My Profile</h1>
-            <p class="text-sm text-secondary-text">Review your academic profile and update your contact information.</p>
-        </div>
-
         @if (session('success'))
             <x-alert type="success">
                 {{ session('success') }}
             </x-alert>
         @endif
+
+        <section class="rounded-2xl border border-border-soft bg-white p-6 shadow-card">
+            <div class="flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
+                <div class="flex min-w-0 items-center gap-4">
+                    <div class="flex h-20 w-20 shrink-0 items-center justify-center rounded-2xl bg-primary-blue text-2xl font-bold text-white shadow-lg shadow-blue-200">
+                        {{ $studentInitials }}
+                    </div>
+                    <div class="min-w-0">
+                        <p class="text-xs font-bold uppercase tracking-[0.16em] text-primary-blue">Student Account</p>
+                        <h2 class="mt-1 break-words text-2xl font-bold text-primary-navy">{{ $studentName }}</h2>
+                        <p class="mt-1 break-words text-sm text-secondary-text">{{ $student->user->email }}</p>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-3 sm:min-w-64">
+                    <div class="rounded-xl border border-border-soft bg-muted-bg px-4 py-3">
+                        <p class="text-xs font-bold uppercase tracking-wide text-secondary-text">Semester</p>
+                        <p class="mt-1 text-lg font-bold text-main-text">{{ $student->semester }}</p>
+                    </div>
+                    <div class="rounded-xl border border-border-soft bg-muted-bg px-4 py-3">
+                        <p class="text-xs font-bold uppercase tracking-wide text-secondary-text">Batch</p>
+                        <p class="mt-1 text-lg font-bold text-main-text">{{ $student->batch }}</p>
+                    </div>
+                </div>
+            </div>
+        </section>
 
         <section class="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
             <div class="rounded-2xl border border-border-soft bg-card-bg p-5 shadow-card">
