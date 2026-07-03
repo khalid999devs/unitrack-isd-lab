@@ -3,10 +3,10 @@
 @section('title', 'Login - UniTrack')
 
 @section('content')
-    <section class="grid min-h-screen bg-white lg:grid-cols-[0.92fr_1.08fr]">
-        <div class="flex min-h-screen items-center justify-center px-6 py-10 sm:px-10 lg:px-16">
-            <div class="w-full max-w-[440px]">
-                <a href="{{ route('login') }}" class="mb-12 inline-flex items-center gap-3">
+    <section class="grid h-screen min-h-[720px] overflow-hidden bg-white lg:grid-cols-[0.92fr_1.08fr]">
+        <div class="flex h-full min-h-0 items-center justify-center px-6 py-6 sm:px-10 lg:px-14">
+            <div class="w-full max-w-[430px]">
+                <a href="{{ route('login') }}" class="mb-8 inline-flex items-center gap-3">
                     <span class="flex h-12 w-12 items-center justify-center rounded-2xl bg-primary-blue text-white shadow-lg shadow-blue-200">
                         <i class="ti ti-layers-intersect text-2xl"></i>
                     </span>
@@ -18,8 +18,8 @@
 
                 <div>
                     <p class="text-xs font-bold uppercase tracking-[0.22em] text-primary-blue">Secure sign in</p>
-                    <h1 class="mt-4 text-4xl font-black tracking-normal text-primary-navy sm:text-5xl">Welcome back</h1>
-                    <p class="mt-4 text-base leading-7 text-secondary-text">
+                    <h1 class="mt-3 text-4xl font-black tracking-normal text-primary-navy sm:text-[46px]">Welcome back</h1>
+                    <p class="mt-3 text-base leading-7 text-secondary-text">
                         Sign in once and UniTrack opens the right workspace from your approved account role.
                     </p>
                 </div>
@@ -36,7 +36,7 @@
                     </x-alert>
                 @endif
 
-                <form method="POST" action="{{ route('login.store') }}" class="mt-8 space-y-5">
+                <form method="POST" action="{{ route('login.store') }}" class="mt-7 space-y-4">
                     @csrf
 
                     <div>
@@ -48,7 +48,7 @@
                             value="{{ old('email') }}"
                             autocomplete="email"
                             required
-                            class="h-[52px] w-full rounded-xl border border-input-border bg-white px-4 text-base outline-none transition focus:border-primary-blue focus:ring-4 focus:ring-focus-ring"
+                            class="h-12 w-full rounded-xl border border-input-border bg-white px-4 text-base outline-none transition focus:border-primary-blue focus:ring-4 focus:ring-focus-ring"
                         >
                     </div>
 
@@ -61,7 +61,7 @@
                                 type="password"
                                 autocomplete="current-password"
                                 required
-                                class="h-[52px] w-full rounded-xl border border-input-border bg-white px-4 pr-12 text-base outline-none transition focus:border-primary-blue focus:ring-4 focus:ring-focus-ring"
+                                class="h-12 w-full rounded-xl border border-input-border bg-white px-4 pr-12 text-base outline-none transition focus:border-primary-blue focus:ring-4 focus:ring-focus-ring"
                             >
                             <button
                                 type="button"
@@ -90,30 +90,30 @@
                         </a>
                     </div>
 
-                    <button type="submit" class="inline-flex h-[52px] w-full items-center justify-center rounded-xl bg-primary-blue px-5 text-base font-black text-white transition hover:bg-royal-blue focus:outline-none focus:ring-4 focus:ring-focus-ring">
+                    <button type="submit" class="inline-flex h-12 w-full items-center justify-center rounded-xl bg-primary-blue px-5 text-base font-black text-white transition hover:bg-royal-blue focus:outline-none focus:ring-4 focus:ring-focus-ring">
                         Sign in
                     </button>
                 </form>
             </div>
         </div>
 
-        <aside class="hidden min-h-screen items-center justify-center bg-soft-blue-bg px-10 py-12 lg:flex">
-            <div class="relative flex h-full max-h-[880px] w-full max-w-[720px] flex-col justify-between overflow-hidden rounded-[32px] bg-primary-navy p-10 text-white shadow-2xl shadow-slate-300/60 xl:p-14">
+        <aside class="hidden h-full min-h-0 items-center justify-center bg-soft-blue-bg px-6 py-6 lg:flex xl:px-10">
+            <div class="relative flex h-full max-h-[820px] min-h-0 w-full max-w-[720px] flex-col justify-between overflow-hidden rounded-[28px] bg-primary-navy p-8 text-white shadow-2xl shadow-slate-300/60 xl:p-10">
                 <div class="flex items-center justify-between gap-4">
                     <div>
                         <p class="text-sm font-bold uppercase tracking-[0.22em] text-blue-100">Role-aware access</p>
-                        <h2 class="mt-4 max-w-xl text-4xl font-black leading-tight xl:text-5xl">
+                        <h2 class="mt-3 max-w-xl text-4xl font-black leading-[1.12] xl:text-[44px]">
                             One doorway into every academic workspace.
                         </h2>
                     </div>
                     <span class="shrink-0 rounded-full border border-white/20 px-4 py-2 text-xs font-black uppercase tracking-wide text-blue-100">V1 Core</span>
                 </div>
 
-                <div class="my-8 flex min-h-0 flex-1 items-center justify-center">
+                <div class="my-5 flex min-h-0 flex-1 items-center justify-center">
                     <img
                         src="{{ asset('images/auth-illustration.svg') }}"
                         alt="Secure academic login illustration"
-                        class="max-h-[390px] w-full object-contain"
+                        class="max-h-[300px] w-full object-contain xl:max-h-[330px]"
                     >
                 </div>
 
