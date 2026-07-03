@@ -74,7 +74,7 @@
                             <x-button variant="secondary" href="{{ route('admin.courses.edit', $course) }}" class="h-9 px-3">
                                 <i class="ti ti-edit text-base"></i>
                             </x-button>
-                            
+
                             <button
                                 type="button"
                                 onclick="confirmDelete('{{ $course->id }}')"

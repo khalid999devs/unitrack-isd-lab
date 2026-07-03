@@ -20,7 +20,7 @@
         @endif
 
         <tbody>
-            @if (!empty($rows))
+            @if (!empty($rows) && count($rows) > 0)
                 @foreach ($rows as $row)
                     <tr class="{{ $hoverable ? 'hover:bg-muted-bg transition' : '' }} border-b border-border-soft last:border-b-0">
                         {{ $slot }}

@@ -1,59 +1,56 @@
 @php
     $role = 'student';
-    $title = 'Routine';
+    $title = 'Class Routine';
     $active = 'routine';
+    $student = auth()->user()->student;
 @endphp
 
 @extends('layouts.app')
 
-@section('title', 'Routine - UniTrack')
+@section('title', 'Class Routine - UniTrack')
 
 @section('content')
-    @php
-        $days = ['Saturday', 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday'];
-        $routineRows = [
-            ['time' => '08:30 - 09:20', 'Saturday' => 'Database Systems<br><span class="text-xs text-secondary-text">Room 402</span>', 'Sunday' => '—', 'Monday' => 'Software Engineering<br><span class="text-xs text-secondary-text">Room 305</span>', 'Tuesday' => '—', 'Wednesday' => 'Web App Lab<br><span class="text-xs text-secondary-text">Lab 2</span>', 'Thursday' => '—'],
-            ['time' => '09:30 - 10:20', 'Saturday' => '—', 'Sunday' => 'Technical Communication<br><span class="text-xs text-secondary-text">Room 210</span>', 'Monday' => '—', 'Tuesday' => 'Data Structures<br><span class="text-xs text-secondary-text">Room 118</span>', 'Wednesday' => '—', 'Thursday' => 'Project Lab<br><span class="text-xs text-secondary-text">Lab 1</span>'],
-            ['time' => '10:30 - 11:20', 'Saturday' => 'Programming Lab<br><span class="text-xs text-secondary-text">Lab 3</span>', 'Sunday' => '—', 'Monday' => 'Operating Systems<br><span class="text-xs text-secondary-text">Room 401</span>', 'Tuesday' => '—', 'Wednesday' => '—', 'Thursday' => '—'],
-            ['time' => '01:30 - 02:20', 'Saturday' => '—', 'Sunday' => 'Discrete Math<br><span class="text-xs text-secondary-text">Room 115</span>', 'Monday' => '—', 'Tuesday' => 'Database Tutorial<br><span class="text-xs text-secondary-text">Room 402</span>', 'Wednesday' => 'Software Engineering<br><span class="text-xs text-secondary-text">Room 305</span>', 'Thursday' => '—'],
-            ['time' => '02:30 - 03:20', 'Saturday' => 'Web App Development<br><span class="text-xs text-secondary-text">Room 408</span>', 'Sunday' => '—', 'Monday' => '—', 'Tuesday' => 'Machine Practice<br><span class="text-xs text-secondary-text">Lab 2</span>', 'Wednesday' => '—', 'Thursday' => 'Academic Advising<br><span class="text-xs text-secondary-text">Room 101</span>'],
-        ];
-    @endphp
-
     <div class="space-y-6">
-        <section class="rounded-2xl border border-border-soft bg-card-bg p-6 shadow-card">
-            <div class="flex flex-col gap-2">
-                <p class="text-sm font-bold uppercase tracking-[0.2em] text-[#3B5BDB]">Weekly Routine</p>
-                <h1 class="text-2xl font-bold text-main-text">Class schedule preview</h1>
-                <p class="max-w-3xl text-sm leading-6 text-secondary-text">Demo timetable content is displayed from Saturday to Thursday with a blue header row and room details for each session.</p>
+        <div class="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+            <div>
+                <h1 class="text-2xl font-bold text-main-text">My Class Routine</h1>
+                <p class="text-sm text-secondary-text">Weekly academic schedule for your enrolled semester and batch.</p>
             </div>
-        </section>
+            @if ($student)
+                <div class="inline-flex items-center gap-2 rounded-xl border border-border-soft bg-card-bg px-4 py-2 text-sm font-semibold shadow-card">
+                    <span class="text-secondary-text">Semester:</span>
+                    <x-badge variant="success">{{ $student->semester }}</x-badge>
+                    <span class="text-secondary-text ml-2">Batch:</span>
+                    <x-badge variant="info">{{ $student->batch }}</x-badge>
+                </div>
+            @endif
+        </div>
 
-        <x-card class="overflow-hidden rounded-xl">
-            <div class="-m-6 overflow-x-auto">
-                <table class="w-full border-collapse text-sm">
-                    <thead>
-                        <tr class="bg-[#3B5BDB] text-white">
-                            <th class="px-4 py-4 text-left font-bold uppercase tracking-wide">Time</th>
-                            @foreach ($days as $day)
-                                <th class="px-4 py-4 text-left font-bold uppercase tracking-wide">{{ $day }}</th>
-                            @endforeach
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($routineRows as $row)
-                            <tr class="border-b border-border-soft last:border-b-0 hover:bg-[#F8FBFF]">
-                                <td class="whitespace-nowrap px-4 py-4 font-semibold text-main-text">{{ $row['time'] }}</td>
-                                @foreach ($days as $day)
-                                    <td class="px-4 py-4 align-top text-secondary-text">
-                                        {!! $row[$day] !!}
-                                    </td>
-                                @endforeach
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-            </div>
-        </x-card>
+        @if ($routines->isEmpty())
+            <x-empty-state
+                icon="calendar-stats"
+                title="No Routine Found"
+                message="There are no class routines scheduled for your semester ({{ $student->semester ?? 'N/A' }}) and batch ({{ $student->batch ?? 'N/A' }})."
+            />
+        @else
+            <x-table :headers="['Day', 'Time', 'Room', 'Course', 'Instructor']" emptyMessage="No routines scheduled.">
+                @foreach ($routines as $routine)
+                    <tr class="hover:bg-muted-bg transition border-b border-border-soft last:border-b-0">
+                        <td class="px-4 py-4 text-sm font-bold text-main-text">{{ $routine->day }}</td>
+                        <td class="px-4 py-4 text-sm text-main-text font-medium">
+                            {{ date('h:i A', strtotime($routine->start_time)) }} - {{ date('h:i A', strtotime($routine->end_time)) }}
+                        </td>
+                        <td class="px-4 py-4 text-sm text-secondary-text font-semibold">{{ $routine->room }}</td>
+                        <td class="px-4 py-4 text-sm">
+                            <span class="font-bold text-primary-blue">{{ $routine->course->course_code }}</span><br>
+                            <span class="text-xs text-secondary-text">{{ $routine->course->course_title }}</span>
+                        </td>
+                        <td class="px-4 py-4 text-sm text-main-text">
+                            {{ $routine->teacher->user->name }}
+                        </td>
+                    </tr>
+                @endforeach
+            </x-table>
+        @endif
     </div>
 @endsection

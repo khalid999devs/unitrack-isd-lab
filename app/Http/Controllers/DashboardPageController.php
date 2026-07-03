@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Routine;
+
 class DashboardPageController extends Controller
 {
     public function studentCourses()
@@ -11,7 +13,30 @@ class DashboardPageController extends Controller
 
     public function studentRoutine()
     {
-        return view('student.routine');
+        $student = auth()->user()->student;
+        $routines = collect();
+
+        if ($student) {
+            $dayOrder = "CASE day
+                WHEN 'Sunday' THEN 1
+                WHEN 'Monday' THEN 2
+                WHEN 'Tuesday' THEN 3
+                WHEN 'Wednesday' THEN 4
+                WHEN 'Thursday' THEN 5
+                WHEN 'Friday' THEN 6
+                WHEN 'Saturday' THEN 7
+                ELSE 8
+            END";
+
+            $routines = Routine::with(['course', 'teacher.user'])
+                ->where('semester', $student->semester)
+                ->where('batch', $student->batch)
+                ->orderByRaw($dayOrder)
+                ->orderBy('start_time')
+                ->get();
+        }
+
+        return view('student.routine', compact('routines'));
     }
 
     public function studentNotices()
@@ -36,7 +61,29 @@ class DashboardPageController extends Controller
 
     public function teacherRoutine()
     {
-        return view('teacher.routine');
+        $teacher = auth()->user()->teacher;
+        $routines = collect();
+
+        if ($teacher) {
+            $dayOrder = "CASE day
+                WHEN 'Sunday' THEN 1
+                WHEN 'Monday' THEN 2
+                WHEN 'Tuesday' THEN 3
+                WHEN 'Wednesday' THEN 4
+                WHEN 'Thursday' THEN 5
+                WHEN 'Friday' THEN 6
+                WHEN 'Saturday' THEN 7
+                ELSE 8
+            END";
+
+            $routines = Routine::with(['course', 'teacher.user'])
+                ->where('teacher_id', $teacher->id)
+                ->orderByRaw($dayOrder)
+                ->orderBy('start_time')
+                ->get();
+        }
+
+        return view('teacher.routine', compact('routines'));
     }
 
     public function teacherMaterials()
@@ -52,11 +99,6 @@ class DashboardPageController extends Controller
     public function teacherNotices()
     {
         return view('teacher.notices');
-    }
-
-    public function adminRoutines()
-    {
-        return view('admin.routines');
     }
 
     public function adminNotices()
