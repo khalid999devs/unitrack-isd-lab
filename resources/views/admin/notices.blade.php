@@ -12,8 +12,8 @@
     <div class="space-y-6">
         <section class="flex flex-col gap-4 rounded-2xl border border-border-soft bg-card-bg p-6 shadow-card sm:flex-row sm:items-center sm:justify-between">
             <div>
-                <p class="text-sm font-bold uppercase tracking-[0.2em] text-[#3B5BDB]">Notices</p>
-                <h1 class="mt-1 text-2xl font-bold text-main-text">Institution announcements</h1>
+                <p class="text-sm font-bold text-main-text">Institution announcements</p>
+                <p class="text-sm text-secondary-text">Create and maintain notices for each role audience.</p>
             </div>
             <x-button href="{{ route('admin.notices.create') }}">
                 <i class="ti ti-plus mr-2 text-base"></i>
@@ -29,7 +29,7 @@
             <x-empty-state
                 icon="bell"
                 title="No Notices Posted"
-                message="Create the first institution notice for the V1 demo."
+                message="Create the first institution notice for UniTrack."
             />
         @else
             <x-table :headers="['Title', 'Posted By', 'Date', 'Target', 'Actions']" emptyMessage="No notices posted.">

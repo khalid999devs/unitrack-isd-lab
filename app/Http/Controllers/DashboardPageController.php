@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Assignment;
+use App\Models\AssignmentSubmission;
 use App\Models\Course;
 use App\Models\Notice;
 use App\Models\Routine;
@@ -124,7 +125,12 @@ class DashboardPageController extends Controller
             ? Course::where('semester', $student->semester)->pluck('id')
             : collect();
 
-        $assignments = Assignment::with('course')
+        $assignments = Assignment::with([
+            'course',
+            'submissions' => fn ($query) => $student
+                ? $query->where('student_id', $student->id)
+                : $query->whereRaw('1 = 0'),
+        ])
             ->whereIn('course_id', $courseIds)
             ->orderBy('deadline')
             ->get();
@@ -212,6 +218,7 @@ class DashboardPageController extends Controller
             'noticeCount' => Notice::count(),
             'materialCount' => StudyMaterial::count(),
             'assignmentCount' => Assignment::count(),
+            'submissionCount' => AssignmentSubmission::count(),
         ]);
     }
 }

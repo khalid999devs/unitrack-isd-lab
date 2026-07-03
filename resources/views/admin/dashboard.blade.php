@@ -13,7 +13,7 @@
         ['label' => 'Notices', 'value' => $noticeCount ?? 0, 'color' => 'bg-primary-blue'],
         ['label' => 'Study Materials', 'value' => $materialCount ?? 0, 'color' => 'bg-success'],
         ['label' => 'Assignments', 'value' => $assignmentCount ?? 0, 'color' => 'bg-warning'],
-        ['label' => 'Class Routines', 'value' => $routineCount ?? 0, 'color' => 'bg-indigo-accent'],
+        ['label' => 'Submissions', 'value' => $submissionCount ?? 0, 'color' => 'bg-indigo-accent'],
     ];
     $maxAcademicValue = max(1, ...array_column($academicStats, 'value'));
 @endphp
@@ -82,7 +82,7 @@
             <x-card title="Total Notices" :value="$noticeCount ?? 0" description="Academic notices." icon="bell" />
             <x-card title="Study Materials" :value="$materialCount ?? 0" description="Uploaded resources." icon="files" />
             <x-card title="Assignments" :value="$assignmentCount ?? 0" description="Academic tasks." icon="clipboard-list" />
-            <x-card title="Pending Reviews" value="0" description="Admin review area." icon="clock" />
+            <x-card title="Submissions" :value="$submissionCount ?? 0" description="Student assignment submissions." icon="upload" />
         </section>
 
         <section class="grid gap-4 md:grid-cols-2 xl:grid-cols-5">

@@ -10,18 +10,17 @@
 
 @section('content')
     <div class="space-y-6">
-        <!-- Header -->
-        <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+        <section class="flex flex-col gap-4 rounded-2xl border border-border-soft bg-card-bg p-5 shadow-card sm:flex-row sm:items-center sm:justify-between">
             <div>
-                <h1 class="text-2xl font-bold text-primary-navy">Courses Management</h1>
-                <p class="text-sm text-secondary-text">View and manage the academic course catalog and teacher assignments.</p>
+                <p class="text-sm font-bold text-main-text">Course catalog</p>
+                <p class="text-sm text-secondary-text">Manage academic courses and teacher assignments.</p>
             </div>
             <div>
                 <x-button href="{{ route('admin.courses.create') }}">
                     <i class="ti ti-plus mr-2 text-base"></i> Add New Course
                 </x-button>
             </div>
-        </div>
+        </section>
 
         <!-- Success Alert -->
         @if (session('success'))

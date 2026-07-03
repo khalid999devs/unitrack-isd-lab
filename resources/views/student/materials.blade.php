@@ -25,6 +25,9 @@
         @else
             <x-table :headers="['Material', 'Course', 'Uploaded By', 'Upload Date', 'Action']" emptyMessage="No materials available.">
                 @foreach ($materials as $material)
+                    @php
+                        $hasFile = $material->file_path && \Illuminate\Support\Facades\Storage::exists($material->file_path);
+                    @endphp
                     <tr class="hover:bg-muted-bg transition border-b border-border-soft last:border-b-0">
                         <td class="px-4 py-4">
                             <div class="flex items-center gap-3">
@@ -43,10 +46,14 @@
                         <td class="px-4 py-4 text-secondary-text">{{ $material->teacher->user->name }}</td>
                         <td class="px-4 py-4 text-secondary-text">{{ $material->created_at->format('d M Y') }}</td>
                         <td class="px-4 py-4">
-                            <a href="{{ route('student.materials.download', $material) }}" class="inline-flex items-center gap-2 rounded-xl bg-[#3B5BDB] px-4 py-2 text-sm font-bold text-white transition hover:bg-[#334FCC]">
-                                <i class="ti ti-download text-[18px]"></i>
-                                Download
-                            </a>
+                            @if ($hasFile)
+                                <a href="{{ route('student.materials.download', $material) }}" class="inline-flex items-center gap-2 rounded-xl bg-[#3B5BDB] px-4 py-2 text-sm font-bold text-white transition hover:bg-[#334FCC]">
+                                    <i class="ti ti-download text-[18px]"></i>
+                                    Download
+                                </a>
+                            @else
+                                <x-badge variant="warning">No file</x-badge>
+                            @endif
                         </td>
                     </tr>
                 @endforeach

@@ -6,6 +6,7 @@ use App\Models\Course;
 use App\Models\StudyMaterial;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
 use Illuminate\View\View;
 
@@ -34,8 +35,13 @@ class TeacherMaterialController extends Controller
 
         abort_unless($teacher, 403);
 
+        $validated = $request->validate($this->rules(requireFile: true));
+
         StudyMaterial::create([
-            ...$request->validate($this->rules()),
+            'course_id' => $validated['course_id'],
+            'title' => $validated['title'],
+            'description' => $validated['description'] ?? null,
+            'file_path' => $request->file('material_file')->store('study-materials'),
             'teacher_id' => $teacher->id,
         ]);
 
@@ -58,7 +64,23 @@ class TeacherMaterialController extends Controller
     {
         $this->authorizeTeacherMaterial($studyMaterial);
 
-        $studyMaterial->update($request->validate($this->rules()));
+        $validated = $request->validate($this->rules());
+        $filePath = $studyMaterial->file_path;
+
+        if ($request->hasFile('material_file')) {
+            if ($filePath) {
+                Storage::delete($filePath);
+            }
+
+            $filePath = $request->file('material_file')->store('study-materials');
+        }
+
+        $studyMaterial->update([
+            'course_id' => $validated['course_id'],
+            'title' => $validated['title'],
+            'description' => $validated['description'] ?? null,
+            'file_path' => $filePath,
+        ]);
 
         return redirect()
             ->route('teacher.materials')
@@ -68,6 +90,10 @@ class TeacherMaterialController extends Controller
     public function destroy(StudyMaterial $studyMaterial): RedirectResponse
     {
         $this->authorizeTeacherMaterial($studyMaterial);
+
+        if ($studyMaterial->file_path) {
+            Storage::delete($studyMaterial->file_path);
+        }
 
         $studyMaterial->delete();
 
@@ -79,7 +105,7 @@ class TeacherMaterialController extends Controller
     /**
      * @return array<string, mixed>
      */
-    private function rules(): array
+    private function rules(bool $requireFile = false): array
     {
         $teacher = auth()->user()->teacher;
 
@@ -90,7 +116,7 @@ class TeacherMaterialController extends Controller
             ],
             'title' => ['required', 'string', 'max:255'],
             'description' => ['nullable', 'string'],
-            'file_path' => ['nullable', 'string', 'max:255'],
+            'material_file' => [$requireFile ? 'required' : 'nullable', 'file', 'max:10240'],
         ];
     }
 

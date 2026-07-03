@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Models\Assignment;
+use App\Models\AssignmentSubmission;
 use App\Models\Course;
 use App\Models\Notice;
 use App\Models\Routine;
@@ -24,6 +25,7 @@ class ModelRelationshipTest extends TestCase
         $this->assertHasMany(new User, 'notices', Notice::class, 'posted_by');
 
         $this->assertBelongsTo(new Student, 'user', User::class);
+        $this->assertHasMany(new Student, 'assignmentSubmissions', AssignmentSubmission::class);
 
         $this->assertBelongsTo(new Teacher, 'user', User::class);
         $this->assertHasMany(new Teacher, 'courses', Course::class);
@@ -46,6 +48,10 @@ class ModelRelationshipTest extends TestCase
 
         $this->assertBelongsTo(new Assignment, 'course', Course::class);
         $this->assertBelongsTo(new Assignment, 'teacher', Teacher::class);
+        $this->assertHasMany(new Assignment, 'submissions', AssignmentSubmission::class);
+
+        $this->assertBelongsTo(new AssignmentSubmission, 'assignment', Assignment::class);
+        $this->assertBelongsTo(new AssignmentSubmission, 'student', Student::class);
     }
 
     private function assertHasOne(object $model, string $method, string $relatedClass): void

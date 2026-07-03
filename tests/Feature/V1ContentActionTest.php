@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Models\Assignment;
+use App\Models\AssignmentSubmission;
 use App\Models\Course;
 use App\Models\Notice;
 use App\Models\Student;
@@ -10,6 +11,8 @@ use App\Models\StudyMaterial;
 use App\Models\Teacher;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
 
 class V1ContentActionTest extends TestCase
@@ -25,6 +28,8 @@ class V1ContentActionTest extends TestCase
 
     public function test_teacher_can_manage_materials_and_student_can_download_them(): void
     {
+        Storage::fake('local');
+
         [
             'teacherUser' => $teacherUser,
             'studentUser' => $studentUser,
@@ -36,10 +41,11 @@ class V1ContentActionTest extends TestCase
                 'course_id' => $course->id,
                 'title' => 'Week 5 Notes',
                 'description' => 'Transactions and recovery notes.',
-                'file_path' => 'materials/week-5-notes.pdf',
+                'material_file' => UploadedFile::fake()->create('week-5-notes.pdf', 64, 'application/pdf'),
             ])->assertRedirect(route('teacher.materials'));
 
         $material = StudyMaterial::firstOrFail();
+        Storage::assertExists($material->file_path);
 
         $this->assertDatabaseHas('study_materials', [
             'title' => 'Week 5 Notes',
@@ -56,10 +62,11 @@ class V1ContentActionTest extends TestCase
                 'course_id' => $course->id,
                 'title' => 'Updated Week 5 Notes',
                 'description' => 'Updated resource summary.',
-                'file_path' => 'materials/updated-week-5-notes.pdf',
+                'material_file' => UploadedFile::fake()->create('updated-week-5-notes.pdf', 64, 'application/pdf'),
             ])->assertRedirect(route('teacher.materials'));
 
         $material->refresh();
+        Storage::assertExists($material->file_path);
 
         $this->actingAs($studentUser)
             ->get(route('student.materials'))
@@ -83,8 +90,11 @@ class V1ContentActionTest extends TestCase
 
     public function test_teacher_can_create_assignment_and_view_submission_roster(): void
     {
+        Storage::fake('local');
+
         [
             'teacherUser' => $teacherUser,
+            'studentUser' => $studentUser,
             'student' => $student,
             'course' => $course,
         ] = $this->createAcademicFixture();
@@ -99,11 +109,27 @@ class V1ContentActionTest extends TestCase
 
         $assignment = Assignment::firstOrFail();
 
+        $this->actingAs($studentUser)
+            ->post(route('student.assignments.submit', $assignment), [
+                'submission_text' => 'Completed sprint review summary.',
+                'submission_file' => UploadedFile::fake()->create('summary.pdf', 32, 'application/pdf'),
+            ])->assertRedirect(route('student.assignments'));
+
+        $submission = AssignmentSubmission::firstOrFail();
+        Storage::assertExists($submission->file_path);
+
         $this->actingAs($teacherUser)
             ->get(route('teacher.assignments.submissions', $assignment))
             ->assertOk()
             ->assertSee('Sprint Review Summary')
-            ->assertSee($student->student_id);
+            ->assertSee($student->student_id)
+            ->assertSee('Submitted');
+
+        $download = $this->actingAs($teacherUser)
+            ->get(route('teacher.assignments.submissions.download', $submission));
+
+        $download->assertOk();
+        $this->assertStringContainsString('attachment', $download->headers->get('content-disposition'));
     }
 
     public function test_admin_and_teacher_notice_actions_feed_role_notice_boards(): void

@@ -201,7 +201,7 @@ class RoleFlowIntegrationTest extends TestCase
             'teacher_id' => $teacher->id,
             'title' => 'ISD Starter Material',
             'description' => 'Starter material for testing.',
-            'file_path' => 'materials/isd-starter.pdf',
+            'file_path' => null,
         ]);
 
         Assignment::create([

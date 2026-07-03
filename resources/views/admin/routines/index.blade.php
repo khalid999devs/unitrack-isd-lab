@@ -16,15 +16,15 @@
             </x-alert>
         @endif
 
-        <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+        <section class="flex flex-col gap-4 rounded-2xl border border-border-soft bg-card-bg p-5 shadow-card sm:flex-row sm:items-center sm:justify-between">
             <div>
-                <h1 class="text-2xl font-bold text-main-text">Class Routines</h1>
+                <p class="text-sm font-bold text-main-text">Schedule controls</p>
                 <p class="text-sm text-secondary-text">Manage academic schedules and classroom distributions.</p>
             </div>
             <x-button href="{{ route('admin.routines.create') }}" class="sm:self-start">
                 <i class="ti ti-plus mr-1"></i> Add Routine
             </x-button>
-        </div>
+        </section>
 
         <!-- Filters -->
         <div class="rounded-2xl border border-border-soft bg-card-bg p-5 shadow-card">

@@ -195,8 +195,8 @@ class DatabaseSeeder extends Seeder
 
         $notices = [
             [
-                'title' => 'Welcome to UniTrack V1 Demo',
-                'description' => 'Use the demo accounts to review Student, Teacher, and Admin role flows.',
+                'title' => 'Welcome to UniTrack V1',
+                'description' => 'Use UniTrack to review Student, Teacher, and Admin academic workflows.',
                 'target_role' => 'all',
             ],
             [
@@ -231,29 +231,29 @@ class DatabaseSeeder extends Seeder
                 'course' => $isdLab,
                 'teacher' => $teacher,
                 'title' => 'ISD Lab Starter Material',
-                'description' => 'Project setup, role flow, and V1 demo checklist.',
-                'file_path' => 'materials/isd-lab-starter.pdf',
+                'description' => 'Project setup, role flow, and V1 readiness checklist.',
+                'file_path' => null,
             ],
             [
                 'course' => $databaseSystems,
                 'teacher' => $secondTeacher,
                 'title' => 'Database Normalization Notes',
                 'description' => 'Introductory normalization and schema design notes.',
-                'file_path' => 'materials/database-normalization.pdf',
+                'file_path' => null,
             ],
             [
                 'course' => $softwareEngineering,
                 'teacher' => $teacher,
                 'title' => 'Software Engineering Sprint Guide',
                 'description' => 'Short guide for Agile sprint planning and review.',
-                'file_path' => 'materials/software-engineering-sprint-guide.pdf',
+                'file_path' => null,
             ],
             [
                 'course' => $webProgramming,
                 'teacher' => $teacher,
                 'title' => 'Blade and Tailwind UI Notes',
                 'description' => 'Starter notes for Blade templates and Tailwind components.',
-                'file_path' => 'materials/blade-tailwind-ui-notes.pdf',
+                'file_path' => null,
             ],
         ];
 
@@ -273,7 +273,7 @@ class DatabaseSeeder extends Seeder
                 'course' => $isdLab,
                 'teacher' => $teacher,
                 'title' => 'Review Role Dashboard Flow',
-                'description' => 'Verify Student, Teacher, and Admin routes using the seeded demo accounts.',
+                'description' => 'Verify Student, Teacher, and Admin routes using seeded role accounts.',
                 'deadline' => now()->addDays(5),
             ],
             [

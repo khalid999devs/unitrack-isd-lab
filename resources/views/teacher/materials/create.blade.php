@@ -21,8 +21,8 @@
             </div>
         </div>
 
-        <x-form-group title="Material Details" description="Use a file path or reference name for the V1 demo record.">
-            <form method="POST" action="{{ route('teacher.materials.store') }}" class="space-y-4">
+        <x-form-group title="Material Details" description="Upload a resource file for students in the selected course.">
+            <form method="POST" action="{{ route('teacher.materials.store') }}" enctype="multipart/form-data" class="space-y-4">
                 @csrf
 
                 <x-form-input type="select" name="course_id" label="Course" required :error="$errors->first('course_id')">
@@ -52,14 +52,21 @@
                     :error="$errors->first('description')"
                 />
 
-                <x-form-input
-                    name="file_path"
-                    label="File Path"
-                    placeholder="materials/week-5-notes.pdf"
-                    :value="old('file_path')"
-                    :error="$errors->first('file_path')"
-                    hint="V1 stores a file reference; physical upload storage can be added later."
-                />
+                <div>
+                    <label for="material_file" class="mb-2 block text-sm font-semibold text-main-text">
+                        Material File <span class="text-error">*</span>
+                    </label>
+                    <input
+                        id="material_file"
+                        name="material_file"
+                        type="file"
+                        required
+                        class="block w-full rounded-[10px] border border-input-border bg-white px-3 py-2 text-sm outline-none transition file:mr-4 file:rounded-lg file:border-0 file:bg-primary-blue file:px-4 file:py-2 file:text-sm file:font-bold file:text-white focus:border-primary-blue focus:ring-4 focus:ring-focus-ring"
+                    >
+                    @if ($errors->first('material_file'))
+                        <p class="mt-1 text-xs font-medium text-error">{{ $errors->first('material_file') }}</p>
+                    @endif
+                </div>
 
                 <div class="flex gap-3 pt-4">
                     <x-button type="submit">Upload Material</x-button>

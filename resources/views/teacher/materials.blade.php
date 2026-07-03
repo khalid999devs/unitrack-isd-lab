@@ -32,8 +32,11 @@
                 message="Upload a study material for one of your assigned courses."
             />
         @else
-            <x-table :headers="['Material', 'Course', 'Uploaded', 'File Path', 'Actions']" emptyMessage="No materials uploaded.">
+            <x-table :headers="['Material', 'Course', 'Uploaded', 'File', 'Actions']" emptyMessage="No materials uploaded.">
                 @foreach ($materials as $material)
+                    @php
+                        $hasFile = $material->file_path && \Illuminate\Support\Facades\Storage::exists($material->file_path);
+                    @endphp
                     <tr class="hover:bg-muted-bg transition border-b border-border-soft last:border-b-0">
                         <td class="px-4 py-4">
                             <p class="font-semibold text-main-text">{{ $material->title }}</p>
@@ -43,7 +46,13 @@
                         </td>
                         <td class="px-4 py-4 text-sm text-secondary-text">{{ $material->course->course_code }}</td>
                         <td class="px-4 py-4 text-sm text-secondary-text">{{ $material->created_at->format('d M Y') }}</td>
-                        <td class="px-4 py-4 text-sm text-secondary-text">{{ $material->file_path ?: 'Demo record' }}</td>
+                        <td class="px-4 py-4">
+                            @if ($hasFile)
+                                <x-badge variant="success">Attached</x-badge>
+                            @else
+                                <x-badge variant="warning">No file</x-badge>
+                            @endif
+                        </td>
                         <td class="px-4 py-4">
                             <div class="flex items-center gap-2">
                                 <x-button variant="secondary" href="{{ route('teacher.materials.edit', $material) }}" class="h-9 px-3">

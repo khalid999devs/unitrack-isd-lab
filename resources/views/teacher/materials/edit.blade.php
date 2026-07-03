@@ -22,7 +22,7 @@
         </div>
 
         <x-form-group title="Material Details" description="Keep course resources clear and searchable.">
-            <form method="POST" action="{{ route('teacher.materials.update', $material) }}" class="space-y-4">
+            <form method="POST" action="{{ route('teacher.materials.update', $material) }}" enctype="multipart/form-data" class="space-y-4">
                 @csrf
                 @method('PUT')
 
@@ -51,12 +51,21 @@
                     :error="$errors->first('description')"
                 />
 
-                <x-form-input
-                    name="file_path"
-                    label="File Path"
-                    :value="old('file_path', $material->file_path)"
-                    :error="$errors->first('file_path')"
-                />
+                <div>
+                    <label for="material_file" class="mb-2 block text-sm font-semibold text-main-text">Replace File</label>
+                    <input
+                        id="material_file"
+                        name="material_file"
+                        type="file"
+                        class="block w-full rounded-[10px] border border-input-border bg-white px-3 py-2 text-sm outline-none transition file:mr-4 file:rounded-lg file:border-0 file:bg-primary-blue file:px-4 file:py-2 file:text-sm file:font-bold file:text-white focus:border-primary-blue focus:ring-4 focus:ring-focus-ring"
+                    >
+                    <p class="mt-1 text-xs text-secondary-text">
+                        Current file: {{ $material->file_path ? basename($material->file_path) : 'No file attached' }}
+                    </p>
+                    @if ($errors->first('material_file'))
+                        <p class="mt-1 text-xs font-medium text-error">{{ $errors->first('material_file') }}</p>
+                    @endif
+                </div>
 
                 <div class="flex gap-3 pt-4">
                     <x-button type="submit">Save Changes</x-button>

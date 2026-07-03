@@ -3,12 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Models\Assignment;
+use App\Models\AssignmentSubmission;
 use App\Models\Course;
 use App\Models\Student;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
 use Illuminate\View\View;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class TeacherAssignmentController extends Controller
 {
@@ -56,7 +59,23 @@ class TeacherAssignmentController extends Controller
             ->orderBy('student_id')
             ->get();
 
-        return view('teacher.assignments.submissions', compact('assignment', 'students'));
+        $submissions = $assignment->submissions()
+            ->with('student.user')
+            ->get()
+            ->keyBy('student_id');
+
+        return view('teacher.assignments.submissions', compact('assignment', 'students', 'submissions'));
+    }
+
+    public function downloadSubmission(AssignmentSubmission $assignmentSubmission): StreamedResponse
+    {
+        $teacher = auth()->user()->teacher;
+        $assignment = $assignmentSubmission->assignment;
+
+        abort_unless($teacher && $assignment->teacher_id === $teacher->id, 403);
+        abort_unless($assignmentSubmission->file_path && Storage::exists($assignmentSubmission->file_path), 404);
+
+        return Storage::download($assignmentSubmission->file_path);
     }
 
     /**

@@ -6,6 +6,7 @@ use App\Http\Controllers\CourseController;
 use App\Http\Controllers\DashboardPageController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RoutineController;
+use App\Http\Controllers\StudentAssignmentSubmissionController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\StudentMaterialController;
 use App\Http\Controllers\TeacherAssignmentController;
@@ -40,6 +41,9 @@ Route::middleware(['auth', 'role:student'])->prefix('student')->name('student.')
 
     Route::get('/materials/{studyMaterial}/download', [StudentMaterialController::class, 'download'])
         ->name('materials.download');
+
+    Route::post('/assignments/{assignment}/submit', [StudentAssignmentSubmissionController::class, 'store'])
+        ->name('assignments.submit');
 });
 
 Route::middleware(['auth', 'role:teacher'])->prefix('teacher')->name('teacher.')->group(function () {
@@ -61,6 +65,8 @@ Route::middleware(['auth', 'role:teacher'])->prefix('teacher')->name('teacher.')
 
     Route::get('/assignments/{assignment}/submissions', [TeacherAssignmentController::class, 'submissions'])
         ->name('assignments.submissions');
+    Route::get('/assignment-submissions/{assignmentSubmission}/download', [TeacherAssignmentController::class, 'downloadSubmission'])
+        ->name('assignments.submissions.download');
 
     Route::resource('assignments', TeacherAssignmentController::class)
         ->only(['index', 'create', 'store'])

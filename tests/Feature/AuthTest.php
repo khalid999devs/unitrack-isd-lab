@@ -86,6 +86,8 @@ class AuthTest extends TestCase
 
         $this->get('/login')
             ->assertOk()
+            ->assertSee('id="toggle-password"', false)
+            ->assertDontSee('Demo Accounts')
             ->assertDontSee('value="student@unitrack.test"', false)
             ->assertDontSee('value="teacher@unitrack.test"', false)
             ->assertDontSee('value="admin@unitrack.test"', false);
