@@ -20,9 +20,9 @@
         <section class="grid gap-6 xl:grid-cols-2">
             <x-card title="Content Management" description="Teacher workflow shortcuts" icon="settings">
                 <div class="flex flex-wrap gap-3">
-                    <x-button href="{{ route('teacher.materials') }}">Upload Material</x-button>
-                    <x-button href="{{ route('teacher.assignments') }}">Create Assignment</x-button>
-                    <x-button href="{{ route('teacher.notices') }}">Create Notice</x-button>
+                    <x-button href="{{ route('teacher.materials.create') }}">Upload Material</x-button>
+                    <x-button href="{{ route('teacher.assignments.create') }}">Create Assignment</x-button>
+                    <x-button href="{{ route('teacher.notices.create') }}">Create Notice</x-button>
                 </div>
             </x-card>
             <x-card title="Class Schedule" description="Assigned class schedule starter area" icon="table">

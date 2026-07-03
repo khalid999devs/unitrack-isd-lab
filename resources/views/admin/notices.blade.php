@@ -9,51 +9,58 @@
 @section('title', 'Notices - UniTrack')
 
 @section('content')
-    @php
-        $notices = [
-            ['title' => 'Semester Registration Opens', 'posted_by' => 'Admin', 'date' => '20 Jun 2026', 'target' => 'All'],
-            ['title' => 'Faculty Meeting', 'posted_by' => 'Admin', 'date' => '18 Jun 2026', 'target' => 'Teachers'],
-            ['title' => 'Scholarship Applications', 'posted_by' => 'Admin', 'date' => '15 Jun 2026', 'target' => 'Students'],
-            ['title' => 'Campus Maintenance', 'posted_by' => 'Admin', 'date' => '12 Jun 2026', 'target' => 'All'],
-        ];
-    @endphp
-
     <div class="space-y-6">
-        <section class="rounded-2xl border border-border-soft bg-card-bg p-6 shadow-card flex items-center justify-between">
+        <section class="flex flex-col gap-4 rounded-2xl border border-border-soft bg-card-bg p-6 shadow-card sm:flex-row sm:items-center sm:justify-between">
             <div>
-                <p class="text-sm font-bold uppercase tracking-[0.2em] text-[#3B5BDB]">Notices</p>
-                <h1 class="mt-1 text-2xl font-bold text-main-text">Institution announcements</h1>
+                <p class="text-sm font-bold text-main-text">Institution announcements</p>
+                <p class="text-sm text-secondary-text">Create and maintain notices for each role audience.</p>
             </div>
-            <div>
-                <button class="inline-flex items-center gap-2 rounded-[10px] bg-[#3B5BDB] px-4 py-2 text-sm font-bold text-white">Post Notice</button>
-            </div>
+            <x-button href="{{ route('admin.notices.create') }}">
+                <i class="ti ti-plus mr-2 text-base"></i>
+                Post Notice
+            </x-button>
         </section>
 
-        <x-card class="overflow-hidden rounded-xl">
-            <div class="-m-6 overflow-x-auto">
-                <table class="w-full border-collapse text-sm">
-                    <thead>
-                        <tr class="bg-[#3B5BDB] text-white">
-                            <th class="px-4 py-4 text-left font-bold uppercase tracking-wide">Title</th>
-                            <th class="px-4 py-4 text-left font-bold uppercase tracking-wide">Posted By</th>
-                            <th class="px-4 py-4 text-left font-bold uppercase tracking-wide">Date</th>
-                            <th class="px-4 py-4 text-left font-bold uppercase tracking-wide">Target</th>
-                            <th class="px-4 py-4 text-left font-bold uppercase tracking-wide">Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($notices as $n)
-                            <tr class="border-b border-border-soft last:border-b-0 hover:bg-[#F8FBFF]">
-                                <td class="px-4 py-4 font-semibold text-main-text">{{ $n['title'] }}</td>
-                                <td class="px-4 py-4">{{ $n['posted_by'] }}</td>
-                                <td class="px-4 py-4">{{ $n['date'] }}</td>
-                                <td class="px-4 py-4">{{ $n['target'] }}</td>
-                                <td class="px-4 py-4"><button class="mr-2 inline-flex items-center gap-2 rounded-[10px] bg-[#3B5BDB] px-3 py-1 text-sm font-bold text-white">Edit</button> <button class="inline-flex items-center gap-2 rounded-[10px] bg-[#3B5BDB] px-3 py-1 text-sm font-bold text-white">Delete</button></td>
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-            </div>
-        </x-card>
+        @if (session('success'))
+            <x-alert type="success">{{ session('success') }}</x-alert>
+        @endif
+
+        @if ($notices->isEmpty())
+            <x-empty-state
+                icon="bell"
+                title="No Notices Posted"
+                message="Create the first institution notice for UniTrack."
+            />
+        @else
+            <x-table :headers="['Title', 'Posted By', 'Date', 'Target', 'Actions']" emptyMessage="No notices posted.">
+                @foreach ($notices as $notice)
+                    <tr class="hover:bg-muted-bg transition border-b border-border-soft last:border-b-0">
+                        <td class="px-4 py-4">
+                            <p class="font-semibold text-main-text">{{ $notice->title }}</p>
+                            <p class="mt-1 max-w-md text-xs text-secondary-text">{{ $notice->description }}</p>
+                        </td>
+                        <td class="px-4 py-4 text-sm text-secondary-text">{{ $notice->postedBy?->name ?? 'System' }}</td>
+                        <td class="px-4 py-4 text-sm text-secondary-text">{{ $notice->created_at->format('d M Y') }}</td>
+                        <td class="px-4 py-4"><x-badge variant="info">{{ ucfirst($notice->target_role) }}</x-badge></td>
+                        <td class="px-4 py-4">
+                            <div class="flex items-center gap-2">
+                                <x-button variant="secondary" href="{{ route('admin.notices.edit', $notice) }}" class="h-9 px-3">
+                                    <i class="ti ti-edit text-base"></i>
+                                    Edit
+                                </x-button>
+                                <form method="POST" action="{{ route('admin.notices.destroy', $notice) }}" onsubmit="return confirm('Delete this notice?');">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="inline-flex h-9 items-center gap-2 rounded-[10px] bg-error/10 px-3 text-sm font-bold text-error transition hover:bg-error hover:text-white">
+                                        <i class="ti ti-trash text-base"></i>
+                                        Delete
+                                    </button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                @endforeach
+            </x-table>
+        @endif
     </div>
 @endsection

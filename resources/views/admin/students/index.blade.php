@@ -10,18 +10,17 @@
 
 @section('content')
     <div class="space-y-6">
-        <!-- Header -->
-        <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+        <section class="flex flex-col gap-4 rounded-2xl border border-border-soft bg-card-bg p-5 shadow-card sm:flex-row sm:items-center sm:justify-between">
             <div>
-                <h1 class="text-2xl font-bold text-primary-navy">Students Management</h1>
-                <p class="text-sm text-secondary-text">View and manage student profiles, accounts, and academic information.</p>
+                <p class="text-sm font-bold text-main-text">Student directory</p>
+                <p class="text-sm text-secondary-text">Manage profiles, accounts, and academic information.</p>
             </div>
             <div>
                 <x-button href="{{ route('admin.students.create') }}">
                     <i class="ti ti-plus mr-2 text-base"></i> Add New Student
                 </x-button>
             </div>
-        </div>
+        </section>
 
         <!-- Success Alert -->
         @if (session('success'))

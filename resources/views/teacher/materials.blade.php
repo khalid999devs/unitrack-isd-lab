@@ -9,54 +9,69 @@
 @section('title', 'Materials - UniTrack')
 
 @section('content')
-    @php
-        $materials = [
-            ['name' => 'Lecture 5 - Transactions.pdf', 'course' => 'Database Systems', 'date' => '18 Jun 2026', 'size' => '1.2 MB'],
-            ['name' => 'Lab 2 Materials.zip', 'course' => 'Web Application Development', 'date' => '15 Jun 2026', 'size' => '4.8 MB'],
-            ['name' => 'API Examples.docx', 'course' => 'Software Architecture', 'date' => '12 Jun 2026', 'size' => '680 KB'],
-            ['name' => 'Assignment 3 Brief.pdf', 'course' => 'Software Engineering', 'date' => '10 Jun 2026', 'size' => '320 KB'],
-        ];
-    @endphp
-
     <div class="space-y-6">
-        <section class="rounded-2xl border border-border-soft bg-card-bg p-6 shadow-card flex items-center justify-between">
+        <section class="flex flex-col gap-4 rounded-2xl border border-border-soft bg-card-bg p-6 shadow-card sm:flex-row sm:items-center sm:justify-between">
             <div>
                 <p class="text-sm font-bold uppercase tracking-[0.2em] text-[#3B5BDB]">Uploaded Materials</p>
                 <h1 class="mt-1 text-2xl font-bold text-main-text">Your course files</h1>
             </div>
-            <div>
-                <button class="inline-flex items-center gap-2 rounded-[10px] bg-[#3B5BDB] px-4 py-2 text-sm font-bold text-white">Upload New Material</button>
-            </div>
+            <x-button href="{{ route('teacher.materials.create') }}">
+                <i class="ti ti-plus mr-2 text-base"></i>
+                Upload New Material
+            </x-button>
         </section>
 
-        <x-card class="overflow-hidden rounded-xl">
-            <div class="-m-6 overflow-x-auto">
-                <table class="w-full border-collapse text-sm">
-                    <thead>
-                        <tr class="bg-[#3B5BDB] text-white">
-                            <th class="px-4 py-4 text-left font-bold uppercase tracking-wide">Material Name</th>
-                            <th class="px-4 py-4 text-left font-bold uppercase tracking-wide">Course</th>
-                            <th class="px-4 py-4 text-left font-bold uppercase tracking-wide">Upload Date</th>
-                            <th class="px-4 py-4 text-left font-bold uppercase tracking-wide">File Size</th>
-                            <th class="px-4 py-4 text-left font-bold uppercase tracking-wide">Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($materials as $m)
-                            <tr class="border-b border-border-soft last:border-b-0 hover:bg-[#F8FBFF]">
-                                <td class="px-4 py-4 font-semibold text-main-text">{{ $m['name'] }}</td>
-                                <td class="px-4 py-4 text-secondary-text">{{ $m['course'] }}</td>
-                                <td class="px-4 py-4 text-secondary-text">{{ $m['date'] }}</td>
-                                <td class="px-4 py-4 text-secondary-text">{{ $m['size'] }}</td>
-                                <td class="px-4 py-4">
-                                    <button class="mr-2 inline-flex items-center gap-2 rounded-[10px] bg-[#3B5BDB] px-3 py-1 text-sm font-bold text-white">Edit</button>
-                                    <button class="inline-flex items-center gap-2 rounded-[10px] bg-[#3B5BDB] px-3 py-1 text-sm font-bold text-white">Delete</button>
-                                </td>
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-            </div>
-        </x-card>
+        @if (session('success'))
+            <x-alert type="success">{{ session('success') }}</x-alert>
+        @endif
+
+        @if ($materials->isEmpty())
+            <x-empty-state
+                icon="files"
+                title="No Materials Uploaded"
+                message="Upload a study material for one of your assigned courses."
+            />
+        @else
+            <x-table :headers="['Material', 'Course', 'Uploaded', 'File', 'Actions']" emptyMessage="No materials uploaded.">
+                @foreach ($materials as $material)
+                    @php
+                        $hasFile = $material->file_path && \Illuminate\Support\Facades\Storage::exists($material->file_path);
+                    @endphp
+                    <tr class="hover:bg-muted-bg transition border-b border-border-soft last:border-b-0">
+                        <td class="px-4 py-4">
+                            <p class="font-semibold text-main-text">{{ $material->title }}</p>
+                            @if ($material->description)
+                                <p class="mt-1 max-w-md text-xs text-secondary-text">{{ $material->description }}</p>
+                            @endif
+                        </td>
+                        <td class="px-4 py-4 text-sm text-secondary-text">{{ $material->course->course_code }}</td>
+                        <td class="px-4 py-4 text-sm text-secondary-text">{{ $material->created_at->format('d M Y') }}</td>
+                        <td class="px-4 py-4">
+                            @if ($hasFile)
+                                <x-badge variant="success">Attached</x-badge>
+                            @else
+                                <x-badge variant="warning">No file</x-badge>
+                            @endif
+                        </td>
+                        <td class="px-4 py-4">
+                            <div class="flex items-center gap-2">
+                                <x-button variant="secondary" href="{{ route('teacher.materials.edit', $material) }}" class="h-9 px-3">
+                                    <i class="ti ti-edit text-base"></i>
+                                    Edit
+                                </x-button>
+                                <form method="POST" action="{{ route('teacher.materials.destroy', $material) }}" onsubmit="return confirm('Delete this material?');">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="inline-flex h-9 items-center gap-2 rounded-[10px] bg-error/10 px-3 text-sm font-bold text-error transition hover:bg-error hover:text-white">
+                                        <i class="ti ti-trash text-base"></i>
+                                        Delete
+                                    </button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                @endforeach
+            </x-table>
+        @endif
     </div>
 @endsection

@@ -9,47 +9,55 @@
 @section('title', 'Assignments - UniTrack')
 
 @section('content')
-    @php
-        $assignments = [
-            ['title' => 'ER Diagram Submission', 'course' => 'Database Systems', 'due' => '28 Jun 2026', 'submissions' => 45],
-            ['title' => 'Module Interface Design', 'course' => 'Software Architecture', 'due' => '30 Jun 2026', 'submissions' => 33],
-            ['title' => 'Client-side Validation Task', 'course' => 'Web Application Development', 'due' => '02 Jul 2026', 'submissions' => 39],
-        ];
-    @endphp
-
     <div class="space-y-6">
         <section class="flex flex-col gap-4 rounded-2xl border border-border-soft bg-card-bg p-6 shadow-card sm:flex-row sm:items-center sm:justify-between">
             <div>
                 <p class="text-sm font-bold uppercase tracking-[0.2em] text-[#3B5BDB]">Assignments</p>
                 <h1 class="mt-2 text-2xl font-bold text-main-text">Manage coursework and submissions</h1>
             </div>
-            <button type="button" class="inline-flex items-center justify-center gap-2 rounded-[10px] bg-[#3B5BDB] px-4 py-2 text-sm font-bold text-white transition hover:bg-[#2F49C6]">
+            <x-button href="{{ route('teacher.assignments.create') }}">
                 <i class="ti ti-plus text-base"></i>
                 Add Assignment
-            </button>
+            </x-button>
         </section>
 
-        <section class="grid gap-6 lg:grid-cols-2">
-            @foreach ($assignments as $a)
-                <x-card class="h-full border-t-4 border-t-[#3B5BDB]">
-                    <div class="flex h-full flex-col gap-4">
-                        <div class="flex items-center justify-between">
-                            <div>
-                                <h2 class="text-lg font-bold text-main-text">{{ $a['title'] }}</h2>
-                                <p class="text-sm text-secondary-text">{{ $a['course'] }}</p>
-                            </div>
-                            <div class="text-right">
-                                <p class="font-semibold text-main-text">Due {{ $a['due'] }}</p>
-                                <p class="text-sm text-secondary-text">{{ $a['submissions'] }} submissions</p>
-                            </div>
-                        </div>
+        @if (session('success'))
+            <x-alert type="success">{{ session('success') }}</x-alert>
+        @endif
 
-                        <div class="mt-auto flex justify-end">
-                            <button class="inline-flex items-center gap-2 rounded-[10px] bg-[#3B5BDB] px-4 py-2 text-sm font-bold text-white">View Submissions</button>
+        @if ($assignments->isEmpty())
+            <x-empty-state
+                icon="clipboard-list"
+                title="No Assignments Created"
+                message="Create an assignment for one of your assigned courses."
+            />
+        @else
+            <section class="grid gap-6 lg:grid-cols-2">
+                @foreach ($assignments as $assignment)
+                    <x-card class="h-full border-t-4 border-t-[#3B5BDB]">
+                        <div class="flex h-full flex-col gap-4">
+                            <div class="flex items-start justify-between gap-4">
+                                <div>
+                                    <h2 class="text-lg font-bold text-main-text">{{ $assignment->title }}</h2>
+                                    <p class="text-sm text-secondary-text">{{ $assignment->course->course_code }} - {{ $assignment->course->course_title }}</p>
+                                </div>
+                                <div class="text-right">
+                                    <p class="font-semibold text-main-text">Due {{ $assignment->deadline->format('d M Y') }}</p>
+                                    <p class="text-sm text-secondary-text">{{ $assignment->deadline->format('h:i A') }}</p>
+                                </div>
+                            </div>
+
+                            <p class="text-sm leading-6 text-secondary-text">{{ $assignment->description }}</p>
+
+                            <div class="mt-auto flex justify-end">
+                                <x-button href="{{ route('teacher.assignments.submissions', $assignment) }}" class="h-10">
+                                    View Submissions
+                                </x-button>
+                            </div>
                         </div>
-                    </div>
-                </x-card>
-            @endforeach
-        </section>
+                    </x-card>
+                @endforeach
+            </section>
+        @endif
     </div>
 @endsection
