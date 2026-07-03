@@ -63,29 +63,6 @@
 
                         <x-button type="submit" class="w-full">Login</x-button>
                     </form>
-
-                    <div class="mt-5 grid gap-2 sm:grid-cols-3 md:mt-6 md:gap-3">
-                        <form method="POST" action="{{ route('login.store') }}">
-                            @csrf
-                            <input type="hidden" name="email" value="student@unitrack.test">
-                            <input type="hidden" name="password" value="password">
-                            <x-button type="submit" variant="secondary" class="h-10 w-full px-3 text-xs">Student</x-button>
-                        </form>
-
-                        <form method="POST" action="{{ route('login.store') }}">
-                            @csrf
-                            <input type="hidden" name="email" value="teacher@unitrack.test">
-                            <input type="hidden" name="password" value="password">
-                            <x-button type="submit" variant="secondary" class="h-10 w-full px-3 text-xs">Teacher</x-button>
-                        </form>
-
-                        <form method="POST" action="{{ route('login.store') }}">
-                            @csrf
-                            <input type="hidden" name="email" value="admin@unitrack.test">
-                            <input type="hidden" name="password" value="password">
-                            <x-button type="submit" variant="secondary" class="h-10 w-full px-3 text-xs">Admin</x-button>
-                        </form>
-                    </div>
                 </div>
             </div>
         </div>

@@ -21,9 +21,12 @@ Test and review the Minimum V1 flow across Student, Teacher, and Admin roles.
 - Added Student own profile route, page, and update action.
 - Added Teacher own profile route, page, and update action.
 - Added Profile links to Student and Teacher sidebars.
+- Removed temporary Student, Teacher, and Admin login shortcut buttons.
+- Hardened login so role redirection is based only on the authenticated user's `users.role` value.
+- Added unsupported-role login handling so invalid role data cannot enter a dashboard.
 - Removed unused Admin resource `show` routes that pointed to missing controller methods.
 - Added profile flow tests for viewing, updating, validation, and role protection.
-- Extended role integration tests to include Student and Teacher profile routes.
+- Extended auth and role integration tests to include role-owned profile routes and login error cases.
 
 ## V1 Flow Status
 
@@ -35,6 +38,7 @@ The Minimum V1 core flow is ready for review:
 4. Admin users can manage students, teachers, courses, and routines.
 5. Cross-role access is blocked by role middleware.
 6. Seeded demo data supports Student, Teacher, and Admin review flows.
+7. Login uses email/password only; role is recognized automatically after authentication.
 
 ## Verification Commands
 

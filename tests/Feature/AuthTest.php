@@ -80,6 +80,17 @@ class AuthTest extends TestCase
         ])->assertRedirect(route('admin.dashboard'));
     }
 
+    public function test_login_page_does_not_render_role_shortcut_forms(): void
+    {
+        $this->withoutVite();
+
+        $this->get('/login')
+            ->assertOk()
+            ->assertDontSee('value="student@unitrack.test"', false)
+            ->assertDontSee('value="teacher@unitrack.test"', false)
+            ->assertDontSee('value="admin@unitrack.test"', false);
+    }
+
     public function test_demo_role_credentials_redirect_to_their_dashboards(): void
     {
         $accounts = [
@@ -106,6 +117,14 @@ class AuthTest extends TestCase
 
     // Invalid login returns error
 
+    public function test_login_requires_valid_email_format(): void
+    {
+        $this->post('/login', [
+            'email' => 'khalid01',
+            'password' => 'password',
+        ])->assertSessionHasErrors('email');
+    }
+
     public function test_invalid_login_returns_auth_error(): void
     {
         User::factory()->create(['email' => 'student@unitrack.test']);
@@ -114,6 +133,23 @@ class AuthTest extends TestCase
             'email' => 'student@unitrack.test',
             'password' => 'wrongpassword',
         ])->assertSessionHasErrors('email');
+    }
+
+    public function test_login_with_unsupported_role_is_rejected(): void
+    {
+        User::factory()->create([
+            'email' => 'unknown@unitrack.test',
+            'password' => 'password',
+            'role' => 'unknown',
+        ]);
+
+        $this->post('/login', [
+            'email' => 'unknown@unitrack.test',
+            'password' => 'password',
+        ])->assertRedirect(route('login'))
+            ->assertSessionHasErrors('email');
+
+        $this->assertGuest();
     }
 
     // Logout invalidates session and redirects to login
