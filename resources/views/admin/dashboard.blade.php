@@ -4,10 +4,10 @@
     $active = 'dashboard';
     $adminName = auth()->user()?->name ?? 'Admin User';
     $overviewStats = [
+        ['label' => 'Pending Requests', 'value' => $pendingRegistrationCount ?? 0, 'icon' => 'user-plus', 'accent' => 'bg-error', 'surface' => 'bg-error-bg', 'text' => 'text-error-text'],
         ['label' => 'Students', 'value' => $studentCount ?? 0, 'icon' => 'users', 'accent' => 'bg-primary-blue', 'surface' => 'bg-soft-blue-bg', 'text' => 'text-primary-blue'],
         ['label' => 'Teachers', 'value' => $teacherCount ?? 0, 'icon' => 'user-star', 'accent' => 'bg-indigo-accent', 'surface' => 'bg-violet-50', 'text' => 'text-indigo-accent'],
         ['label' => 'Courses', 'value' => $courseCount ?? 0, 'icon' => 'book-2', 'accent' => 'bg-success', 'surface' => 'bg-success-bg', 'text' => 'text-success-text'],
-        ['label' => 'Routines', 'value' => $routineCount ?? 0, 'icon' => 'calendar-stats', 'accent' => 'bg-warning', 'surface' => 'bg-warning-bg', 'text' => 'text-warning-text'],
     ];
     $academicStats = [
         ['label' => 'Notices', 'value' => $noticeCount ?? 0, 'color' => 'bg-primary-blue'],
@@ -79,13 +79,18 @@
         </section>
 
         <section class="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-            <x-card title="Total Notices" :value="$noticeCount ?? 0" description="Academic notices." icon="bell" />
+            <x-card title="Pending Registrations" :value="$pendingRegistrationCount ?? 0" description="Student and teacher access requests." icon="user-plus" />
             <x-card title="Study Materials" :value="$materialCount ?? 0" description="Uploaded resources." icon="files" />
             <x-card title="Assignments" :value="$assignmentCount ?? 0" description="Academic tasks." icon="clipboard-list" />
             <x-card title="Submissions" :value="$submissionCount ?? 0" description="Student assignment submissions." icon="upload" />
         </section>
 
-        <section class="grid gap-4 md:grid-cols-2 xl:grid-cols-5">
+        <section class="grid gap-4 md:grid-cols-2 xl:grid-cols-6">
+            <a href="{{ route('admin.registration-requests') }}" class="rounded-2xl border border-border-soft bg-white p-5 shadow-card transition hover:-translate-y-0.5 hover:border-error">
+                <i class="ti ti-user-plus text-2xl text-error"></i>
+                <p class="mt-4 text-sm font-bold text-main-text">Registrations</p>
+                <p class="mt-1 text-xs text-secondary-text">Approve student and teacher access.</p>
+            </a>
             <a href="{{ route('admin.students') }}" class="rounded-2xl border border-border-soft bg-white p-5 shadow-card transition hover:-translate-y-0.5 hover:border-primary-blue">
                 <i class="ti ti-users text-2xl text-primary-blue"></i>
                 <p class="mt-4 text-sm font-bold text-main-text">Students</p>

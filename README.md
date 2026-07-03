@@ -18,6 +18,7 @@ It helps organize courses, class routines, notices, study materials, and assignm
 10. Teacher Dashboard
 11. Admin Dashboard
 12. Search and Filter
+13. Student and Teacher Registration Requests with Admin Approval
 
 ## Technology Stack
 
@@ -154,7 +155,9 @@ Quick demo flow:
 
 1. Log in as `student@unitrack.test` and review dashboard counts, courses, and class routine.
 2. Log in as `teacher@unitrack.test` and review assigned courses, class routine, material count, and assignment count.
-3. Log in as `admin@unitrack.test` and review seeded students, teachers, courses, routines, and dashboard totals.
+3. Use `/register` to submit a student or teacher access request.
+4. Log in as `admin@unitrack.test`, open Registrations, and approve or reject pending access requests.
+5. Review seeded students, teachers, courses, routines, and dashboard totals.
 
 If the database does not exist yet, create it manually in phpMyAdmin/Adminer. MAMP users can also run:
 
@@ -185,9 +188,10 @@ http://127.0.0.1:8000/login
 Starter routes:
 
 1. `/login`
-2. `/student/dashboard`
-3. `/teacher/dashboard`
-4. `/admin/dashboard`
+2. `/register`
+3. `/student/dashboard`
+4. `/teacher/dashboard`
+5. `/admin/dashboard`
 
 ## Team Members
 

@@ -6,6 +6,7 @@ use App\Models\Assignment;
 use App\Models\AssignmentSubmission;
 use App\Models\Course;
 use App\Models\Notice;
+use App\Models\RegistrationRequest;
 use App\Models\Routine;
 use App\Models\Student;
 use App\Models\StudyMaterial;
@@ -219,6 +220,7 @@ class DashboardPageController extends Controller
             'materialCount' => StudyMaterial::count(),
             'assignmentCount' => Assignment::count(),
             'submissionCount' => AssignmentSubmission::count(),
+            'pendingRegistrationCount' => RegistrationRequest::where('status', 'pending')->count(),
         ]);
     }
 }

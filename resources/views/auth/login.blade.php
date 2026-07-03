@@ -3,39 +3,44 @@
 @section('title', 'Login - UniTrack')
 
 @section('content')
-    <section class="grid min-h-[640px] w-full max-w-6xl overflow-hidden rounded-[28px] border border-border-soft bg-white shadow-2xl shadow-slate-300/50 lg:grid-cols-2">
-        <div class="flex items-center justify-center px-6 py-10 sm:px-10 lg:px-16">
-            <div class="w-full max-w-md">
-                <div class="mb-12 flex items-center gap-3">
-                    <div class="flex h-12 w-12 items-center justify-center rounded-2xl bg-primary-blue text-white shadow-lg shadow-blue-200">
-                        <svg class="h-7 w-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3l8 4-8 4-8-4 8-4z"></path>
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 11l8 4 8-4"></path>
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 15l8 4 8-4"></path>
-                        </svg>
-                    </div>
-                    <div>
-                        <p class="text-2xl font-bold text-primary-navy">UniTrack</p>
-                        <p class="text-sm font-semibold text-secondary-text">Academic Resource System</p>
-                    </div>
+    <section class="grid min-h-screen bg-white lg:grid-cols-[0.92fr_1.08fr]">
+        <div class="flex min-h-screen items-center justify-center px-6 py-10 sm:px-10 lg:px-16">
+            <div class="w-full max-w-[440px]">
+                <a href="{{ route('login') }}" class="mb-12 inline-flex items-center gap-3">
+                    <span class="flex h-12 w-12 items-center justify-center rounded-2xl bg-primary-blue text-white shadow-lg shadow-blue-200">
+                        <i class="ti ti-layers-intersect text-2xl"></i>
+                    </span>
+                    <span>
+                        <span class="block text-2xl font-black tracking-[0.18em] text-primary-navy">UNITRACK</span>
+                        <span class="block text-xs font-bold uppercase tracking-[0.18em] text-secondary-text">Academic Resource System</span>
+                    </span>
+                </a>
+
+                <div>
+                    <p class="text-xs font-bold uppercase tracking-[0.22em] text-primary-blue">Secure sign in</p>
+                    <h1 class="mt-4 text-4xl font-black tracking-normal text-primary-navy sm:text-5xl">Welcome back</h1>
+                    <p class="mt-4 text-base leading-7 text-secondary-text">
+                        Sign in once and UniTrack opens the right workspace from your approved account role.
+                    </p>
                 </div>
 
-                <div class="mb-8">
-                    <h1 class="text-4xl font-bold text-primary-navy">Welcome back</h1>
-                    <p class="mt-3 text-sm leading-6 text-secondary-text">Sign in with your UniTrack account. Your role is detected automatically after authentication.</p>
-                </div>
+                @if (session('success'))
+                    <x-alert type="success" class="mt-7">
+                        {{ session('success') }}
+                    </x-alert>
+                @endif
 
                 @if ($errors->any())
-                    <x-alert type="error" class="mb-6">
+                    <x-alert type="error" class="mt-7">
                         {{ $errors->first() }}
                     </x-alert>
                 @endif
 
-                <form method="POST" action="{{ route('login.store') }}" class="space-y-5">
+                <form method="POST" action="{{ route('login.store') }}" class="mt-8 space-y-5">
                     @csrf
 
                     <div>
-                        <label for="email" class="mb-2 block text-sm font-semibold text-main-text">Email address</label>
+                        <label for="email" class="mb-2 block text-sm font-bold text-main-text">Email address</label>
                         <input
                             id="email"
                             name="email"
@@ -43,12 +48,12 @@
                             value="{{ old('email') }}"
                             autocomplete="email"
                             required
-                            class="h-12 w-full rounded-xl border border-input-border bg-white px-4 text-sm outline-none transition focus:border-primary-blue focus:ring-4 focus:ring-focus-ring"
+                            class="h-[52px] w-full rounded-xl border border-input-border bg-white px-4 text-base outline-none transition focus:border-primary-blue focus:ring-4 focus:ring-focus-ring"
                         >
                     </div>
 
                     <div>
-                        <label for="password" class="mb-2 block text-sm font-semibold text-main-text">Password</label>
+                        <label for="password" class="mb-2 block text-sm font-bold text-main-text">Password</label>
                         <div class="relative">
                             <input
                                 id="password"
@@ -56,7 +61,7 @@
                                 type="password"
                                 autocomplete="current-password"
                                 required
-                                class="h-12 w-full rounded-xl border border-input-border bg-white px-4 pr-12 text-sm outline-none transition focus:border-primary-blue focus:ring-4 focus:ring-focus-ring"
+                                class="h-[52px] w-full rounded-xl border border-input-border bg-white px-4 pr-12 text-base outline-none transition focus:border-primary-blue focus:ring-4 focus:ring-focus-ring"
                             >
                             <button
                                 type="button"
@@ -71,7 +76,7 @@
                     </div>
 
                     <div class="flex items-center justify-between gap-4">
-                        <label class="flex items-center gap-3 text-sm font-medium text-main-text">
+                        <label class="flex items-center gap-3 text-sm font-semibold text-main-text">
                             <input
                                 type="checkbox"
                                 name="remember"
@@ -80,55 +85,54 @@
                             >
                             Remember me
                         </label>
-                        <span class="text-sm text-secondary-text">Need access? Contact admin</span>
+                        <a href="{{ route('register') }}" class="text-sm font-bold text-primary-blue transition hover:text-royal-blue">
+                            Request access
+                        </a>
                     </div>
 
-                    <x-button type="submit" class="h-12 w-full rounded-xl">Sign in</x-button>
+                    <button type="submit" class="inline-flex h-[52px] w-full items-center justify-center rounded-xl bg-primary-blue px-5 text-base font-black text-white transition hover:bg-royal-blue focus:outline-none focus:ring-4 focus:ring-focus-ring">
+                        Sign in
+                    </button>
                 </form>
             </div>
         </div>
 
-        <div class="relative hidden overflow-hidden bg-gradient-to-br from-primary-blue via-royal-blue to-primary-navy p-10 text-white lg:block">
-            <div class="relative z-10 flex h-full flex-col justify-between">
-                <div class="max-w-sm">
-                    <p class="text-sm font-semibold text-blue-100">Role-based academic operations</p>
-                    <h2 class="mt-4 text-4xl font-bold leading-tight">One workspace for students, teachers, and admins.</h2>
-                    <p class="mt-4 text-sm leading-6 text-blue-100">UniTrack connects course data, routines, notices, materials, assignments, and submissions from a single Laravel backend.</p>
+        <aside class="hidden min-h-screen items-center justify-center bg-soft-blue-bg px-10 py-12 lg:flex">
+            <div class="relative flex h-full max-h-[880px] w-full max-w-[720px] flex-col justify-between overflow-hidden rounded-[32px] bg-primary-navy p-10 text-white shadow-2xl shadow-slate-300/60 xl:p-14">
+                <div class="flex items-center justify-between gap-4">
+                    <div>
+                        <p class="text-sm font-bold uppercase tracking-[0.22em] text-blue-100">Role-aware access</p>
+                        <h2 class="mt-4 max-w-xl text-4xl font-black leading-tight xl:text-5xl">
+                            One doorway into every academic workspace.
+                        </h2>
+                    </div>
+                    <span class="shrink-0 rounded-full border border-white/20 px-4 py-2 text-xs font-black uppercase tracking-wide text-blue-100">V1 Core</span>
                 </div>
 
-                <div class="rounded-3xl border border-white/20 bg-white/10 p-6 backdrop-blur">
-                    <div class="mb-5 flex items-center justify-between">
-                        <p class="text-sm font-bold">Live modules</p>
-                        <span class="rounded-full bg-white/15 px-3 py-1 text-xs font-bold">V1</span>
+                <div class="my-8 flex min-h-0 flex-1 items-center justify-center">
+                    <img
+                        src="{{ asset('images/auth-illustration.svg') }}"
+                        alt="Secure academic login illustration"
+                        class="max-h-[390px] w-full object-contain"
+                    >
+                </div>
+
+                <div class="grid gap-3 sm:grid-cols-3">
+                    <div class="rounded-2xl bg-white p-4 text-primary-navy">
+                        <p class="text-xs font-black uppercase tracking-wide text-primary-blue">Students</p>
+                        <p class="mt-2 text-sm font-bold">Courses, routines, materials, assignments</p>
                     </div>
-                    <div class="grid gap-3">
-                        <div class="flex items-center justify-between rounded-2xl bg-white p-4 text-primary-navy">
-                            <span class="font-bold">Course & routine flow</span>
-                            <i class="ti ti-check text-2xl text-success"></i>
-                        </div>
-                        <div class="flex items-center justify-between rounded-2xl bg-white/15 p-4">
-                            <span class="font-bold">Materials & assignments</span>
-                            <i class="ti ti-cloud-upload text-2xl"></i>
-                        </div>
-                        <div class="flex items-center justify-between rounded-2xl bg-white/15 p-4">
-                            <span class="font-bold">Role protected dashboards</span>
-                            <i class="ti ti-shield-check text-2xl"></i>
-                        </div>
+                    <div class="rounded-2xl bg-white/10 p-4">
+                        <p class="text-xs font-black uppercase tracking-wide text-blue-100">Teachers</p>
+                        <p class="mt-2 text-sm font-bold">Content publishing and submissions</p>
+                    </div>
+                    <div class="rounded-2xl bg-white/10 p-4">
+                        <p class="text-xs font-black uppercase tracking-wide text-blue-100">Admins</p>
+                        <p class="mt-2 text-sm font-bold">Approvals and academic management</p>
                     </div>
                 </div>
             </div>
-
-            <svg class="absolute bottom-12 right-10 h-72 w-72 text-white/20" viewBox="0 0 240 240" fill="none" aria-hidden="true">
-                <rect x="42" y="58" width="156" height="108" rx="18" stroke="currentColor" stroke-width="8"/>
-                <path d="M78 188h84" stroke="currentColor" stroke-width="8" stroke-linecap="round"/>
-                <path d="M104 166l-8 22h48l-8-22" stroke="currentColor" stroke-width="8" stroke-linejoin="round"/>
-                <circle cx="120" cy="112" r="34" fill="currentColor"/>
-                <path d="M102 113l13 13 27-31" stroke="#ffffff" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
-                <path d="M39 36h42M160 37h26M185 190h22M28 174h34" stroke="currentColor" stroke-width="6" stroke-linecap="round"/>
-                <circle cx="198" cy="74" r="10" stroke="currentColor" stroke-width="6"/>
-                <circle cx="47" cy="117" r="8" stroke="currentColor" stroke-width="6"/>
-            </svg>
-        </div>
+        </aside>
     </section>
 
     <script>

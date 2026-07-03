@@ -1,10 +1,12 @@
 <?php
 
 use App\Http\Controllers\AdminNoticeController;
+use App\Http\Controllers\AdminRegistrationRequestController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\DashboardPageController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\RegistrationRequestController;
 use App\Http\Controllers\RoutineController;
 use App\Http\Controllers\StudentAssignmentSubmissionController;
 use App\Http\Controllers\StudentController;
@@ -20,6 +22,8 @@ Route::redirect('/', '/login');
 Route::middleware('guest')->group(function () {
     Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
     Route::post('/login', [AuthController::class, 'login'])->name('login.store');
+    Route::get('/register', [RegistrationRequestController::class, 'create'])->name('register');
+    Route::post('/register', [RegistrationRequestController::class, 'store'])->name('register.store');
 });
 
 Route::post('/logout', [AuthController::class, 'logout'])
@@ -83,6 +87,13 @@ Route::middleware(['auth', 'role:teacher'])->prefix('teacher')->name('teacher.')
 
 Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/dashboard', [DashboardPageController::class, 'adminDashboard'])->name('dashboard');
+
+    Route::get('/registration-requests', [AdminRegistrationRequestController::class, 'index'])
+        ->name('registration-requests');
+    Route::post('/registration-requests/{registrationRequest}/approve', [AdminRegistrationRequestController::class, 'approve'])
+        ->name('registration-requests.approve');
+    Route::post('/registration-requests/{registrationRequest}/reject', [AdminRegistrationRequestController::class, 'reject'])
+        ->name('registration-requests.reject');
 
     Route::resource('students', StudentController::class)
         ->except(['show'])

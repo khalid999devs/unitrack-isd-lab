@@ -26,6 +26,7 @@
         ],
         'admin' => [
             ['key' => 'dashboard', 'label' => 'Dashboard', 'href' => route('admin.dashboard'), 'icon' => 'layout-dashboard'],
+            ['key' => 'registration-requests', 'label' => 'Registrations', 'href' => route('admin.registration-requests'), 'icon' => 'user-plus'],
             ['key' => 'students', 'label' => 'Students', 'href' => route('admin.students'), 'icon' => 'users'],
             ['key' => 'teachers', 'label' => 'Teachers', 'href' => route('admin.teachers'), 'icon' => 'user-star'],
             ['key' => 'courses', 'label' => 'Courses', 'href' => route('admin.courses'), 'icon' => 'book-2'],
