@@ -60,12 +60,14 @@
                         id="material_file"
                         name="material_file"
                         type="file"
+                        accept=".pdf,.doc,.docx,.ppt,.pptx,.jpg,.jpeg,.png"
                         required
-                        class="block w-full rounded-[10px] border border-input-border bg-white px-3 py-2 text-sm outline-none transition file:mr-4 file:rounded-lg file:border-0 file:bg-primary-blue file:px-4 file:py-2 file:text-sm file:font-bold file:text-white focus:border-primary-blue focus:ring-4 focus:ring-focus-ring"
+                        class="block w-full rounded-[10px] border border-input-border bg-card-bg px-3 py-2 text-sm outline-none transition file:mr-4 file:rounded-lg file:border-0 file:bg-primary-blue file:px-4 file:py-2 file:text-sm file:font-bold file:text-on-primary focus:border-primary-blue focus:ring-4 focus:ring-focus-ring"
                     >
                     @if ($errors->first('material_file'))
                         <p class="mt-1 text-xs font-medium text-error">{{ $errors->first('material_file') }}</p>
                     @endif
+                    <p class="mt-1 text-xs text-secondary-text">PDF, Word, PowerPoint, JPG, or PNG up to 10 MB.</p>
                 </div>
 
                 <div class="flex gap-3 pt-4">

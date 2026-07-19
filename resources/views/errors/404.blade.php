@@ -1,0 +1,5 @@
+@extends('errors.layout')
+@section('code', '404')
+@section('icon', 'ti-file-search')
+@section('heading', 'Page not found')
+@section('message', 'The page or record you requested could not be found. It may have moved or been removed.')

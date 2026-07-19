@@ -1,0 +1,5 @@
+@extends('errors.layout')
+@section('code', '419')
+@section('icon', 'ti-clock-exclamation')
+@section('heading', 'Session expired')
+@section('message', 'Your session expired before the request was completed. Return to the dashboard and try again.')

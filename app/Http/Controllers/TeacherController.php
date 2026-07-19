@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\AssignmentSubmission;
 use App\Models\Teacher;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use Illuminate\View\View;
 
 class TeacherController extends Controller
@@ -38,6 +41,10 @@ class TeacherController extends Controller
 
     public function store(Request $request): RedirectResponse
     {
+        $request->merge([
+            'email' => Str::lower(trim((string) $request->input('email'))),
+        ]);
+
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'email', 'unique:users,email'],
@@ -78,6 +85,10 @@ class TeacherController extends Controller
 
     public function update(Request $request, Teacher $teacher): RedirectResponse
     {
+        $request->merge([
+            'email' => Str::lower(trim((string) $request->input('email'))),
+        ]);
+
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'email', 'unique:users,email,'.$teacher->user_id],
@@ -113,8 +124,20 @@ class TeacherController extends Controller
 
     public function destroy(Teacher $teacher): RedirectResponse
     {
-        // Cascades to delete teacher profile automatically
+        $materialPaths = $teacher->studyMaterials()
+            ->whereNotNull('file_path')
+            ->pluck('file_path')
+            ->all();
+        $submissionPaths = AssignmentSubmission::whereHas(
+            'assignment',
+            fn ($query) => $query->where('teacher_id', $teacher->id),
+        )
+            ->whereNotNull('file_path')
+            ->pluck('file_path')
+            ->all();
+
         $teacher->user->delete();
+        Storage::delete([...$materialPaths, ...$submissionPaths]);
 
         return redirect()->route('admin.teachers')
             ->with('success', 'Teacher deleted successfully.');

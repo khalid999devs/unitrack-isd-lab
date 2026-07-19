@@ -147,6 +147,7 @@ class AuthTest extends TestCase
         $this->assertDatabaseHas('users', ['email' => 'nadia@unitrack.test', 'role' => 'student']);
         $this->assertDatabaseHas('students', ['student_id' => 'STU-777']);
         $this->assertSame('approved', $registrationRequest->refresh()->status);
+        $this->assertNull($registrationRequest->password);
 
         $this->post(route('logout'));
 
@@ -220,6 +221,37 @@ class AuthTest extends TestCase
         ]);
         $this->assertDatabaseMissing('users', ['email' => 'rejected@unitrack.test']);
         $this->assertSame(0, Student::where('student_id', 'STU-778')->count());
+        $this->assertNull($registrationRequest->refresh()->password);
+    }
+
+    public function test_email_addresses_are_normalized_for_registration_and_login(): void
+    {
+        $this->post(route('register.store'), [
+            'role' => 'student',
+            'name' => 'Normalized Student',
+            'email' => '  NORMALIZED@UNITRACK.TEST ',
+            'password' => 'password',
+            'password_confirmation' => 'password',
+            'student_id' => 'STU-NORMALIZED',
+            'department' => 'Computer Science and Engineering',
+            'semester' => '6th',
+            'batch' => '2022',
+        ])->assertRedirect(route('login'));
+
+        $this->assertDatabaseHas('registration_requests', [
+            'email' => 'normalized@unitrack.test',
+        ]);
+
+        User::factory()->create([
+            'email' => 'case@unitrack.test',
+            'password' => 'password',
+            'role' => 'student',
+        ]);
+
+        $this->post(route('login.store'), [
+            'email' => ' CASE@UNITRACK.TEST ',
+            'password' => 'password',
+        ])->assertRedirect(route('student.dashboard'));
     }
 
     public function test_demo_role_credentials_redirect_to_their_dashboards(): void
@@ -264,6 +296,25 @@ class AuthTest extends TestCase
             'email' => 'student@unitrack.test',
             'password' => 'wrongpassword',
         ])->assertSessionHasErrors('email');
+    }
+
+    public function test_repeated_login_failures_are_rate_limited(): void
+    {
+        User::factory()->create(['email' => 'limited@unitrack.test']);
+
+        for ($attempt = 0; $attempt < 5; $attempt++) {
+            $this->post(route('login.store'), [
+                'email' => 'limited@unitrack.test',
+                'password' => 'wrongpassword',
+            ])->assertSessionHasErrors('email');
+        }
+
+        $this->withoutVite();
+        $this->post(route('login.store'), [
+            'email' => 'limited@unitrack.test',
+            'password' => 'wrongpassword',
+        ])->assertTooManyRequests()
+            ->assertSee('Too many requests');
     }
 
     public function test_login_with_unsupported_role_is_rejected(): void

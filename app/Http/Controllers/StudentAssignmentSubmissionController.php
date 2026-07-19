@@ -14,12 +14,22 @@ class StudentAssignmentSubmissionController extends Controller
     {
         $student = $request->user()->student;
 
-        abort_unless($student && $assignment->course->semester === $student->semester, 403);
+        abort_unless(
+            $student
+                && $assignment->course->semester === $student->semester
+                && $assignment->course->department === $student->department,
+            403,
+        );
         abort_if($assignment->deadline->isPast(), 403);
 
         $validated = $request->validate([
-            'submission_text' => ['nullable', 'string'],
-            'submission_file' => ['nullable', 'file', 'max:10240'],
+            'submission_text' => ['nullable', 'string', 'max:5000'],
+            'submission_file' => [
+                'nullable',
+                'file',
+                'max:10240',
+                'mimes:pdf,doc,docx,ppt,pptx,jpg,jpeg,png,zip',
+            ],
         ]);
 
         if (! $request->filled('submission_text') && ! $request->hasFile('submission_file')) {
@@ -36,11 +46,13 @@ class StudentAssignmentSubmissionController extends Controller
         $filePath = $submission->file_path;
 
         if ($request->hasFile('submission_file')) {
+            $newFilePath = $request->file('submission_file')->store('assignment-submissions');
+
             if ($filePath) {
                 Storage::delete($filePath);
             }
 
-            $filePath = $request->file('submission_file')->store('assignment-submissions');
+            $filePath = $newFilePath;
         }
 
         $submission->fill([

@@ -3,11 +3,11 @@
 @section('title', 'Login - UniTrack')
 
 @section('content')
-    <section class="grid h-screen min-h-[720px] overflow-hidden bg-white lg:grid-cols-[0.92fr_1.08fr]">
+    <section class="grid h-screen min-h-[720px] overflow-hidden bg-card-bg lg:grid-cols-[0.92fr_1.08fr]">
         <div class="flex h-full min-h-0 items-center justify-center px-6 py-6 sm:px-10 lg:px-14">
             <div class="w-full max-w-[430px]">
                 <a href="{{ route('login') }}" class="mb-8 inline-flex items-center gap-3">
-                    <span class="flex h-12 w-12 items-center justify-center rounded-2xl bg-primary-blue text-white shadow-lg shadow-blue-200">
+                    <span class="flex h-12 w-12 items-center justify-center rounded-2xl bg-primary-blue text-on-primary shadow-lg shadow-primary-blue/20">
                         <i class="ti ti-layers-intersect text-2xl"></i>
                     </span>
                     <span>
@@ -48,7 +48,7 @@
                             value="{{ old('email') }}"
                             autocomplete="email"
                             required
-                            class="h-12 w-full rounded-xl border border-input-border bg-white px-4 text-base outline-none transition focus:border-primary-blue focus:ring-4 focus:ring-focus-ring"
+                            class="h-12 w-full rounded-xl border border-input-border bg-card-bg px-4 text-base outline-none transition focus:border-primary-blue focus:ring-4 focus:ring-focus-ring"
                         >
                     </div>
 
@@ -61,7 +61,7 @@
                                 type="password"
                                 autocomplete="current-password"
                                 required
-                                class="h-12 w-full rounded-xl border border-input-border bg-white px-4 pr-12 text-base outline-none transition focus:border-primary-blue focus:ring-4 focus:ring-focus-ring"
+                                class="h-12 w-full rounded-xl border border-input-border bg-card-bg px-4 pr-12 text-base outline-none transition focus:border-primary-blue focus:ring-4 focus:ring-focus-ring"
                             >
                             <button
                                 type="button"
@@ -90,7 +90,7 @@
                         </a>
                     </div>
 
-                    <button type="submit" class="inline-flex h-12 w-full items-center justify-center rounded-xl bg-primary-blue px-5 text-base font-black text-white transition hover:bg-royal-blue focus:outline-none focus:ring-4 focus:ring-focus-ring">
+                    <button type="submit" class="inline-flex h-12 w-full items-center justify-center rounded-xl bg-primary-blue px-5 text-base font-black text-on-primary transition hover:bg-royal-blue focus:outline-none focus:ring-4 focus:ring-focus-ring">
                         Sign in
                     </button>
                 </form>
@@ -98,15 +98,15 @@
         </div>
 
         <aside class="hidden h-full min-h-0 items-center justify-center bg-soft-blue-bg px-6 py-6 lg:flex xl:px-10">
-            <div class="relative flex h-full max-h-[820px] min-h-0 w-full max-w-[720px] flex-col justify-between overflow-hidden rounded-[28px] bg-primary-navy p-8 text-white shadow-2xl shadow-slate-300/60 xl:p-10">
+            <div class="relative flex h-full max-h-[820px] min-h-0 w-full max-w-[720px] flex-col justify-between overflow-hidden rounded-[28px] bg-primary-navy p-8 text-on-primary shadow-auth-card xl:p-10">
                 <div class="flex items-center justify-between gap-4">
                     <div>
-                        <p class="text-sm font-bold uppercase tracking-[0.22em] text-blue-100">Role-aware access</p>
+                        <p class="text-sm font-bold uppercase tracking-[0.22em] text-info-border">Role-aware access</p>
                         <h2 class="mt-3 max-w-xl text-4xl font-black leading-[1.12] xl:text-[44px]">
                             One doorway into every academic workspace.
                         </h2>
                     </div>
-                    <span class="shrink-0 rounded-full border border-white/20 px-4 py-2 text-xs font-black uppercase tracking-wide text-blue-100">V1 Core</span>
+                    <span class="shrink-0 rounded-full border border-on-primary/20 px-4 py-2 text-xs font-black uppercase tracking-wide text-info-border">V1 Core</span>
                 </div>
 
                 <div class="my-5 flex min-h-0 flex-1 items-center justify-center">
@@ -118,16 +118,16 @@
                 </div>
 
                 <div class="grid gap-3 sm:grid-cols-3">
-                    <div class="rounded-2xl bg-white p-4 text-primary-navy">
+                    <div class="rounded-2xl bg-card-bg p-4 text-primary-navy">
                         <p class="text-xs font-black uppercase tracking-wide text-primary-blue">Students</p>
                         <p class="mt-2 text-sm font-bold">Courses, routines, materials, assignments</p>
                     </div>
-                    <div class="rounded-2xl bg-white/10 p-4">
-                        <p class="text-xs font-black uppercase tracking-wide text-blue-100">Teachers</p>
+                    <div class="rounded-2xl bg-card-bg/10 p-4">
+                        <p class="text-xs font-black uppercase tracking-wide text-info-border">Teachers</p>
                         <p class="mt-2 text-sm font-bold">Content publishing and submissions</p>
                     </div>
-                    <div class="rounded-2xl bg-white/10 p-4">
-                        <p class="text-xs font-black uppercase tracking-wide text-blue-100">Admins</p>
+                    <div class="rounded-2xl bg-card-bg/10 p-4">
+                        <p class="text-xs font-black uppercase tracking-wide text-info-border">Admins</p>
                         <p class="mt-2 text-sm font-bold">Approvals and academic management</p>
                     </div>
                 </div>

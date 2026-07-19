@@ -80,7 +80,7 @@
                             <button
                                 type="button"
                                 onclick="confirmDelete('{{ $student->id }}')"
-                                class="inline-flex h-9 w-9 items-center justify-center rounded-[10px] bg-error/10 text-error hover:bg-error hover:text-white transition focus:outline-none focus:ring-4 focus:ring-red-100"
+                                class="inline-flex h-9 w-9 items-center justify-center rounded-[10px] bg-error/10 text-error hover:bg-error hover:text-on-primary transition focus:outline-none focus:ring-4 focus:ring-error-bg"
                             >
                                 <i class="ti ti-trash text-base"></i>
                             </button>
