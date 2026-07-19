@@ -27,7 +27,7 @@
             placeholder="{{ $placeholder }}"
             {{ $disabled ? 'disabled' : '' }}
             {{ $required ? 'required' : '' }}
-            {{ $attributes->merge(['class' => 'min-h-24 w-full rounded-[10px] border px-3 py-2 text-sm outline-none transition placeholder:text-placeholder-text disabled:bg-muted-bg disabled:text-placeholder-text ' . ($error ? 'border-error focus:border-error focus:ring-4 focus:ring-red-100' : 'border-input-border focus:border-primary-blue focus:ring-4 focus:ring-focus-ring')]) }}
+            {{ $attributes->merge(['class' => 'min-h-24 w-full rounded-[10px] border px-3 py-2 text-sm outline-none transition placeholder:text-placeholder-text disabled:bg-muted-bg disabled:text-placeholder-text ' . ($error ? 'border-error focus:border-error focus:ring-4 focus:ring-error-bg' : 'border-input-border focus:border-primary-blue focus:ring-4 focus:ring-focus-ring')]) }}
         >{{ $value }}</textarea>
     @elseif ($type === 'select')
         <select
@@ -35,7 +35,7 @@
             name="{{ $name }}"
             {{ $disabled ? 'disabled' : '' }}
             {{ $required ? 'required' : '' }}
-            {{ $attributes->merge(['class' => 'h-11 w-full rounded-[10px] border px-3 text-sm outline-none transition disabled:bg-muted-bg disabled:text-placeholder-text ' . ($error ? 'border-error focus:border-error focus:ring-4 focus:ring-red-100' : 'border-input-border focus:border-primary-blue focus:ring-4 focus:ring-focus-ring')]) }}
+            {{ $attributes->merge(['class' => 'h-11 w-full rounded-[10px] border px-3 text-sm outline-none transition disabled:bg-muted-bg disabled:text-placeholder-text ' . ($error ? 'border-error focus:border-error focus:ring-4 focus:ring-error-bg' : 'border-input-border focus:border-primary-blue focus:ring-4 focus:ring-focus-ring')]) }}
         >
             {{ $slot }}
         </select>
@@ -48,7 +48,7 @@
             placeholder="{{ $placeholder }}"
             {{ $disabled ? 'disabled' : '' }}
             {{ $required ? 'required' : '' }}
-            {{ $attributes->merge(['class' => 'h-11 w-full rounded-[10px] border px-3 text-sm outline-none transition placeholder:text-placeholder-text disabled:bg-muted-bg disabled:text-placeholder-text ' . ($error ? 'border-error focus:border-error focus:ring-4 focus:ring-red-100' : 'border-input-border focus:border-primary-blue focus:ring-4 focus:ring-focus-ring')]) }}
+            {{ $attributes->merge(['class' => 'h-11 w-full rounded-[10px] border px-3 text-sm outline-none transition placeholder:text-placeholder-text disabled:bg-muted-bg disabled:text-placeholder-text ' . ($error ? 'border-error focus:border-error focus:ring-4 focus:ring-error-bg' : 'border-input-border focus:border-primary-blue focus:ring-4 focus:ring-focus-ring')]) }}
         >
     @endif
 

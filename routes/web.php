@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\AdminAssignmentController;
+use App\Http\Controllers\AdminMaterialController;
 use App\Http\Controllers\AdminNoticeController;
 use App\Http\Controllers\AdminRegistrationRequestController;
 use App\Http\Controllers\AuthController;
@@ -21,9 +23,13 @@ Route::redirect('/', '/login');
 
 Route::middleware('guest')->group(function () {
     Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
-    Route::post('/login', [AuthController::class, 'login'])->name('login.store');
+    Route::post('/login', [AuthController::class, 'login'])
+        ->middleware('throttle:login')
+        ->name('login.store');
     Route::get('/register', [RegistrationRequestController::class, 'create'])->name('register');
-    Route::post('/register', [RegistrationRequestController::class, 'store'])->name('register.store');
+    Route::post('/register', [RegistrationRequestController::class, 'store'])
+        ->middleware('throttle:registration')
+        ->name('register.store');
 });
 
 Route::post('/logout', [AuthController::class, 'logout'])
@@ -67,19 +73,22 @@ Route::middleware(['auth', 'role:teacher'])->prefix('teacher')->name('teacher.')
             'index' => 'materials',
         ]);
 
+    Route::get('/materials/{studyMaterial}/download', [TeacherMaterialController::class, 'download'])
+        ->name('materials.download');
+
     Route::get('/assignments/{assignment}/submissions', [TeacherAssignmentController::class, 'submissions'])
         ->name('assignments.submissions');
     Route::get('/assignment-submissions/{assignmentSubmission}/download', [TeacherAssignmentController::class, 'downloadSubmission'])
         ->name('assignments.submissions.download');
 
     Route::resource('assignments', TeacherAssignmentController::class)
-        ->only(['index', 'create', 'store'])
+        ->except(['show'])
         ->names([
             'index' => 'assignments',
         ]);
 
     Route::resource('notices', TeacherNoticeController::class)
-        ->only(['index', 'create', 'store'])
+        ->except(['show'])
         ->names([
             'index' => 'notices',
         ]);
@@ -123,5 +132,24 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
         ->except(['show'])
         ->names([
             'index' => 'notices',
+        ]);
+
+    Route::get('/materials/{studyMaterial}/download', [AdminMaterialController::class, 'download'])
+        ->name('materials.download');
+    Route::resource('materials', AdminMaterialController::class)
+        ->except(['show'])
+        ->parameters(['materials' => 'studyMaterial'])
+        ->names([
+            'index' => 'materials',
+        ]);
+
+    Route::get('/assignments/{assignment}/submissions', [AdminAssignmentController::class, 'submissions'])
+        ->name('assignments.submissions');
+    Route::get('/assignment-submissions/{assignmentSubmission}/download', [AdminAssignmentController::class, 'downloadSubmission'])
+        ->name('assignments.submissions.download');
+    Route::resource('assignments', AdminAssignmentController::class)
+        ->except(['show'])
+        ->names([
+            'index' => 'assignments',
         ]);
 });

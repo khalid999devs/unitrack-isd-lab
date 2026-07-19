@@ -7,6 +7,8 @@ use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use Illuminate\View\View;
 
 class StudentController extends Controller
@@ -38,6 +40,10 @@ class StudentController extends Controller
 
     public function store(Request $request): RedirectResponse
     {
+        $request->merge([
+            'email' => Str::lower(trim((string) $request->input('email'))),
+        ]);
+
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'email', 'unique:users,email'],
@@ -82,6 +88,10 @@ class StudentController extends Controller
 
     public function update(Request $request, Student $student): RedirectResponse
     {
+        $request->merge([
+            'email' => Str::lower(trim((string) $request->input('email'))),
+        ]);
+
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'email', 'unique:users,email,'.$student->user_id],
@@ -121,8 +131,13 @@ class StudentController extends Controller
 
     public function destroy(Student $student): RedirectResponse
     {
-        // Cascades to delete student profile automatically
+        $submissionPaths = $student->assignmentSubmissions()
+            ->whereNotNull('file_path')
+            ->pluck('file_path')
+            ->all();
+
         $student->user->delete();
+        Storage::delete($submissionPaths);
 
         return redirect()->route('admin.students')
             ->with('success', 'Student deleted successfully.');

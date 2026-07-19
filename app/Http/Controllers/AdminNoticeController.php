@@ -9,11 +9,27 @@ use Illuminate\View\View;
 
 class AdminNoticeController extends Controller
 {
-    public function index(): View
+    public function index(Request $request): View
     {
-        $notices = Notice::with('postedBy')
+        $query = Notice::with('postedBy');
+
+        if ($request->filled('search')) {
+            $search = $request->string('search')->trim()->toString();
+            $query->where(function ($noticeQuery) use ($search) {
+                $noticeQuery->where('title', 'like', "%{$search}%")
+                    ->orWhere('description', 'like', "%{$search}%")
+                    ->orWhereHas('postedBy', fn ($userQuery) => $userQuery->where('name', 'like', "%{$search}%"));
+            });
+        }
+
+        if ($request->filled('target_role')) {
+            $query->where('target_role', $request->input('target_role'));
+        }
+
+        $notices = $query
             ->latest()
-            ->get();
+            ->paginate(10)
+            ->withQueryString();
 
         return view('admin.notices', compact('notices'));
     }
@@ -67,7 +83,7 @@ class AdminNoticeController extends Controller
     {
         return [
             'title' => ['required', 'string', 'max:255'],
-            'description' => ['required', 'string'],
+            'description' => ['required', 'string', 'max:5000'],
             'target_role' => ['required', 'in:all,student,teacher,admin'],
         ];
     }

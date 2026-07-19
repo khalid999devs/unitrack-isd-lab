@@ -26,6 +26,14 @@ class RoutineController extends Controller
             $query->where('batch', $request->input('batch'));
         }
 
+        if ($request->filled('day')) {
+            $query->where('day', $request->input('day'));
+        }
+
+        if ($request->filled('teacher_id')) {
+            $query->where('teacher_id', $request->integer('teacher_id'));
+        }
+
         $dayOrder = "CASE day
             WHEN 'Sunday' THEN 1
             WHEN 'Monday' THEN 2
@@ -42,7 +50,10 @@ class RoutineController extends Controller
             ->paginate(10)
             ->withQueryString();
 
-        return view('admin.routines.index', compact('routines'));
+        return view('admin.routines.index', [
+            'routines' => $routines,
+            'teachers' => Teacher::with('user')->orderBy('teacher_id')->get(),
+        ]);
     }
 
     /**
@@ -86,7 +97,6 @@ class RoutineController extends Controller
         $courses = Course::orderBy('course_code')->get();
         $teachers = Teacher::with('user')->get();
 
-        // format times to H:i for input fields
         $routine->start_time = date('H:i', strtotime($routine->start_time));
         $routine->end_time = date('H:i', strtotime($routine->end_time));
 

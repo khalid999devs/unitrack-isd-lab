@@ -7,19 +7,38 @@ use App\Models\StudyMaterial;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 use Illuminate\View\View;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class TeacherMaterialController extends Controller
 {
-    public function index(): View
+    public function index(Request $request): View
     {
         $teacher = auth()->user()->teacher;
-        $materials = $teacher
-            ? $teacher->studyMaterials()->with('course')->latest()->get()
-            : collect();
+        $query = $teacher
+            ? $teacher->studyMaterials()->with('course')
+            : StudyMaterial::query()->whereRaw('1 = 0');
 
-        return view('teacher.materials', compact('materials'));
+        if ($request->filled('search')) {
+            $search = $request->string('search')->trim()->toString();
+            $query->where(function ($materialQuery) use ($search) {
+                $materialQuery->where('title', 'like', "%{$search}%")
+                    ->orWhere('description', 'like', "%{$search}%");
+            });
+        }
+
+        if ($request->filled('course_id')) {
+            $query->where('course_id', $request->integer('course_id'));
+        }
+
+        $materials = $query->latest()->paginate(10)->withQueryString();
+
+        return view('teacher.materials', [
+            'materials' => $materials,
+            'courses' => $this->teacherCourses(),
+        ]);
     }
 
     public function create(): View
@@ -68,11 +87,13 @@ class TeacherMaterialController extends Controller
         $filePath = $studyMaterial->file_path;
 
         if ($request->hasFile('material_file')) {
+            $newFilePath = $request->file('material_file')->store('study-materials');
+
             if ($filePath) {
                 Storage::delete($filePath);
             }
 
-            $filePath = $request->file('material_file')->store('study-materials');
+            $filePath = $newFilePath;
         }
 
         $studyMaterial->update([
@@ -85,6 +106,17 @@ class TeacherMaterialController extends Controller
         return redirect()
             ->route('teacher.materials')
             ->with('success', 'Study material updated successfully.');
+    }
+
+    public function download(StudyMaterial $studyMaterial): StreamedResponse
+    {
+        $this->authorizeTeacherMaterial($studyMaterial);
+        abort_unless($studyMaterial->file_path && Storage::exists($studyMaterial->file_path), 404);
+
+        $extension = pathinfo($studyMaterial->file_path, PATHINFO_EXTENSION);
+        $name = Str::slug($studyMaterial->title).($extension ? ".{$extension}" : '');
+
+        return Storage::download($studyMaterial->file_path, $name);
     }
 
     public function destroy(StudyMaterial $studyMaterial): RedirectResponse
@@ -115,8 +147,13 @@ class TeacherMaterialController extends Controller
                 Rule::exists('courses', 'id')->where(fn ($query) => $query->where('teacher_id', $teacher?->id)),
             ],
             'title' => ['required', 'string', 'max:255'],
-            'description' => ['nullable', 'string'],
-            'material_file' => [$requireFile ? 'required' : 'nullable', 'file', 'max:10240'],
+            'description' => ['nullable', 'string', 'max:5000'],
+            'material_file' => [
+                $requireFile ? 'required' : 'nullable',
+                'file',
+                'max:10240',
+                'mimes:pdf,doc,docx,ppt,pptx,jpg,jpeg,png',
+            ],
         ];
     }
 

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\RegistrationRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 use Illuminate\View\View;
 
@@ -17,6 +18,10 @@ class RegistrationRequestController extends Controller
 
     public function store(Request $request): RedirectResponse
     {
+        $request->merge([
+            'email' => Str::lower(trim((string) $request->input('email'))),
+        ]);
+
         $role = $request->input('role');
 
         $request->validate([
@@ -56,7 +61,7 @@ class RegistrationRequestController extends Controller
 
         RegistrationRequest::create([
             'name' => $request->input('name'),
-            'email' => strtolower($request->input('email')),
+            'email' => $request->input('email'),
             'password' => $request->input('password'),
             'role' => $role,
             'student_id' => $role === 'student' ? $request->input('student_id') : null,

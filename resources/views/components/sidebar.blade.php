@@ -32,38 +32,64 @@
             ['key' => 'courses', 'label' => 'Courses', 'href' => route('admin.courses'), 'icon' => 'book-2'],
             ['key' => 'routines', 'label' => 'Routines', 'href' => route('admin.routines'), 'icon' => 'calendar-stats'],
             ['key' => 'notices', 'label' => 'Notices', 'href' => route('admin.notices'), 'icon' => 'bell'],
+            ['key' => 'materials', 'label' => 'Materials', 'href' => route('admin.materials'), 'icon' => 'files'],
+            ['key' => 'assignments', 'label' => 'Assignments', 'href' => route('admin.assignments'), 'icon' => 'clipboard-list'],
         ],
     ][$role] ?? [];
 
     $dashboardHref = $items[0]['href'] ?? route('login');
 @endphp
 
-<aside class="bg-[#3B5BDB] px-4 py-5 text-white lg:min-h-screen lg:w-[260px] lg:shrink-0">
-    <div class="flex items-center justify-between lg:block">
+<aside class="bg-primary-navy px-4 py-4 text-on-primary lg:sticky lg:top-0 lg:h-screen lg:w-[260px] lg:shrink-0 lg:overflow-y-auto lg:py-5">
+    <div class="flex items-center justify-between gap-3">
         <div>
             <a href="{{ $dashboardHref }}" class="text-xl font-bold uppercase tracking-[0.2em]">
-                <span class="text-white">UNI</span><span class="text-blue-100">TRACK</span>
+                <span class="text-on-primary">UNI</span><span class="text-info-border">TRACK</span>
             </a>
-            <p class="mt-1 text-xs font-semibold uppercase tracking-wide text-blue-200">{{ $roleLabel }} Panel</p>
+            <p class="mt-1 text-xs font-semibold uppercase tracking-wide text-sidebar-text">{{ $roleLabel }} Panel</p>
         </div>
-        <form method="POST" action="{{ route('logout') }}" class="lg:hidden">
-            @csrf
-            <button type="submit" class="inline-flex items-center gap-2 rounded-lg border border-white/40 px-3 py-2 text-sm font-semibold text-white">
-                <i class="ti ti-logout text-base"></i>
-                Logout
+        <div class="flex items-center gap-2 lg:hidden">
+            <button
+                type="button"
+                data-sidebar-toggle
+                aria-controls="role-sidebar-navigation"
+                aria-expanded="false"
+                aria-label="Open navigation"
+                class="inline-flex h-10 w-10 items-center justify-center rounded-lg border border-sidebar-divider text-on-primary transition hover:bg-sidebar-hover-bg"
+            >
+                <i class="ti ti-menu-2 text-xl" aria-hidden="true"></i>
             </button>
-        </form>
+            <form method="POST" action="{{ route('logout') }}">
+                @csrf
+                <button type="submit" aria-label="Logout" class="inline-flex h-10 w-10 items-center justify-center rounded-lg border border-sidebar-divider text-on-primary transition hover:bg-sidebar-hover-bg">
+                    <i class="ti ti-logout text-lg" aria-hidden="true"></i>
+                </button>
+            </form>
+        </div>
     </div>
 
-    <nav class="mt-6 grid gap-1 sm:grid-cols-2 lg:grid-cols-1">
+    <nav id="role-sidebar-navigation" class="mt-5 hidden gap-1 lg:grid">
         @foreach ($items as $item)
             <a
                 href="{{ $item['href'] }}"
-                class="{{ $active === $item['key'] ? 'bg-white text-[#3B5BDB]' : 'text-white hover:bg-white/10 hover:text-white' }} inline-flex items-center gap-3 rounded-[10px] px-4 py-3 text-sm font-semibold transition"
+                @if ($active === $item['key']) aria-current="page" @endif
+                class="{{ $active === $item['key'] ? 'bg-primary-blue text-on-primary' : 'text-sidebar-text hover:bg-sidebar-hover-bg hover:text-on-primary' }} inline-flex min-h-11 items-center gap-3 rounded-[10px] px-4 py-3 text-sm font-semibold transition"
             >
-                <i class="ti ti-{{ $item['icon'] }} text-base"></i>
+                <i class="ti ti-{{ $item['icon'] }} text-base" aria-hidden="true"></i>
                 {{ $item['label'] }}
             </a>
         @endforeach
     </nav>
 </aside>
+
+<script>
+    document.querySelector('[data-sidebar-toggle]')?.addEventListener('click', (event) => {
+        const navigation = document.getElementById('role-sidebar-navigation');
+        const isOpening = navigation.classList.contains('hidden');
+
+        navigation.classList.toggle('hidden');
+        event.currentTarget.setAttribute('aria-expanded', String(isOpening));
+        event.currentTarget.setAttribute('aria-label', isOpening ? 'Close navigation' : 'Open navigation');
+        event.currentTarget.querySelector('i').className = isOpening ? 'ti ti-x text-xl' : 'ti ti-menu-2 text-xl';
+    });
+</script>

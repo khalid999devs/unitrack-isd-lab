@@ -96,6 +96,7 @@ class AdminRegistrationRequestController extends Controller
 
             $registrationRequest->update([
                 'status' => 'approved',
+                'password' => null,
                 'reviewed_by' => auth()->id(),
                 'reviewed_at' => now(),
                 'rejection_reason' => null,
@@ -118,6 +119,7 @@ class AdminRegistrationRequestController extends Controller
 
         $registrationRequest->update([
             'status' => 'rejected',
+            'password' => null,
             'reviewed_by' => auth()->id(),
             'reviewed_at' => now(),
             'rejection_reason' => $request->input('rejection_reason'),
