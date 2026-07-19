@@ -1,0 +1,5 @@
+@extends('errors.layout')
+@section('code', '403')
+@section('icon', 'ti-shield-lock')
+@section('heading', 'Access denied')
+@section('message', 'Your account does not have permission to open this area. Use the dashboard assigned to your role.')

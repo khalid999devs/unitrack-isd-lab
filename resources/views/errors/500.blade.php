@@ -1,0 +1,5 @@
+@extends('errors.layout')
+@section('code', '500')
+@section('icon', 'ti-server-off')
+@section('heading', 'Something went wrong')
+@section('message', 'The request could not be completed. Please return to your dashboard and try again shortly.')

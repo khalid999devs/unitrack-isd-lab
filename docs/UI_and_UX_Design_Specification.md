@@ -745,40 +745,30 @@ Border: #FDE68A
 
 Design style:
 
-1. Centered login card
-2. Premium academic look
-3. Soft background
-4. UniTrack title and short subtitle
-5. Email input
-6. Password input
-7. Login button
-8. Error message area
+1. Full-viewport, two-column desktop layout
+2. Focused sign-in form on a white surface
+3. Premium navy product panel with the UniTrack illustration
+4. Single-column form layout on mobile
+5. Email and password inputs with visible focus states
+6. Working show/hide password control
+7. Remember-me option
+8. Link to the registration request page
+9. Validation and success message area
 
-Background:
+The login page should use `100vh` with a practical minimum height so it fits standard desktop viewports without page scrolling. The illustration panel is hidden on smaller screens to preserve form clarity.
 
-```text
-#F8FAFC
-```
+## Registration Request Page
 
-Login card:
+Design and behavior:
 
-1. Width: 420px
-2. Padding: 32px
-3. Border radius: 20px
-4. Background: #FFFFFF
-5. Shadow: 0 18px 60px rgba(15, 23, 42, 0.10)
-
-Login title:
-
-```text
-UniTrack
-```
-
-Subtitle:
-
-```text
-Student Academic Resource Management System
-```
+1. Full-width split layout on desktop and a single-column form on mobile
+2. Page remains vertically scrollable because the form is longer than login
+3. Student and Teacher account type selector
+4. Shared identity and contact fields
+5. Role-specific academic fields shown dynamically
+6. Password and confirmation visibility controls
+7. Clear notice that Admin approval is required
+8. Link back to sign in
 
 ## Student Dashboard
 
@@ -835,12 +825,15 @@ Layout:
 
 Cards:
 
-1. Total Students
-2. Total Teachers
-3. Total Courses
-4. Total Routines
-5. Total Notices
-6. Total Assignments
+1. Pending Registrations
+2. Total Students
+3. Total Teachers
+4. Total Courses
+5. Total Routines
+6. Total Notices
+7. Total Materials
+8. Total Assignments
+9. Total Submissions
 
 UX goal:
 
@@ -942,8 +935,9 @@ Components:
 1. Page title
 2. Create Notice button for Admin/Teacher
 3. Search input
-4. Notice cards or table
-5. Notice detail view
+4. Target-role filter where relevant
+5. Notice cards or table
+6. Edit and delete actions for authorized owners
 
 Notice card should show:
 
@@ -988,6 +982,7 @@ Assignment item should show:
 3. Description preview
 4. Deadline
 5. Posted by
+6. Submission status or count where relevant
 
 Deadline warning:
 

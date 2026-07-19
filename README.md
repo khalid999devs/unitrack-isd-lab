@@ -35,8 +35,8 @@ Install these tools before running the project:
 
 1. PHP 8.4.1 or newer
 2. Composer
-3. Node.js
-4. npm
+3. Node.js 22.12.0 or newer
+4. npm 10 or newer
 5. MySQL
 
 ## Code Quality and Pull Request Checks
@@ -49,6 +49,9 @@ npm install
 npm run build
 ./vendor/bin/pint --test
 php artisan test
+composer validate --strict
+composer audit --locked
+npm audit
 ```
 
 Use Pint to fix PHP formatting when needed:
@@ -63,7 +66,10 @@ Command purpose:
 2. `./vendor/bin/pint` fixes PHP formatting.
 3. `npm run build` verifies the frontend asset build.
 4. `php artisan test` runs Laravel tests.
-5. GitHub Actions automatically runs checks on pull requests.
+5. `composer validate --strict` validates Composer metadata and lock-file consistency.
+6. `composer audit --locked` checks locked PHP packages for known advisories.
+7. `npm audit` checks JavaScript dependencies for known advisories.
+8. GitHub Actions automatically runs checks on pull requests.
 
 ## Local Setup
 
@@ -157,7 +163,7 @@ Quick demo flow:
 2. Log in as `teacher@unitrack.test` and review assigned courses, class routine, material count, and assignment count.
 3. Use `/register` to submit a student or teacher access request.
 4. Log in as `admin@unitrack.test`, open Registrations, and approve or reject pending access requests.
-5. Review seeded students, teachers, courses, routines, and dashboard totals.
+5. Review seeded students, teachers, courses, routines, notices, materials, assignments, submissions, and dashboard totals.
 
 If the database does not exist yet, create it manually in phpMyAdmin/Adminer. MAMP users can also run:
 
@@ -185,7 +191,7 @@ Open the application:
 http://127.0.0.1:8000/login
 ```
 
-Starter routes:
+Core routes:
 
 1. `/login`
 2. `/register`
@@ -218,6 +224,9 @@ Project documentation is available inside the `docs` folder.
 11. `docs/sprint-notes/SCRUM-14-code-quality-and-coding-rules.md`
 12. `docs/sprint-notes/SCRUM-27-v1-seed-data-demo-accounts.md`
 13. `docs/sprint-notes/SCRUM-28-v1-core-flow-review.md`
+14. `docs/sprint-notes/SCRUM-45-project-workflow-and-application-audit.md`
+15. `docs/sprint-notes/SCRUM-46-final-v1-presentation-evidence.md`
+16. `docs/presentation-evidence/SCRUM-46/README.md`
 
 ## Branch Management Quick Notice
 
@@ -313,3 +322,5 @@ PR rules:
 4. Mention the Jira task ID in the PR title and description.
 5. Include testing or verification notes.
 6. Wait for review before merging.
+7. Merge only after the project checks pass.
+8. Delete the remote feature branch after a successful merge.

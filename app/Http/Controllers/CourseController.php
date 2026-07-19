@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\AssignmentSubmission;
 use App\Models\Course;
 use App\Models\Teacher;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 
 class CourseController extends Controller
@@ -22,9 +24,21 @@ class CourseController extends Controller
             });
         }
 
+        if ($request->filled('department')) {
+            $query->where('department', $request->input('department'));
+        }
+
+        if ($request->filled('semester')) {
+            $query->where('semester', $request->input('semester'));
+        }
+
         $courses = $query->latest()->paginate(10)->withQueryString();
 
-        return view('admin.courses.index', compact('courses'));
+        return view('admin.courses.index', [
+            'courses' => $courses,
+            'departments' => Course::query()->select('department')->distinct()->orderBy('department')->pluck('department'),
+            'semesters' => Course::query()->select('semester')->distinct()->orderBy('semester')->pluck('semester'),
+        ]);
     }
 
     public function create(): View
@@ -37,7 +51,7 @@ class CourseController extends Controller
     public function store(Request $request): RedirectResponse
     {
         $request->validate([
-            'course_code' => ['required', 'string', 'unique:courses,course_code'],
+            'course_code' => ['required', 'string', 'max:50', 'unique:courses,course_code'],
             'course_title' => ['required', 'string', 'max:255'],
             'department' => ['required', 'string', 'max:255'],
             'semester' => ['required', 'string', 'max:50'],
@@ -68,7 +82,7 @@ class CourseController extends Controller
     public function update(Request $request, Course $course): RedirectResponse
     {
         $request->validate([
-            'course_code' => ['required', 'string', 'unique:courses,course_code,'.$course->id],
+            'course_code' => ['required', 'string', 'max:50', 'unique:courses,course_code,'.$course->id],
             'course_title' => ['required', 'string', 'max:255'],
             'department' => ['required', 'string', 'max:255'],
             'semester' => ['required', 'string', 'max:50'],
@@ -91,7 +105,20 @@ class CourseController extends Controller
 
     public function destroy(Course $course): RedirectResponse
     {
+        $materialPaths = $course->studyMaterials()
+            ->whereNotNull('file_path')
+            ->pluck('file_path')
+            ->all();
+        $submissionPaths = AssignmentSubmission::whereHas(
+            'assignment',
+            fn ($query) => $query->where('course_id', $course->id),
+        )
+            ->whereNotNull('file_path')
+            ->pluck('file_path')
+            ->all();
+
         $course->delete();
+        Storage::delete([...$materialPaths, ...$submissionPaths]);
 
         return redirect()->route('admin.courses')
             ->with('success', 'Course deleted successfully.');

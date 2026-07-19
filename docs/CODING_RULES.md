@@ -122,6 +122,9 @@ Run these checks before opening a pull request:
 npm run build
 ./vendor/bin/pint --test
 php artisan test
+composer validate --strict
+composer audit --locked
+npm audit
 ```
 
 Use this command to fix PHP formatting:
@@ -148,4 +151,5 @@ Before requesting review, confirm:
 8. `npm run build` passes.
 9. `./vendor/bin/pint --test` passes.
 10. `php artisan test` passes.
-11. README or sprint notes are updated when setup behavior changes.
+11. Composer and npm validation/audit checks pass.
+12. README or sprint notes are updated when setup behavior changes.

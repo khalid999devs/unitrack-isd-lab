@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 use Illuminate\View\View;
 
@@ -26,6 +27,10 @@ class ProfileController extends Controller
         $student = $request->user()->student;
 
         abort_unless($student, 404);
+
+        $request->merge([
+            'email' => Str::lower(trim((string) $request->input('email'))),
+        ]);
 
         $validated = $request->validate([
             'name' => ['required', 'string', 'max:255'],
@@ -65,6 +70,10 @@ class ProfileController extends Controller
         $teacher = $request->user()->teacher;
 
         abort_unless($teacher, 404);
+
+        $request->merge([
+            'email' => Str::lower(trim((string) $request->input('email'))),
+        ]);
 
         $validated = $request->validate([
             'name' => ['required', 'string', 'max:255'],

@@ -179,7 +179,7 @@ feature/SCRUM-8-login-ui -> dev
 
 ### Step 7: Review and merge
 
-The Scrum Master or another member will check the pull request before merging.
+The Scrum Master or another member will check the pull request before merging. Required project checks must pass, review feedback must be resolved, and the remote feature branch should be deleted after the merge.
 
 ## Jira and GitHub Connection
 
@@ -247,6 +247,8 @@ The task is fully completed, reviewed, and merged if needed.
 6. Keep commits small and meaningful.
 7. Update Jira task status honestly.
 8. Communicate if there is any blocker.
+9. Do not merge a pull request while required project checks are failing.
+10. Delete merged feature branches unless they are intentionally retained for release support.
 
 ## Example Full Workflow
 

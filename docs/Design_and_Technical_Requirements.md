@@ -349,6 +349,8 @@ Relationship:
 ```text
 GET /login
 POST /login
+GET /register
+POST /register
 POST /logout
 ```
 
@@ -362,7 +364,9 @@ GET /student/courses
 GET /student/routine
 GET /student/notices
 GET /student/materials
+GET /student/materials/{id}/download
 GET /student/assignments
+POST /student/assignments/{id}/submit
 ```
 
 ## Teacher Routes
@@ -373,31 +377,31 @@ GET /teacher/profile
 POST /teacher/profile/update
 GET /teacher/courses
 GET /teacher/routine
-GET /teacher/materials
-POST /teacher/materials/store
-GET /teacher/materials/{id}/edit
-POST /teacher/materials/{id}/update
-POST /teacher/materials/{id}/delete
-GET /teacher/assignments
-POST /teacher/assignments/store
-GET /teacher/assignments/{id}/edit
-POST /teacher/assignments/{id}/update
-POST /teacher/assignments/{id}/delete
-GET /teacher/notices
-POST /teacher/notices/store
+RESOURCE /teacher/materials
+GET /teacher/materials/{id}/download
+RESOURCE /teacher/assignments
+GET /teacher/assignments/{id}/submissions
+GET /teacher/assignment-submissions/{id}/download
+RESOURCE /teacher/notices
 ```
 
 ## Admin Routes
 
 ```text
 GET /admin/dashboard
+GET /admin/registration-requests
+POST /admin/registration-requests/{id}/approve
+POST /admin/registration-requests/{id}/reject
 RESOURCE /admin/students
 RESOURCE /admin/teachers
 RESOURCE /admin/courses
 RESOURCE /admin/routines
 RESOURCE /admin/notices
 RESOURCE /admin/materials
+GET /admin/materials/{id}/download
 RESOURCE /admin/assignments
+GET /admin/assignments/{id}/submissions
+GET /admin/assignment-submissions/{id}/download
 ```
 
 ## Authentication Requirements
@@ -409,6 +413,9 @@ RESOURCE /admin/assignments
 5. Logged-in users should not access login page again unless logged out.
 6. Logged-out users should not access protected pages.
 7. Logout should destroy the session.
+8. Student and Teacher registration requests must remain pending until an Admin approves them.
+9. Approval must create both the User account and its role profile in one transaction.
+10. Login and registration endpoints must be rate limited.
 
 ## Role-Based Access Requirements
 
@@ -448,6 +455,8 @@ Admins can access:
 6. Notice management
 7. Study material management
 8. Assignment management
+9. Student and Teacher registration approval
+10. Assignment submission review
 
 ## Validation Requirements
 
@@ -474,6 +483,8 @@ Admins can access:
 8. `.env` file must not be pushed to GitHub.
 9. Uploaded file paths should be handled safely.
 10. Delete operations should be protected by authentication.
+11. Uploaded materials and submissions should remain in private storage and be served only through authorized controllers.
+12. Registration-request password hashes should be removed after approval or rejection.
 
 ## UI Design Requirement Summary
 
@@ -501,7 +512,7 @@ Deployment checklist:
 1. Environment file configured
 2. MySQL database connected
 3. Migrations executed
-4. Storage link created if file upload is used
+4. Application storage is writable and private upload directories are available
 5. Composer dependencies installed
 6. npm dependencies installed
 7. Tailwind build generated
@@ -539,6 +550,9 @@ The team should test:
 11. Role-based page protection
 12. Form validation
 13. Logout
+14. Registration request, approval, rejection, and first login
+15. Student assignment submission and authorized download
+16. Uploaded-file cleanup when related records are replaced or deleted
 
 ## GitHub and Development Rules
 

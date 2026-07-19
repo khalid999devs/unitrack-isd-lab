@@ -57,7 +57,8 @@
                         id="material_file"
                         name="material_file"
                         type="file"
-                        class="block w-full rounded-[10px] border border-input-border bg-white px-3 py-2 text-sm outline-none transition file:mr-4 file:rounded-lg file:border-0 file:bg-primary-blue file:px-4 file:py-2 file:text-sm file:font-bold file:text-white focus:border-primary-blue focus:ring-4 focus:ring-focus-ring"
+                        accept=".pdf,.doc,.docx,.ppt,.pptx,.jpg,.jpeg,.png"
+                        class="block w-full rounded-[10px] border border-input-border bg-card-bg px-3 py-2 text-sm outline-none transition file:mr-4 file:rounded-lg file:border-0 file:bg-primary-blue file:px-4 file:py-2 file:text-sm file:font-bold file:text-on-primary focus:border-primary-blue focus:ring-4 focus:ring-focus-ring"
                     >
                     <p class="mt-1 text-xs text-secondary-text">
                         Current file: {{ $material->file_path ? basename($material->file_path) : 'No file attached' }}

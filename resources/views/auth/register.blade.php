@@ -3,11 +3,11 @@
 @section('title', 'Request Access - UniTrack')
 
 @section('content')
-    <section class="grid min-h-screen bg-white lg:grid-cols-[1.04fr_0.96fr]">
+    <section class="grid min-h-screen bg-card-bg lg:grid-cols-[1.04fr_0.96fr]">
         <div class="flex min-h-screen items-center justify-center overflow-y-auto px-6 py-10 sm:px-10 lg:px-16">
             <div class="w-full max-w-2xl">
                 <a href="{{ route('login') }}" class="mb-10 inline-flex items-center gap-3">
-                    <span class="flex h-12 w-12 items-center justify-center rounded-2xl bg-primary-blue text-white shadow-lg shadow-blue-200">
+                    <span class="flex h-12 w-12 items-center justify-center rounded-2xl bg-primary-blue text-on-primary shadow-lg shadow-primary-blue/20">
                         <i class="ti ti-layers-intersect text-2xl"></i>
                     </span>
                     <span>
@@ -39,7 +39,7 @@
                             <select
                                 id="role"
                                 name="role"
-                                class="h-12 w-full rounded-xl border border-input-border bg-white px-4 text-sm font-semibold outline-none transition focus:border-primary-blue focus:ring-4 focus:ring-focus-ring"
+                                class="h-12 w-full rounded-xl border border-input-border bg-card-bg px-4 text-sm font-semibold outline-none transition focus:border-primary-blue focus:ring-4 focus:ring-focus-ring"
                                 required
                             >
                                 <option value="student" @selected(old('role', 'student') === 'student')>Student</option>
@@ -55,7 +55,7 @@
                                 type="text"
                                 value="{{ old('department') }}"
                                 required
-                                class="h-12 w-full rounded-xl border border-input-border bg-white px-4 text-sm outline-none transition focus:border-primary-blue focus:ring-4 focus:ring-focus-ring"
+                                class="h-12 w-full rounded-xl border border-input-border bg-card-bg px-4 text-sm outline-none transition focus:border-primary-blue focus:ring-4 focus:ring-focus-ring"
                             >
                         </div>
                     </div>
@@ -70,7 +70,7 @@
                                 value="{{ old('name') }}"
                                 autocomplete="name"
                                 required
-                                class="h-12 w-full rounded-xl border border-input-border bg-white px-4 text-sm outline-none transition focus:border-primary-blue focus:ring-4 focus:ring-focus-ring"
+                                class="h-12 w-full rounded-xl border border-input-border bg-card-bg px-4 text-sm outline-none transition focus:border-primary-blue focus:ring-4 focus:ring-focus-ring"
                             >
                         </div>
 
@@ -83,7 +83,7 @@
                                 value="{{ old('email') }}"
                                 autocomplete="email"
                                 required
-                                class="h-12 w-full rounded-xl border border-input-border bg-white px-4 text-sm outline-none transition focus:border-primary-blue focus:ring-4 focus:ring-focus-ring"
+                                class="h-12 w-full rounded-xl border border-input-border bg-card-bg px-4 text-sm outline-none transition focus:border-primary-blue focus:ring-4 focus:ring-focus-ring"
                             >
                         </div>
                     </div>
@@ -98,7 +98,7 @@
                                     type="password"
                                     autocomplete="new-password"
                                     required
-                                    class="h-12 w-full rounded-xl border border-input-border bg-white px-4 pr-12 text-sm outline-none transition focus:border-primary-blue focus:ring-4 focus:ring-focus-ring"
+                                    class="h-12 w-full rounded-xl border border-input-border bg-card-bg px-4 pr-12 text-sm outline-none transition focus:border-primary-blue focus:ring-4 focus:ring-focus-ring"
                                 >
                                 <button type="button" data-password-toggle="password" class="absolute inset-y-0 right-0 flex w-12 items-center justify-center text-secondary-text transition hover:text-primary-blue" aria-label="Show password" aria-pressed="false">
                                     <i class="ti ti-eye text-xl"></i>
@@ -115,7 +115,7 @@
                                     type="password"
                                     autocomplete="new-password"
                                     required
-                                    class="h-12 w-full rounded-xl border border-input-border bg-white px-4 pr-12 text-sm outline-none transition focus:border-primary-blue focus:ring-4 focus:ring-focus-ring"
+                                    class="h-12 w-full rounded-xl border border-input-border bg-card-bg px-4 pr-12 text-sm outline-none transition focus:border-primary-blue focus:ring-4 focus:ring-focus-ring"
                                 >
                                 <button type="button" data-password-toggle="password_confirmation" class="absolute inset-y-0 right-0 flex w-12 items-center justify-center text-secondary-text transition hover:text-primary-blue" aria-label="Show password confirmation" aria-pressed="false">
                                     <i class="ti ti-eye text-xl"></i>
@@ -127,30 +127,30 @@
                     <div class="grid gap-4 sm:grid-cols-2" data-role-fields="student">
                         <div>
                             <label for="student_id" class="mb-2 block text-sm font-bold text-main-text">Student ID</label>
-                            <input id="student_id" name="student_id" type="text" value="{{ old('student_id') }}" class="h-12 w-full rounded-xl border border-input-border bg-white px-4 text-sm outline-none transition focus:border-primary-blue focus:ring-4 focus:ring-focus-ring">
+                            <input id="student_id" name="student_id" type="text" value="{{ old('student_id') }}" class="h-12 w-full rounded-xl border border-input-border bg-card-bg px-4 text-sm outline-none transition focus:border-primary-blue focus:ring-4 focus:ring-focus-ring">
                         </div>
                         <div>
                             <label for="semester" class="mb-2 block text-sm font-bold text-main-text">Semester</label>
-                            <input id="semester" name="semester" type="text" value="{{ old('semester') }}" class="h-12 w-full rounded-xl border border-input-border bg-white px-4 text-sm outline-none transition focus:border-primary-blue focus:ring-4 focus:ring-focus-ring">
+                            <input id="semester" name="semester" type="text" value="{{ old('semester') }}" class="h-12 w-full rounded-xl border border-input-border bg-card-bg px-4 text-sm outline-none transition focus:border-primary-blue focus:ring-4 focus:ring-focus-ring">
                         </div>
                         <div>
                             <label for="batch" class="mb-2 block text-sm font-bold text-main-text">Batch</label>
-                            <input id="batch" name="batch" type="text" value="{{ old('batch') }}" class="h-12 w-full rounded-xl border border-input-border bg-white px-4 text-sm outline-none transition focus:border-primary-blue focus:ring-4 focus:ring-focus-ring">
+                            <input id="batch" name="batch" type="text" value="{{ old('batch') }}" class="h-12 w-full rounded-xl border border-input-border bg-card-bg px-4 text-sm outline-none transition focus:border-primary-blue focus:ring-4 focus:ring-focus-ring">
                         </div>
                         <div>
                             <label for="address" class="mb-2 block text-sm font-bold text-main-text">Address</label>
-                            <input id="address" name="address" type="text" value="{{ old('address') }}" class="h-12 w-full rounded-xl border border-input-border bg-white px-4 text-sm outline-none transition focus:border-primary-blue focus:ring-4 focus:ring-focus-ring">
+                            <input id="address" name="address" type="text" value="{{ old('address') }}" class="h-12 w-full rounded-xl border border-input-border bg-card-bg px-4 text-sm outline-none transition focus:border-primary-blue focus:ring-4 focus:ring-focus-ring">
                         </div>
                     </div>
 
                     <div class="grid gap-4 sm:grid-cols-2" data-role-fields="teacher">
                         <div>
                             <label for="teacher_id" class="mb-2 block text-sm font-bold text-main-text">Teacher ID</label>
-                            <input id="teacher_id" name="teacher_id" type="text" value="{{ old('teacher_id') }}" class="h-12 w-full rounded-xl border border-input-border bg-white px-4 text-sm outline-none transition focus:border-primary-blue focus:ring-4 focus:ring-focus-ring">
+                            <input id="teacher_id" name="teacher_id" type="text" value="{{ old('teacher_id') }}" class="h-12 w-full rounded-xl border border-input-border bg-card-bg px-4 text-sm outline-none transition focus:border-primary-blue focus:ring-4 focus:ring-focus-ring">
                         </div>
                         <div>
                             <label for="designation" class="mb-2 block text-sm font-bold text-main-text">Designation</label>
-                            <input id="designation" name="designation" type="text" value="{{ old('designation') }}" class="h-12 w-full rounded-xl border border-input-border bg-white px-4 text-sm outline-none transition focus:border-primary-blue focus:ring-4 focus:ring-focus-ring">
+                            <input id="designation" name="designation" type="text" value="{{ old('designation') }}" class="h-12 w-full rounded-xl border border-input-border bg-card-bg px-4 text-sm outline-none transition focus:border-primary-blue focus:ring-4 focus:ring-focus-ring">
                         </div>
                     </div>
 
@@ -161,11 +161,11 @@
                             name="phone"
                             type="text"
                             value="{{ old('phone') }}"
-                            class="h-12 w-full rounded-xl border border-input-border bg-white px-4 text-sm outline-none transition focus:border-primary-blue focus:ring-4 focus:ring-focus-ring"
+                            class="h-12 w-full rounded-xl border border-input-border bg-card-bg px-4 text-sm outline-none transition focus:border-primary-blue focus:ring-4 focus:ring-focus-ring"
                         >
                     </div>
 
-                    <button type="submit" class="inline-flex h-12 w-full items-center justify-center rounded-xl bg-primary-blue px-5 text-base font-black text-white transition hover:bg-royal-blue focus:outline-none focus:ring-4 focus:ring-focus-ring">
+                    <button type="submit" class="inline-flex h-12 w-full items-center justify-center rounded-xl bg-primary-blue px-5 text-base font-black text-on-primary transition hover:bg-royal-blue focus:outline-none focus:ring-4 focus:ring-focus-ring">
                         Submit request
                     </button>
 
@@ -178,13 +178,13 @@
         </div>
 
         <aside class="hidden min-h-screen items-center justify-center bg-soft-blue-bg px-10 py-12 lg:flex">
-            <div class="flex h-full max-h-[880px] w-full max-w-[650px] flex-col justify-between overflow-hidden rounded-[32px] bg-primary-navy p-10 text-white shadow-2xl shadow-slate-300/60 xl:p-14">
+            <div class="flex h-full max-h-[880px] w-full max-w-[650px] flex-col justify-between overflow-hidden rounded-[32px] bg-primary-navy p-10 text-on-primary shadow-auth-card xl:p-14">
                 <div>
-                    <p class="text-sm font-bold uppercase tracking-[0.22em] text-blue-100">Admin-approved onboarding</p>
+                    <p class="text-sm font-bold uppercase tracking-[0.22em] text-info-border">Admin-approved onboarding</p>
                     <h2 class="mt-4 max-w-lg text-4xl font-black leading-tight xl:text-5xl">
                         Request access, then enter through the correct role flow.
                     </h2>
-                    <p class="mt-5 max-w-md text-base leading-7 text-blue-100">
+                    <p class="mt-5 max-w-md text-base leading-7 text-info-border">
                         Admins review each request before UniTrack creates the connected account and academic profile.
                     </p>
                 </div>
@@ -198,7 +198,7 @@
                 </div>
 
                 <div class="grid gap-3">
-                    <div class="rounded-2xl bg-white p-4 text-primary-navy">
+                    <div class="rounded-2xl bg-card-bg p-4 text-primary-navy">
                         <p class="text-xs font-black uppercase tracking-wide text-primary-blue">Approval flow</p>
                         <p class="mt-2 text-sm font-bold">Pending request to approved account, all from the database.</p>
                     </div>

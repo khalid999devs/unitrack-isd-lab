@@ -12,6 +12,7 @@ use App\Models\Student;
 use App\Models\StudyMaterial;
 use App\Models\Teacher;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 use Illuminate\View\View;
 
 class DashboardPageController extends Controller
@@ -19,24 +20,51 @@ class DashboardPageController extends Controller
     public function studentDashboard(): View
     {
         $student = auth()->user()->student;
-        $courseIds = $student
-            ? Course::where('semester', $student->semester)->pluck('id')
+        $courseIds = $this->studentCourseIds($student);
+
+        $todayRoutines = $student
+            ? Routine::with(['course', 'teacher.user'])
+                ->where('semester', $student->semester)
+                ->where('batch', $student->batch)
+                ->where('day', now()->format('l'))
+                ->whereHas('course', fn ($query) => $query->where('department', $student->department))
+                ->orderBy('start_time')
+                ->limit(3)
+                ->get()
             : collect();
+
+        $latestNotices = Notice::with('postedBy')
+            ->whereIn('target_role', ['all', 'student'])
+            ->latest()
+            ->limit(3)
+            ->get();
+
+        $recentMaterials = StudyMaterial::with(['course', 'teacher.user'])
+            ->whereIn('course_id', $courseIds)
+            ->latest()
+            ->limit(3)
+            ->get();
+
+        $upcomingAssignments = Assignment::with('course')
+            ->whereIn('course_id', $courseIds)
+            ->where('deadline', '>=', now())
+            ->orderBy('deadline')
+            ->limit(3)
+            ->get();
 
         return view('student.dashboard', [
             'courseCount' => $courseIds->count(),
-            'todayClassCount' => $student
-                ? Routine::where('semester', $student->semester)
-                    ->where('batch', $student->batch)
-                    ->where('day', now()->format('l'))
-                    ->count()
-                : 0,
+            'todayClassCount' => $todayRoutines->count(),
             'noticeCount' => Notice::whereIn('target_role', ['all', 'student'])->count(),
             'assignmentCount' => $courseIds->isNotEmpty()
                 ? Assignment::whereIn('course_id', $courseIds)
                     ->where('deadline', '>=', now())
                     ->count()
                 : 0,
+            'todayRoutines' => $todayRoutines,
+            'latestNotices' => $latestNotices,
+            'recentMaterials' => $recentMaterials,
+            'upcomingAssignments' => $upcomingAssignments,
         ]);
     }
 
@@ -47,7 +75,8 @@ class DashboardPageController extends Controller
 
         if ($student) {
             $query = Course::with('teacher.user')
-                ->where('semester', $student->semester);
+                ->where('semester', $student->semester)
+                ->where('department', $student->department);
 
             if ($request->filled('search')) {
                 $search = $request->input('search');
@@ -86,6 +115,7 @@ class DashboardPageController extends Controller
             $routines = Routine::with(['course', 'teacher.user'])
                 ->where('semester', $student->semester)
                 ->where('batch', $student->batch)
+                ->whereHas('course', fn ($query) => $query->where('department', $student->department))
                 ->orderByRaw($dayOrder)
                 ->orderBy('start_time')
                 ->get();
@@ -94,68 +124,143 @@ class DashboardPageController extends Controller
         return view('student.routine', compact('routines'));
     }
 
-    public function studentNotices(): View
+    public function studentNotices(Request $request): View
     {
-        $notices = Notice::with('postedBy')
-            ->whereIn('target_role', ['all', 'student'])
-            ->latest()
-            ->get();
+        $query = Notice::with('postedBy')
+            ->whereIn('target_role', ['all', 'student']);
+
+        if ($request->filled('search')) {
+            $search = $request->string('search')->trim()->toString();
+            $query->where(function ($noticeQuery) use ($search) {
+                $noticeQuery->where('title', 'like', "%{$search}%")
+                    ->orWhere('description', 'like', "%{$search}%");
+            });
+        }
+
+        $notices = $query->latest()->paginate(8)->withQueryString();
 
         return view('student.notices', compact('notices'));
     }
 
-    public function studentMaterials(): View
+    public function studentMaterials(Request $request): View
     {
         $student = auth()->user()->student;
-        $courseIds = $student
-            ? Course::where('semester', $student->semester)->pluck('id')
-            : collect();
+        $courseIds = $this->studentCourseIds($student);
 
-        $materials = StudyMaterial::with(['course', 'teacher.user'])
-            ->whereIn('course_id', $courseIds)
+        $query = StudyMaterial::with(['course', 'teacher.user'])
+            ->whereIn('course_id', $courseIds);
+
+        if ($request->filled('course_id')) {
+            $query->where('course_id', $request->integer('course_id'));
+        }
+
+        if ($request->filled('search')) {
+            $search = $request->string('search')->trim()->toString();
+            $query->where(function ($materialQuery) use ($search) {
+                $materialQuery->where('title', 'like', "%{$search}%")
+                    ->orWhere('description', 'like', "%{$search}%");
+            });
+        }
+
+        $materials = $query
             ->latest()
+            ->paginate(10)
+            ->withQueryString();
+
+        $courses = Course::whereIn('id', $courseIds)
+            ->orderBy('course_code')
             ->get();
 
-        return view('student.materials', compact('materials'));
+        return view('student.materials', compact('materials', 'courses'));
     }
 
-    public function studentAssignments(): View
+    public function studentAssignments(Request $request): View
     {
         $student = auth()->user()->student;
-        $courseIds = $student
-            ? Course::where('semester', $student->semester)->pluck('id')
-            : collect();
+        $courseIds = $this->studentCourseIds($student);
 
-        $assignments = Assignment::with([
+        $query = Assignment::with([
             'course',
             'submissions' => fn ($query) => $student
                 ? $query->where('student_id', $student->id)
                 : $query->whereRaw('1 = 0'),
         ])
-            ->whereIn('course_id', $courseIds)
+            ->whereIn('course_id', $courseIds);
+
+        if ($request->filled('course_id')) {
+            $query->where('course_id', $request->integer('course_id'));
+        }
+
+        match ($request->input('deadline')) {
+            'upcoming' => $query->where('deadline', '>=', now()),
+            'past' => $query->where('deadline', '<', now()),
+            'submitted' => $student
+                ? $query->whereHas('submissions', fn ($submissionQuery) => $submissionQuery->where('student_id', $student->id))
+                : $query->whereRaw('1 = 0'),
+            default => null,
+        };
+
+        $assignments = $query
             ->orderBy('deadline')
+            ->paginate(8)
+            ->withQueryString();
+
+        $courses = Course::whereIn('id', $courseIds)
+            ->orderBy('course_code')
             ->get();
 
-        return view('student.assignments', compact('assignments'));
+        return view('student.assignments', compact('assignments', 'courses'));
     }
 
     public function teacherDashboard(): View
     {
         $teacher = auth()->user()->teacher;
 
+        $todayRoutines = $teacher
+            ? $teacher->routines()
+                ->with('course')
+                ->where('day', now()->format('l'))
+                ->orderBy('start_time')
+                ->limit(3)
+                ->get()
+            : collect();
+
+        $recentMaterials = $teacher
+            ? $teacher->studyMaterials()->with('course')->latest()->limit(3)->get()
+            : collect();
+
+        $upcomingAssignments = $teacher
+            ? $teacher->assignments()
+                ->with('course')
+                ->where('deadline', '>=', now())
+                ->orderBy('deadline')
+                ->limit(3)
+                ->get()
+            : collect();
+
+        $latestNotices = Notice::with('postedBy')
+            ->where(function ($query) {
+                $query->whereIn('target_role', ['all', 'teacher'])
+                    ->orWhere('posted_by', auth()->id());
+            })
+            ->latest()
+            ->limit(3)
+            ->get();
+
         return view('teacher.dashboard', [
             'courseCount' => $teacher ? $teacher->courses()->count() : 0,
-            'todayClassCount' => $teacher
-                ? $teacher->routines()
-                    ->where('day', now()->format('l'))
-                    ->count()
-                : 0,
+            'todayClassCount' => $todayRoutines->count(),
             'materialCount' => $teacher ? $teacher->studyMaterials()->count() : 0,
             'assignmentCount' => $teacher
                 ? $teacher->assignments()
                     ->where('deadline', '>=', now())
                     ->count()
                 : 0,
+            'noticeCount' => Notice::where('posted_by', auth()->id())->count(),
+            'todayRoutines' => $todayRoutines,
+            'recentMaterials' => $recentMaterials,
+            'upcomingAssignments' => $upcomingAssignments,
+            'latestNotices' => $latestNotices,
         ]);
     }
 
@@ -222,5 +327,16 @@ class DashboardPageController extends Controller
             'submissionCount' => AssignmentSubmission::count(),
             'pendingRegistrationCount' => RegistrationRequest::where('status', 'pending')->count(),
         ]);
+    }
+
+    private function studentCourseIds(?Student $student): Collection
+    {
+        if ($student === null) {
+            return collect();
+        }
+
+        return Course::where('department', $student->department)
+            ->where('semester', $student->semester)
+            ->pluck('id');
     }
 }

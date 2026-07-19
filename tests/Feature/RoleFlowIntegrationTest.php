@@ -79,6 +79,17 @@ class RoleFlowIntegrationTest extends TestCase
         }
     }
 
+    public function test_forbidden_routes_use_the_branded_error_page(): void
+    {
+        ['studentUser' => $studentUser] = $this->createRoleFixtures();
+
+        $this->actingAs($studentUser)
+            ->get(route('admin.dashboard'))
+            ->assertForbidden()
+            ->assertSee('Access denied')
+            ->assertSee('Go to dashboard');
+    }
+
     public function test_student_and_teacher_course_pages_use_backend_course_filters(): void
     {
         [
@@ -254,11 +265,14 @@ class RoleFlowIntegrationTest extends TestCase
     {
         return [
             'admin.dashboard',
+            'admin.registration-requests',
             'admin.students',
             'admin.teachers',
             'admin.courses',
             'admin.routines',
             'admin.notices',
+            'admin.materials',
+            'admin.assignments',
         ];
     }
 }

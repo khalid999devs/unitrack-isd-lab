@@ -66,7 +66,7 @@
 
                 <select
                     name="status"
-                    class="h-11 rounded-[10px] border border-input-border bg-white px-3 text-sm font-semibold outline-none transition focus:border-primary-blue focus:ring-4 focus:ring-focus-ring"
+                    class="h-11 rounded-[10px] border border-input-border bg-card-bg px-3 text-sm font-semibold outline-none transition focus:border-primary-blue focus:ring-4 focus:ring-focus-ring"
                 >
                     @foreach ($statusOptions as $value => $label)
                         <option value="{{ $value }}" @selected($status === $value)>{{ $label }}</option>
@@ -137,7 +137,7 @@
                             <div class="flex min-w-[260px] flex-col gap-2">
                                 <form method="POST" action="{{ route('admin.registration-requests.approve', $registrationRequest) }}">
                                     @csrf
-                                    <button type="submit" class="inline-flex h-9 w-full items-center justify-center rounded-[10px] bg-success px-3 text-xs font-black uppercase tracking-wide text-white transition hover:bg-success-text">
+                                    <button type="submit" class="inline-flex h-9 w-full items-center justify-center rounded-[10px] bg-success px-3 text-xs font-black uppercase tracking-wide text-on-primary transition hover:bg-success-text">
                                         <i class="ti ti-check mr-2 text-base"></i>
                                         Approve
                                     </button>
@@ -150,7 +150,7 @@
                                         placeholder="Reason"
                                         class="h-9 rounded-[10px] border border-input-border px-3 text-xs outline-none transition placeholder:text-placeholder-text focus:border-primary-blue focus:ring-4 focus:ring-focus-ring"
                                     >
-                                    <button type="submit" class="inline-flex h-9 items-center justify-center rounded-[10px] border border-error-border bg-error-bg px-3 text-xs font-black uppercase tracking-wide text-error-text transition hover:bg-error hover:text-white">
+                                    <button type="submit" class="inline-flex h-9 items-center justify-center rounded-[10px] border border-error-border bg-error-bg px-3 text-xs font-black uppercase tracking-wide text-error-text transition hover:bg-error hover:text-on-primary">
                                         Reject
                                     </button>
                                 </form>

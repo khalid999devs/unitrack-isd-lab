@@ -31,7 +31,7 @@
             <x-card title="Deadline" :value="$assignment->deadline->format('d M')" description="{{ $assignment->deadline->format('Y h:i A') }}" icon="calendar-due" />
         </section>
 
-        <x-table :headers="['Student ID', 'Name', 'Status', 'Submitted At', 'File']" emptyMessage="No students found for this course semester.">
+        <x-table :headers="['Student ID', 'Name', 'Status', 'Submission Note', 'Submitted At', 'File']" emptyMessage="No students found for this course semester.">
             @foreach ($students as $student)
                 @php
                     $submission = $submissions->get($student->id);
@@ -45,12 +45,15 @@
                             {{ $submission ? 'Submitted' : 'Pending' }}
                         </x-badge>
                     </td>
+                    <td class="max-w-sm px-4 py-4 text-sm leading-6 text-secondary-text">
+                        {{ $submission?->submission_text ?: '-' }}
+                    </td>
                     <td class="px-4 py-4 text-sm text-secondary-text">
                         {{ $submission?->submitted_at?->format('d M Y h:i A') ?? '-' }}
                     </td>
                     <td class="px-4 py-4">
                         @if ($hasFile)
-                            <a href="{{ route('teacher.assignments.submissions.download', $submission) }}" class="inline-flex h-9 items-center gap-2 rounded-[10px] bg-primary-blue px-3 text-sm font-bold text-white transition hover:bg-royal-blue">
+                            <a href="{{ route('teacher.assignments.submissions.download', $submission) }}" class="inline-flex h-9 items-center gap-2 rounded-[10px] bg-primary-blue px-3 text-sm font-bold text-on-primary transition hover:bg-royal-blue">
                                 <i class="ti ti-download text-base"></i>
                                 Download
                             </a>
