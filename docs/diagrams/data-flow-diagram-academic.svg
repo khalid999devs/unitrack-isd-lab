@@ -1,0 +1,174 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="4200" height="2970" viewBox="0 0 4200 2970">
+  <defs>
+    <marker id="arrow" markerWidth="14" markerHeight="14" refX="12" refY="7" orient="auto" markerUnits="strokeWidth">
+      <path d="M 0 0 L 14 7 L 0 14 z" fill="#2563eb"/>
+    </marker>
+    <style>
+      .label { font-family: Arial, Helvetica, sans-serif; fill: #0f172a; }
+      .muted { font-family: Arial, Helvetica, sans-serif; fill: #475569; }
+      .entity { fill: #ffffff; stroke: #0f172a; stroke-width: 6; }
+      .process { fill: #eff6ff; stroke: #1d4ed8; stroke-width: 7; }
+      .store { fill: none; stroke: #0f172a; stroke-width: 5; }
+      .flow { fill: none; stroke: #2563eb; stroke-width: 6; marker-end: url(#arrow); }
+      .flow-label {
+        font-family: Arial, Helvetica, sans-serif;
+        fill: #1e3a8a;
+        font-size: 24px;
+        font-weight: 700;
+        text-anchor: middle;
+        paint-order: stroke fill;
+        stroke: #ffffff;
+        stroke-width: 16px;
+        stroke-linejoin: round;
+      }
+    </style>
+  </defs>
+
+  <rect width="4200" height="2970" fill="#ffffff"/>
+
+  <!-- 4.0 Courses and Routines -->
+  <g>
+    <rect class="entity" x="80" y="230" width="680" height="200"/>
+    <text class="label" x="420" y="307" text-anchor="middle" font-size="38" font-weight="800">ACADEMIC USER</text>
+    <line x1="185" y1="337" x2="655" y2="337" stroke="#94a3b8" stroke-width="4"/>
+    <text class="muted" x="420" y="386" text-anchor="middle" font-size="25">Student  |  Teacher  |  Admin</text>
+
+    <ellipse class="process" cx="1600" cy="330" rx="400" ry="150"/>
+    <text class="label" x="1600" y="282" text-anchor="middle" font-size="32" font-weight="800">4.0</text>
+    <text class="label" x="1600" y="354" text-anchor="middle" font-size="39" font-weight="800">Courses and Routines</text>
+
+    <path class="flow" d="M 760 285 H 1200"/>
+    <text class="flow-label" x="980" y="260">view, search, filter or admin changes</text>
+    <path class="flow" d="M 1200 375 H 760"/>
+    <text class="flow-label" x="980" y="418">scoped courses, routines and status</text>
+
+    <path class="flow" d="M 2000 285 H 2820"/>
+    <text class="flow-label" x="2410" y="260">course and routine changes</text>
+    <path class="flow" d="M 2820 375 H 2000"/>
+    <text class="flow-label" x="2410" y="418">course and routine records</text>
+
+    <path class="store" d="M 2820 270 H 4100 M 2820 390 H 4100 M 2820 270 V 390 M 2950 270 V 390"/>
+    <text class="label" x="2885" y="343" text-anchor="middle" font-size="29" font-weight="800">D3</text>
+    <text class="label" x="3010" y="324" font-size="29" font-weight="800">Courses and Routines</text>
+    <text class="muted" x="3010" y="361" font-size="22">courses, routines</text>
+  </g>
+
+  <!-- 5.0 Notice Management -->
+  <g>
+    <rect class="entity" x="80" y="900" width="680" height="200"/>
+    <text class="label" x="420" y="977" text-anchor="middle" font-size="38" font-weight="800">ACADEMIC USER</text>
+    <line x1="185" y1="1007" x2="655" y2="1007" stroke="#94a3b8" stroke-width="4"/>
+    <text class="muted" x="420" y="1056" text-anchor="middle" font-size="25">Student  |  Teacher  |  Admin</text>
+
+    <ellipse class="process" cx="1600" cy="1000" rx="400" ry="150"/>
+    <text class="label" x="1600" y="952" text-anchor="middle" font-size="32" font-weight="800">5.0</text>
+    <text class="label" x="1600" y="1024" text-anchor="middle" font-size="39" font-weight="800">Notice Management</text>
+
+    <path class="flow" d="M 760 955 H 1200"/>
+    <text class="flow-label" x="980" y="930">view, publish, update or delete</text>
+    <path class="flow" d="M 1200 1045 H 760"/>
+    <text class="flow-label" x="980" y="1088">targeted notices and operation status</text>
+
+    <path class="flow" d="M 2000 955 H 2820"/>
+    <text class="flow-label" x="2410" y="930">notice changes</text>
+    <path class="flow" d="M 2820 1045 H 2000"/>
+    <text class="flow-label" x="2410" y="1088">targeted or owned notices</text>
+
+    <path class="store" d="M 2820 940 H 4100 M 2820 1060 H 4100 M 2820 940 V 1060 M 2950 940 V 1060"/>
+    <text class="label" x="2885" y="1013" text-anchor="middle" font-size="29" font-weight="800">D4</text>
+    <text class="label" x="3010" y="994" font-size="29" font-weight="800">Notices</text>
+    <text class="muted" x="3010" y="1031" font-size="22">notices</text>
+  </g>
+
+  <!-- 6.0 Study Material Management -->
+  <g>
+    <rect class="entity" x="80" y="1570" width="680" height="200"/>
+    <text class="label" x="420" y="1647" text-anchor="middle" font-size="38" font-weight="800">ACADEMIC USER</text>
+    <line x1="185" y1="1677" x2="655" y2="1677" stroke="#94a3b8" stroke-width="4"/>
+    <text class="muted" x="420" y="1726" text-anchor="middle" font-size="25">Student  |  Teacher  |  Admin</text>
+
+    <ellipse class="process" cx="1600" cy="1670" rx="400" ry="150"/>
+    <text class="label" x="1600" y="1615" text-anchor="middle" font-size="32" font-weight="800">6.0</text>
+    <text class="label" x="1600" y="1668" text-anchor="middle" font-size="36" font-weight="800">Study Material</text>
+    <text class="label" x="1600" y="1715" text-anchor="middle" font-size="36" font-weight="800">Management</text>
+
+    <path class="flow" d="M 760 1625 H 1200"/>
+    <text class="flow-label" x="980" y="1600">view, download or manage material</text>
+    <path class="flow" d="M 1200 1715 H 760"/>
+    <text class="flow-label" x="980" y="1758">scoped records, file and operation status</text>
+
+    <path class="flow" d="M 2820 1500 H 2470 C 2260 1500, 2110 1540, 1935 1595"/>
+    <text class="flow-label" x="2390" y="1475">assigned course rules</text>
+    <path class="flow" d="M 1988 1640 H 2820"/>
+    <text class="flow-label" x="2405" y="1615">material metadata changes</text>
+    <path class="flow" d="M 2820 1700 H 1998"/>
+    <text class="flow-label" x="2410" y="1738">material metadata</text>
+    <path class="flow" d="M 2820 1835 C 2470 1835, 2220 1800, 1900 1755"/>
+    <text class="flow-label" x="2390" y="1810">requested material file</text>
+    <path class="flow" d="M 1940 1765 C 2200 1855, 2470 1875, 2820 1875"/>
+    <text class="flow-label" x="2390" y="1912">uploaded, replaced or deleted file</text>
+
+    <path class="store" d="M 2820 1450 H 4100 M 2820 1550 H 4100 M 2820 1450 V 1550 M 2950 1450 V 1550"/>
+    <text class="label" x="2885" y="1512" text-anchor="middle" font-size="27" font-weight="800">D3</text>
+    <text class="label" x="3010" y="1511" font-size="27" font-weight="800">Courses and Routines</text>
+
+    <path class="store" d="M 2820 1620 H 4100 M 2820 1730 H 4100 M 2820 1620 V 1730 M 2950 1620 V 1730"/>
+    <text class="label" x="2885" y="1688" text-anchor="middle" font-size="27" font-weight="800">D5</text>
+    <text class="label" x="3010" y="1669" font-size="27" font-weight="800">Study Materials</text>
+    <text class="muted" x="3010" y="1705" font-size="21">study_materials</text>
+
+    <path class="store" d="M 2820 1800 H 4100 M 2820 1910 H 4100 M 2820 1800 V 1910 M 2950 1800 V 1910"/>
+    <text class="label" x="2885" y="1868" text-anchor="middle" font-size="27" font-weight="800">D7</text>
+    <text class="label" x="3010" y="1849" font-size="27" font-weight="800">Private File Storage</text>
+    <text class="muted" x="3010" y="1885" font-size="21">study-materials/</text>
+  </g>
+
+  <!-- 7.0 Assignment and Submission Management -->
+  <g>
+    <rect class="entity" x="80" y="2340" width="680" height="200"/>
+    <text class="label" x="420" y="2417" text-anchor="middle" font-size="38" font-weight="800">ACADEMIC USER</text>
+    <line x1="185" y1="2447" x2="655" y2="2447" stroke="#94a3b8" stroke-width="4"/>
+    <text class="muted" x="420" y="2496" text-anchor="middle" font-size="25">Student  |  Teacher  |  Admin</text>
+
+    <ellipse class="process" cx="1600" cy="2440" rx="400" ry="150"/>
+    <text class="label" x="1600" y="2385" text-anchor="middle" font-size="32" font-weight="800">7.0</text>
+    <text class="label" x="1600" y="2438" text-anchor="middle" font-size="34" font-weight="800">Assignment and Submission</text>
+    <text class="label" x="1600" y="2485" text-anchor="middle" font-size="34" font-weight="800">Management</text>
+
+    <path class="flow" d="M 760 2395 H 1200"/>
+    <text class="flow-label" x="980" y="2370">view, submit, review or manage</text>
+    <path class="flow" d="M 1200 2485 H 760"/>
+    <text class="flow-label" x="980" y="2528">scoped work, file and review status</text>
+
+    <path class="flow" d="M 2820 2190 H 2490 C 2250 2190, 2070 2240, 1895 2330"/>
+    <text class="flow-label" x="2390" y="2165">student profile and role</text>
+    <path class="flow" d="M 2820 2320 H 2450 C 2240 2320, 2120 2345, 1980 2390"/>
+    <text class="flow-label" x="2390" y="2295">course eligibility and ownership</text>
+    <path class="flow" d="M 1990 2420 H 2820"/>
+    <text class="flow-label" x="2405" y="2395">assignment and submission changes</text>
+    <path class="flow" d="M 2820 2500 H 1992"/>
+    <text class="flow-label" x="2410" y="2538">assignments, submissions and reviews</text>
+    <path class="flow" d="M 2820 2630 C 2480 2630, 2190 2590, 1870 2550"/>
+    <text class="flow-label" x="2390" y="2605">requested submission file</text>
+    <path class="flow" d="M 1915 2540 C 2200 2665, 2500 2690, 2820 2690"/>
+    <text class="flow-label" x="2390" y="2727">uploaded, replaced or deleted file</text>
+
+    <path class="store" d="M 2820 2140 H 4100 M 2820 2240 H 4100 M 2820 2140 V 2240 M 2950 2140 V 2240"/>
+    <text class="label" x="2885" y="2202" text-anchor="middle" font-size="27" font-weight="800">D1</text>
+    <text class="label" x="3010" y="2201" font-size="27" font-weight="800">Identity and Profiles</text>
+
+    <path class="store" d="M 2820 2270 H 4100 M 2820 2370 H 4100 M 2820 2270 V 2370 M 2950 2270 V 2370"/>
+    <text class="label" x="2885" y="2332" text-anchor="middle" font-size="27" font-weight="800">D3</text>
+    <text class="label" x="3010" y="2331" font-size="27" font-weight="800">Courses and Routines</text>
+
+    <path class="store" d="M 2820 2410 H 4100 M 2820 2530 H 4100 M 2820 2410 V 2530 M 2950 2410 V 2530"/>
+    <text class="label" x="2885" y="2483" text-anchor="middle" font-size="27" font-weight="800">D6</text>
+    <text class="label" x="3010" y="2463" font-size="27" font-weight="800">Assignments and Submissions</text>
+    <text class="muted" x="3010" y="2500" font-size="20">assignments, assignment_submissions</text>
+
+    <path class="store" d="M 2820 2600 H 4100 M 2820 2720 H 4100 M 2820 2600 V 2720 M 2950 2600 V 2720"/>
+    <text class="label" x="2885" y="2673" text-anchor="middle" font-size="27" font-weight="800">D7</text>
+    <text class="label" x="3010" y="2653" font-size="27" font-weight="800">Private File Storage</text>
+    <text class="muted" x="3010" y="2690" font-size="20">assignment-submissions/</text>
+  </g>
+</svg>
