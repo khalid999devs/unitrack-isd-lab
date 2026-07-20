@@ -1,0 +1,116 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="4200" height="2970" viewBox="0 0 4200 2970">
+  <defs>
+    <marker id="arrow" markerWidth="14" markerHeight="14" refX="12" refY="7" orient="auto" markerUnits="strokeWidth">
+      <path d="M 0 0 L 14 7 L 0 14 z" fill="#2563eb"/>
+    </marker>
+    <style>
+      .label { font-family: Arial, Helvetica, sans-serif; fill: #0f172a; }
+      .muted { font-family: Arial, Helvetica, sans-serif; fill: #475569; }
+      .entity { fill: #ffffff; stroke: #0f172a; stroke-width: 6; }
+      .process { fill: #eff6ff; stroke: #1d4ed8; stroke-width: 7; }
+      .store { fill: none; stroke: #0f172a; stroke-width: 5; }
+      .flow { fill: none; stroke: #2563eb; stroke-width: 6; marker-end: url(#arrow); }
+      .flow-label {
+        font-family: Arial, Helvetica, sans-serif;
+        fill: #1e3a8a;
+        font-size: 26px;
+        font-weight: 700;
+        text-anchor: middle;
+        paint-order: stroke fill;
+        stroke: #ffffff;
+        stroke-width: 17px;
+        stroke-linejoin: round;
+      }
+    </style>
+  </defs>
+
+  <rect width="4200" height="2970" fill="#ffffff"/>
+
+  <!-- 1.0 Authentication and Role Access -->
+  <g>
+    <rect class="entity" x="120" y="360" width="700" height="240"/>
+    <text class="label" x="470" y="450" text-anchor="middle" font-size="42" font-weight="800">SYSTEM USER</text>
+    <line x1="225" y1="485" x2="715" y2="485" stroke="#94a3b8" stroke-width="4"/>
+    <text class="muted" x="470" y="545" text-anchor="middle" font-size="28">Student  |  Teacher  |  Admin</text>
+
+    <ellipse class="process" cx="1850" cy="480" rx="430" ry="175"/>
+    <text class="label" x="1850" y="420" text-anchor="middle" font-size="35" font-weight="800">1.0</text>
+    <text class="label" x="1850" y="482" text-anchor="middle" font-size="40" font-weight="800">Authentication and</text>
+    <text class="label" x="1850" y="536" text-anchor="middle" font-size="40" font-weight="800">Role Access</text>
+
+    <path class="flow" d="M 820 425 H 1420"/>
+    <text class="flow-label" x="1120" y="399">email and password</text>
+    <path class="flow" d="M 1420 535 H 820"/>
+    <text class="flow-label" x="1120" y="579">session, role redirect or validation error</text>
+
+    <path class="flow" d="M 2960 480 H 2280"/>
+    <text class="flow-label" x="2620" y="452">credentials, approval state and account role</text>
+
+    <path class="store" d="M 2960 405 H 4080 M 2960 555 H 4080 M 2960 405 V 555 M 3100 405 V 555"/>
+    <text class="label" x="3030" y="495" text-anchor="middle" font-size="32" font-weight="800">D1</text>
+    <text class="label" x="3160" y="466" font-size="32" font-weight="800">Identity and Profiles</text>
+    <text class="muted" x="3160" y="510" font-size="24">users, students, teachers</text>
+  </g>
+
+  <!-- 2.0 Registration and Approval -->
+  <g>
+    <rect class="entity" x="120" y="1365" width="700" height="240"/>
+    <text class="label" x="470" y="1455" text-anchor="middle" font-size="40" font-weight="800">APPLICANT / ADMIN</text>
+    <line x1="225" y1="1490" x2="715" y2="1490" stroke="#94a3b8" stroke-width="4"/>
+    <text class="muted" x="470" y="1550" text-anchor="middle" font-size="26">Student or Teacher applicant  |  Admin</text>
+
+    <ellipse class="process" cx="1850" cy="1485" rx="430" ry="175"/>
+    <text class="label" x="1850" y="1425" text-anchor="middle" font-size="35" font-weight="800">2.0</text>
+    <text class="label" x="1850" y="1487" text-anchor="middle" font-size="40" font-weight="800">Registration and</text>
+    <text class="label" x="1850" y="1541" text-anchor="middle" font-size="40" font-weight="800">Approval</text>
+
+    <path class="flow" d="M 820 1430 H 1420"/>
+    <text class="flow-label" x="1120" y="1404">request details or approval decision</text>
+    <path class="flow" d="M 1420 1540 H 820"/>
+    <text class="flow-label" x="1120" y="1584">receipt, request status or validation error</text>
+
+    <path class="flow" d="M 2960 1375 H 2280"/>
+    <text class="flow-label" x="2620" y="1349">pending request queue</text>
+    <path class="flow" d="M 2280 1435 H 2960"/>
+    <text class="flow-label" x="2620" y="1471">new or reviewed request</text>
+    <path class="flow" d="M 2280 1550 C 2500 1550, 2670 1610, 2960 1610"/>
+    <text class="flow-label" x="2620" y="1647">approved user and role profile</text>
+
+    <path class="store" d="M 2960 1300 H 4080 M 2960 1450 H 4080 M 2960 1300 V 1450 M 3100 1300 V 1450"/>
+    <text class="label" x="3030" y="1390" text-anchor="middle" font-size="32" font-weight="800">D2</text>
+    <text class="label" x="3160" y="1362" font-size="32" font-weight="800">Registration Requests</text>
+    <text class="muted" x="3160" y="1406" font-size="24">registration_requests</text>
+
+    <path class="store" d="M 2960 1535 H 4080 M 2960 1685 H 4080 M 2960 1535 V 1685 M 3100 1535 V 1685"/>
+    <text class="label" x="3030" y="1625" text-anchor="middle" font-size="32" font-weight="800">D1</text>
+    <text class="label" x="3160" y="1597" font-size="32" font-weight="800">Identity and Profiles</text>
+    <text class="muted" x="3160" y="1641" font-size="24">users, students, teachers</text>
+  </g>
+
+  <!-- 3.0 Accounts and Profiles -->
+  <g>
+    <rect class="entity" x="120" y="2370" width="700" height="240"/>
+    <text class="label" x="470" y="2460" text-anchor="middle" font-size="42" font-weight="800">ACCOUNT USER</text>
+    <line x1="225" y1="2495" x2="715" y2="2495" stroke="#94a3b8" stroke-width="4"/>
+    <text class="muted" x="470" y="2555" text-anchor="middle" font-size="28">Student  |  Teacher  |  Admin</text>
+
+    <ellipse class="process" cx="1850" cy="2490" rx="430" ry="175"/>
+    <text class="label" x="1850" y="2430" text-anchor="middle" font-size="35" font-weight="800">3.0</text>
+    <text class="label" x="1850" y="2510" text-anchor="middle" font-size="42" font-weight="800">Accounts and Profiles</text>
+
+    <path class="flow" d="M 820 2435 H 1420"/>
+    <text class="flow-label" x="1120" y="2409">profile request or account changes</text>
+    <path class="flow" d="M 1420 2545 H 820"/>
+    <text class="flow-label" x="1120" y="2589">profile data and operation status</text>
+
+    <path class="flow" d="M 2280 2435 H 2960"/>
+    <text class="flow-label" x="2620" y="2409">profile and account changes</text>
+    <path class="flow" d="M 2960 2545 H 2280"/>
+    <text class="flow-label" x="2620" y="2589">user and profile records</text>
+
+    <path class="store" d="M 2960 2415 H 4080 M 2960 2565 H 4080 M 2960 2415 V 2565 M 3100 2415 V 2565"/>
+    <text class="label" x="3030" y="2505" text-anchor="middle" font-size="32" font-weight="800">D1</text>
+    <text class="label" x="3160" y="2477" font-size="32" font-weight="800">Identity and Profiles</text>
+    <text class="muted" x="3160" y="2521" font-size="24">users, students, teachers</text>
+  </g>
+</svg>

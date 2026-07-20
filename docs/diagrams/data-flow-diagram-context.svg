@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="4200" height="2970" viewBox="0 0 4200 2970">
+  <defs>
+    <marker id="arrow" markerWidth="14" markerHeight="14" refX="12" refY="7" orient="auto" markerUnits="strokeWidth">
+      <path d="M 0 0 L 14 7 L 0 14 z" fill="#2563eb"/>
+    </marker>
+    <style>
+      .label { font-family: Arial, Helvetica, sans-serif; fill: #0f172a; }
+      .muted { font-family: Arial, Helvetica, sans-serif; fill: #475569; }
+      .entity { fill: #ffffff; stroke: #0f172a; stroke-width: 7; }
+      .process { fill: #eff6ff; stroke: #1d4ed8; stroke-width: 9; }
+      .flow { fill: none; stroke: #2563eb; stroke-width: 6; marker-end: url(#arrow); }
+      .flow-label {
+        font-family: Arial, Helvetica, sans-serif;
+        fill: #1e3a8a;
+        font-size: 25px;
+        font-weight: 700;
+        text-anchor: middle;
+        paint-order: stroke fill;
+        stroke: #ffffff;
+        stroke-width: 16px;
+        stroke-linejoin: round;
+      }
+    </style>
+  </defs>
+
+  <rect width="4200" height="2970" fill="#ffffff"/>
+
+  <!-- External entities -->
+  <g>
+    <rect class="entity" x="150" y="340" width="720" height="310"/>
+    <text class="label" x="510" y="470" text-anchor="middle" font-size="52" font-weight="800">STUDENT</text>
+    <line x1="260" y1="515" x2="760" y2="515" stroke="#94a3b8" stroke-width="4"/>
+    <text class="muted" x="510" y="575" text-anchor="middle" font-size="28">applicant and authenticated user</text>
+
+    <rect class="entity" x="150" y="2320" width="720" height="310"/>
+    <text class="label" x="510" y="2450" text-anchor="middle" font-size="52" font-weight="800">TEACHER</text>
+    <line x1="260" y1="2495" x2="760" y2="2495" stroke="#94a3b8" stroke-width="4"/>
+    <text class="muted" x="510" y="2555" text-anchor="middle" font-size="28">applicant and authenticated user</text>
+
+    <rect class="entity" x="3330" y="1330" width="720" height="310"/>
+    <text class="label" x="3690" y="1460" text-anchor="middle" font-size="52" font-weight="800">ADMIN</text>
+    <line x1="3440" y1="1505" x2="3940" y2="1505" stroke="#94a3b8" stroke-width="4"/>
+    <text class="muted" x="3690" y="1565" text-anchor="middle" font-size="28">authenticated system manager</text>
+  </g>
+
+  <!-- System process -->
+  <g>
+    <ellipse class="process" cx="2100" cy="1485" rx="780" ry="520"/>
+    <text class="label" x="2100" y="1190" text-anchor="middle" font-size="48" font-weight="800">0</text>
+    <line x1="1995" y1="1220" x2="2205" y2="1220" stroke="#93c5fd" stroke-width="5"/>
+    <text class="label" x="2100" y="1410" text-anchor="middle" font-size="62" font-weight="800">UniTrack Academic Resource</text>
+    <text class="label" x="2100" y="1490" text-anchor="middle" font-size="62" font-weight="800">Management System</text>
+    <text class="muted" x="2100" y="1615" text-anchor="middle" font-size="31">role-based access, academic records, content,</text>
+    <text class="muted" x="2100" y="1665" text-anchor="middle" font-size="31">assignments, submissions and administration</text>
+  </g>
+
+  <!-- Student flows -->
+  <path class="flow" d="M 870 445 C 1180 445, 1310 810, 1535 1085"/>
+  <text class="flow-label" x="1215" y="630">registration, credentials, profile updates, filters, submission</text>
+  <path class="flow" d="M 1540 1210 C 1290 1030, 1160 585, 870 565"/>
+  <text class="flow-label" x="1195" y="930">receipt, authentication result, dashboard, academic data, status</text>
+
+  <!-- Teacher flows -->
+  <path class="flow" d="M 870 2430 C 1190 2430, 1320 2140, 1540 1880"/>
+  <text class="flow-label" x="1215" y="2235">registration, credentials, profile and academic-content operations</text>
+  <path class="flow" d="M 1540 1760 C 1290 1940, 1160 2545, 870 2555"/>
+  <text class="flow-label" x="1205" y="2020">receipt, authentication result, assigned data, submissions, status</text>
+
+  <!-- Admin flows -->
+  <path class="flow" d="M 3330 1425 H 2880"/>
+  <text class="flow-label" x="3105" y="1396">credentials, approvals and management operations</text>
+  <path class="flow" d="M 2880 1545 H 3330"/>
+  <text class="flow-label" x="3105" y="1584">dashboard, request queue, records and operation status</text>
+</svg>

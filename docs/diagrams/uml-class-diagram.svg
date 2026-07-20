@@ -1,0 +1,327 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="5200" height="3300" viewBox="0 0 5200 3300">
+  <defs>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#0f172a" flood-opacity="0.10"/>
+    </filter>
+    <marker id="dependency-arrow" markerWidth="14" markerHeight="14" refX="12" refY="7" orient="auto" markerUnits="strokeWidth">
+      <path d="M 1 1 L 13 7 L 1 13" fill="none" stroke="#64748b" stroke-width="2"/>
+    </marker>
+    <style>
+      .text { font-family: Arial, Helvetica, sans-serif; fill: #0f172a; }
+      .attr { font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace; fill: #334155; }
+      .method { font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace; fill: #1e40af; }
+      .association { fill: none; stroke: #64748b; stroke-width: 5; }
+      .dependency { fill: none; stroke: #64748b; stroke-width: 4; stroke-dasharray: 16 12; marker-end: url(#dependency-arrow); }
+      .mult { font-family: Arial, Helvetica, sans-serif; fill: #0f172a; font-size: 25px; font-weight: 800; }
+      .rel { font-family: Arial, Helvetica, sans-serif; fill: #475569; font-size: 24px; font-weight: 700; }
+    </style>
+  </defs>
+
+  <rect width="5200" height="3300" fill="#ffffff"/>
+
+  <!-- Associations -->
+  <path class="association" d="M 1480 350 H 1900"/>
+  <path class="association" d="M 3100 350 H 3700"/>
+  <path class="association" d="M 1900 520 H 1580 V 1080 H 650 V 1180"/>
+  <path class="association" d="M 2500 730 V 1050"/>
+  <path class="association" d="M 2950 1400 H 3500"/>
+  <path class="association" d="M 650 1850 V 2200"/>
+  <path class="association" d="M 1530 2550 H 1750"/>
+  <path class="association" d="M 2200 1820 V 2180"/>
+  <path class="association" d="M 3600 1780 V 1900 H 2450 V 2180"/>
+  <path class="association" d="M 2950 1680 H 3250 V 2180"/>
+  <path class="association" d="M 3950 1780 V 2180"/>
+  <path class="association" d="M 4450 1780 V 1980 H 4700 V 2160"/>
+  <path class="association" d="M 2850 1820 V 2080 H 4370 V 2160"/>
+  <path class="dependency" d="M 1480 760 C 1640 760, 1690 610, 1900 610"/>
+
+  <!-- Relationship labels -->
+  <g>
+    <rect x="1550" y="310" width="280" height="54" rx="12" fill="#ffffff"/>
+    <text class="rel" x="1690" y="346" text-anchor="middle">reviews</text>
+    <text class="mult" x="1505" y="330">0..*</text>
+    <text class="mult" x="1835" y="330">0..1</text>
+
+    <rect x="3260" y="310" width="280" height="54" rx="12" fill="#ffffff"/>
+    <text class="rel" x="3400" y="346" text-anchor="middle">posts</text>
+    <text class="mult" x="3125" y="330">0..1</text>
+    <text class="mult" x="3605" y="330">0..*</text>
+
+    <rect x="1260" y="1035" width="300" height="54" rx="12" fill="#ffffff"/>
+    <text class="rel" x="1410" y="1071" text-anchor="middle">student profile</text>
+    <text class="mult" x="1835" y="500">1</text>
+    <text class="mult" x="675" y="1160">0..1</text>
+
+    <rect x="2380" y="850" width="250" height="54" rx="12" fill="#ffffff"/>
+    <text class="rel" x="2505" y="886" text-anchor="middle">teacher profile</text>
+    <text class="mult" x="2520" y="770">1</text>
+    <text class="mult" x="2520" y="1030">0..1</text>
+
+    <rect x="3050" y="1360" width="330" height="54" rx="12" fill="#ffffff"/>
+    <text class="rel" x="3215" y="1396" text-anchor="middle">assigned courses</text>
+    <text class="mult" x="2990" y="1380">0..1</text>
+    <text class="mult" x="3415" y="1380">0..*</text>
+
+    <rect x="510" y="1970" width="280" height="54" rx="12" fill="#ffffff"/>
+    <text class="rel" x="650" y="2006" text-anchor="middle">submits</text>
+    <text class="mult" x="675" y="1890">1</text>
+    <text class="mult" x="675" y="2175">0..*</text>
+
+    <rect x="1545" y="2510" width="190" height="54" rx="12" fill="#ffffff"/>
+    <text class="rel" x="1640" y="2546" text-anchor="middle">receives</text>
+    <text class="mult" x="1440" y="2530">0..*</text>
+    <text class="mult" x="1705" y="2530">1</text>
+
+    <rect x="2070" y="1960" width="260" height="54" rx="12" fill="#ffffff"/>
+    <text class="rel" x="2200" y="1996" text-anchor="middle">creates / owns</text>
+    <text class="mult" x="2225" y="1860">1</text>
+    <text class="mult" x="2225" y="2160">0..*</text>
+
+    <rect x="2920" y="1860" width="250" height="54" rx="12" fill="#ffffff"/>
+    <text class="rel" x="3045" y="1896" text-anchor="middle">defines</text>
+    <text class="mult" x="3625" y="1820">1</text>
+    <text class="mult" x="2470" y="2160">0..*</text>
+
+    <rect x="3000" y="1880" width="300" height="54" rx="12" fill="#ffffff"/>
+    <text class="rel" x="3150" y="1916" text-anchor="middle">uploads / owns</text>
+    <text class="mult" x="2890" y="1760">1</text>
+    <text class="mult" x="3280" y="2160">0..*</text>
+
+    <rect x="3810" y="1950" width="280" height="54" rx="12" fill="#ffffff"/>
+    <text class="rel" x="3950" y="1986" text-anchor="middle">categorizes</text>
+    <text class="mult" x="3980" y="1820">1</text>
+    <text class="mult" x="3980" y="2160">0..*</text>
+
+    <rect x="4470" y="1900" width="260" height="54" rx="12" fill="#ffffff"/>
+    <text class="rel" x="4600" y="1936" text-anchor="middle">schedules</text>
+    <text class="mult" x="4490" y="1820">1</text>
+    <text class="mult" x="4725" y="2140">0..*</text>
+
+    <rect x="3410" y="2040" width="280" height="54" rx="12" fill="#ffffff"/>
+    <text class="rel" x="3550" y="2076" text-anchor="middle">assigned to</text>
+    <text class="mult" x="2880" y="1860">1</text>
+    <text class="mult" x="4315" y="2140">0..*</text>
+
+    <rect x="1540" y="670" width="330" height="54" rx="12" fill="#ffffff"/>
+    <text class="rel" x="1705" y="706" text-anchor="middle">approved into</text>
+  </g>
+
+  <!-- RegistrationRequest -->
+  <g filter="url(#shadow)">
+    <rect x="80" y="80" width="1400" height="930" rx="22" fill="#ffffff" stroke="#334155" stroke-width="4"/>
+    <rect x="80" y="80" width="1400" height="92" rx="22" fill="#0f172a"/>
+    <rect x="80" y="145" width="1400" height="27" fill="#0f172a"/>
+    <text x="780" y="139" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="38" font-weight="800" fill="#ffffff">RegistrationRequest</text>
+    <line x1="80" y1="740" x2="1480" y2="740" stroke="#cbd5e1" stroke-width="3"/>
+    <text class="attr" x="125" y="220" font-size="25">+ id: bigint {PK}</text>
+    <text class="attr" x="125" y="260" font-size="25">+ name: varchar</text>
+    <text class="attr" x="125" y="300" font-size="25">+ email: varchar {indexed}</text>
+    <text class="attr" x="125" y="340" font-size="25">+ password: varchar [0..1, hashed]</text>
+    <text class="attr" x="125" y="380" font-size="25">+ role: varchar {student | teacher}</text>
+    <text class="attr" x="125" y="420" font-size="25">+ student_id: varchar [0..1, indexed]</text>
+    <text class="attr" x="125" y="460" font-size="25">+ teacher_id: varchar [0..1, indexed]</text>
+    <text class="attr" x="125" y="500" font-size="25">+ department: varchar</text>
+    <text class="attr" x="125" y="540" font-size="25">+ semester: varchar [0..1]</text>
+    <text class="attr" x="125" y="580" font-size="25">+ batch: varchar [0..1]</text>
+    <text class="attr" x="760" y="220" font-size="25">+ designation: varchar [0..1]</text>
+    <text class="attr" x="760" y="260" font-size="25">+ phone: varchar [0..1]</text>
+    <text class="attr" x="760" y="300" font-size="25">+ address: text [0..1]</text>
+    <text class="attr" x="760" y="340" font-size="25">+ status: varchar = pending {indexed}</text>
+    <text class="attr" x="760" y="380" font-size="25">+ reviewed_by: bigint [0..1, FK]</text>
+    <text class="attr" x="760" y="420" font-size="25">+ reviewed_at: timestamp [0..1]</text>
+    <text class="attr" x="760" y="460" font-size="25">+ rejection_reason: text [0..1]</text>
+    <text class="attr" x="760" y="500" font-size="25">+ created_at: timestamp</text>
+    <text class="attr" x="760" y="540" font-size="25">+ updated_at: timestamp</text>
+    <text class="method" x="125" y="800" font-size="25">+ reviewer(): BelongsTo&lt;User&gt;</text>
+    <text class="method" x="125" y="845" font-size="25">- casts(): array</text>
+    <text class="text" x="125" y="910" font-size="24" font-style="italic" fill="#64748b">{password cleared after approval or rejection}</text>
+  </g>
+
+  <!-- User -->
+  <g filter="url(#shadow)">
+    <rect x="1900" y="80" width="1200" height="650" rx="22" fill="#ffffff" stroke="#2563eb" stroke-width="5"/>
+    <rect x="1900" y="80" width="1200" height="92" rx="22" fill="#1d4ed8"/>
+    <rect x="1900" y="145" width="1200" height="27" fill="#1d4ed8"/>
+    <text x="2500" y="139" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="38" font-weight="800" fill="#ffffff">User</text>
+    <line x1="1900" y1="430" x2="3100" y2="430" stroke="#bfdbfe" stroke-width="3"/>
+    <text class="attr" x="1945" y="220" font-size="25">+ id: bigint {PK}</text>
+    <text class="attr" x="1945" y="260" font-size="25">+ name: varchar</text>
+    <text class="attr" x="1945" y="300" font-size="25">+ email: varchar {unique}</text>
+    <text class="attr" x="1945" y="340" font-size="25">+ password: varchar {hidden, hashed}</text>
+    <text class="attr" x="1945" y="380" font-size="25">+ role: varchar = student</text>
+    <text class="attr" x="2600" y="220" font-size="25">+ created_at: timestamp</text>
+    <text class="attr" x="2600" y="260" font-size="25">+ updated_at: timestamp</text>
+    <text class="method" x="1945" y="485" font-size="24">+ student(): HasOne&lt;Student&gt;</text>
+    <text class="method" x="1945" y="525" font-size="24">+ teacher(): HasOne&lt;Teacher&gt;</text>
+    <text class="method" x="1945" y="565" font-size="24">+ notices(): HasMany&lt;Notice&gt;</text>
+    <text class="method" x="1945" y="605" font-size="24">+ reviewedRegistrationRequests(): HasMany</text>
+    <text class="text" x="1945" y="675" font-size="23" font-style="italic" fill="#64748b">{role: student | teacher | admin}</text>
+  </g>
+
+  <!-- Notice -->
+  <g filter="url(#shadow)">
+    <rect x="3700" y="80" width="1250" height="550" rx="22" fill="#ffffff" stroke="#334155" stroke-width="4"/>
+    <rect x="3700" y="80" width="1250" height="92" rx="22" fill="#0f172a"/>
+    <rect x="3700" y="145" width="1250" height="27" fill="#0f172a"/>
+    <text x="4325" y="139" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="38" font-weight="800" fill="#ffffff">Notice</text>
+    <line x1="3700" y1="420" x2="4950" y2="420" stroke="#cbd5e1" stroke-width="3"/>
+    <text class="attr" x="3745" y="220" font-size="25">+ id: bigint {PK}</text>
+    <text class="attr" x="3745" y="260" font-size="25">+ title: varchar</text>
+    <text class="attr" x="3745" y="300" font-size="25">+ description: text</text>
+    <text class="attr" x="3745" y="340" font-size="25">+ posted_by: bigint [0..1, FK]</text>
+    <text class="attr" x="3745" y="380" font-size="25">+ target_role: varchar = all {indexed}</text>
+    <text class="attr" x="4380" y="220" font-size="25">+ created_at: timestamp</text>
+    <text class="attr" x="4380" y="260" font-size="25">+ updated_at: timestamp</text>
+    <text class="method" x="3745" y="485" font-size="25">+ postedBy(): BelongsTo&lt;User&gt;</text>
+  </g>
+
+  <!-- Student -->
+  <g filter="url(#shadow)">
+    <rect x="100" y="1180" width="1100" height="670" rx="22" fill="#ffffff" stroke="#2563eb" stroke-width="5"/>
+    <rect x="100" y="1180" width="1100" height="92" rx="22" fill="#1d4ed8"/>
+    <rect x="100" y="1245" width="1100" height="27" fill="#1d4ed8"/>
+    <text x="650" y="1239" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="38" font-weight="800" fill="#ffffff">Student</text>
+    <line x1="100" y1="1580" x2="1200" y2="1580" stroke="#bfdbfe" stroke-width="3"/>
+    <text class="attr" x="145" y="1320" font-size="25">+ id: bigint {PK}</text>
+    <text class="attr" x="145" y="1360" font-size="25">+ user_id: bigint {unique, FK}</text>
+    <text class="attr" x="145" y="1400" font-size="25">+ student_id: varchar {unique}</text>
+    <text class="attr" x="145" y="1440" font-size="25">+ department: varchar</text>
+    <text class="attr" x="145" y="1480" font-size="25">+ semester: varchar</text>
+    <text class="attr" x="145" y="1520" font-size="25">+ batch: varchar</text>
+    <text class="attr" x="650" y="1320" font-size="25">+ phone: varchar [0..1]</text>
+    <text class="attr" x="650" y="1360" font-size="25">+ address: text [0..1]</text>
+    <text class="attr" x="650" y="1400" font-size="25">+ created_at: timestamp</text>
+    <text class="attr" x="650" y="1440" font-size="25">+ updated_at: timestamp</text>
+    <text class="method" x="145" y="1640" font-size="25">+ user(): BelongsTo&lt;User&gt;</text>
+    <text class="method" x="145" y="1685" font-size="25">+ assignmentSubmissions(): HasMany</text>
+    <text class="text" x="145" y="1760" font-size="22" font-style="italic" fill="#64748b">{courses: department + semester}</text>
+    <text class="text" x="145" y="1798" font-size="22" font-style="italic" fill="#64748b">{routines: department + semester + batch}</text>
+  </g>
+
+  <!-- Teacher -->
+  <g filter="url(#shadow)">
+    <rect x="1750" y="1050" width="1200" height="770" rx="22" fill="#ffffff" stroke="#2563eb" stroke-width="5"/>
+    <rect x="1750" y="1050" width="1200" height="92" rx="22" fill="#1d4ed8"/>
+    <rect x="1750" y="1115" width="1200" height="27" fill="#1d4ed8"/>
+    <text x="2350" y="1109" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="38" font-weight="800" fill="#ffffff">Teacher</text>
+    <line x1="1750" y1="1450" x2="2950" y2="1450" stroke="#bfdbfe" stroke-width="3"/>
+    <text class="attr" x="1795" y="1190" font-size="25">+ id: bigint {PK}</text>
+    <text class="attr" x="1795" y="1230" font-size="25">+ user_id: bigint {unique, FK}</text>
+    <text class="attr" x="1795" y="1270" font-size="25">+ teacher_id: varchar {unique}</text>
+    <text class="attr" x="1795" y="1310" font-size="25">+ department: varchar</text>
+    <text class="attr" x="1795" y="1350" font-size="25">+ designation: varchar</text>
+    <text class="attr" x="1795" y="1390" font-size="25">+ phone: varchar [0..1]</text>
+    <text class="attr" x="2400" y="1190" font-size="25">+ created_at: timestamp</text>
+    <text class="attr" x="2400" y="1230" font-size="25">+ updated_at: timestamp</text>
+    <text class="method" x="1795" y="1510" font-size="25">+ user(): BelongsTo&lt;User&gt;</text>
+    <text class="method" x="1795" y="1555" font-size="25">+ courses(): HasMany&lt;Course&gt;</text>
+    <text class="method" x="1795" y="1600" font-size="25">+ routines(): HasMany&lt;Routine&gt;</text>
+    <text class="method" x="1795" y="1645" font-size="25">+ studyMaterials(): HasMany</text>
+    <text class="method" x="1795" y="1690" font-size="25">+ assignments(): HasMany&lt;Assignment&gt;</text>
+  </g>
+
+  <!-- Course -->
+  <g filter="url(#shadow)">
+    <rect x="3500" y="980" width="1400" height="800" rx="22" fill="#ffffff" stroke="#0f766e" stroke-width="5"/>
+    <rect x="3500" y="980" width="1400" height="92" rx="22" fill="#0f766e"/>
+    <rect x="3500" y="1045" width="1400" height="27" fill="#0f766e"/>
+    <text x="4200" y="1039" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="38" font-weight="800" fill="#ffffff">Course</text>
+    <line x1="3500" y1="1420" x2="4900" y2="1420" stroke="#99f6e4" stroke-width="3"/>
+    <text class="attr" x="3545" y="1120" font-size="25">+ id: bigint {PK}</text>
+    <text class="attr" x="3545" y="1160" font-size="25">+ course_code: varchar {unique}</text>
+    <text class="attr" x="3545" y="1200" font-size="25">+ course_title: varchar</text>
+    <text class="attr" x="3545" y="1240" font-size="25">+ department: varchar</text>
+    <text class="attr" x="3545" y="1280" font-size="25">+ semester: varchar</text>
+    <text class="attr" x="3545" y="1320" font-size="25">+ credit: decimal(3,1)</text>
+    <text class="attr" x="4200" y="1120" font-size="25">+ teacher_id: bigint [0..1, FK]</text>
+    <text class="attr" x="4200" y="1160" font-size="25">+ created_at: timestamp</text>
+    <text class="attr" x="4200" y="1200" font-size="25">+ updated_at: timestamp</text>
+    <text class="method" x="3545" y="1480" font-size="25">+ teacher(): BelongsTo&lt;Teacher&gt;</text>
+    <text class="method" x="3545" y="1525" font-size="25">+ routines(): HasMany&lt;Routine&gt;</text>
+    <text class="method" x="3545" y="1570" font-size="25">+ studyMaterials(): HasMany</text>
+    <text class="method" x="3545" y="1615" font-size="25">+ assignments(): HasMany&lt;Assignment&gt;</text>
+  </g>
+
+  <!-- AssignmentSubmission -->
+  <g filter="url(#shadow)">
+    <rect x="80" y="2200" width="1450" height="800" rx="22" fill="#ffffff" stroke="#b45309" stroke-width="5"/>
+    <rect x="80" y="2200" width="1450" height="92" rx="22" fill="#b45309"/>
+    <rect x="80" y="2265" width="1450" height="27" fill="#b45309"/>
+    <text x="805" y="2259" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="38" font-weight="800" fill="#ffffff">AssignmentSubmission</text>
+    <line x1="80" y1="2660" x2="1530" y2="2660" stroke="#fed7aa" stroke-width="3"/>
+    <text class="attr" x="125" y="2340" font-size="25">+ id: bigint {PK}</text>
+    <text class="attr" x="125" y="2380" font-size="25">+ assignment_id: bigint {FK}</text>
+    <text class="attr" x="125" y="2420" font-size="25">+ student_id: bigint {FK}</text>
+    <text class="attr" x="125" y="2460" font-size="25">+ submission_text: text [0..1]</text>
+    <text class="attr" x="125" y="2500" font-size="25">+ file_path: varchar [0..1]</text>
+    <text class="attr" x="125" y="2540" font-size="25">+ submitted_at: timestamp [0..1]</text>
+    <text class="attr" x="790" y="2340" font-size="25">+ created_at: timestamp</text>
+    <text class="attr" x="790" y="2380" font-size="25">+ updated_at: timestamp</text>
+    <text class="attr" x="790" y="2440" font-size="24">{unique: assignment_id + student_id}</text>
+    <text class="method" x="125" y="2720" font-size="25">+ assignment(): BelongsTo&lt;Assignment&gt;</text>
+    <text class="method" x="125" y="2765" font-size="25">+ student(): BelongsTo&lt;Student&gt;</text>
+    <text class="method" x="125" y="2810" font-size="25">- casts(): array</text>
+  </g>
+
+  <!-- Assignment -->
+  <g filter="url(#shadow)">
+    <rect x="1750" y="2180" width="1250" height="720" rx="22" fill="#ffffff" stroke="#7c3aed" stroke-width="5"/>
+    <rect x="1750" y="2180" width="1250" height="92" rx="22" fill="#7c3aed"/>
+    <rect x="1750" y="2245" width="1250" height="27" fill="#7c3aed"/>
+    <text x="2375" y="2239" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="38" font-weight="800" fill="#ffffff">Assignment</text>
+    <line x1="1750" y1="2590" x2="3000" y2="2590" stroke="#ddd6fe" stroke-width="3"/>
+    <text class="attr" x="1795" y="2320" font-size="25">+ id: bigint {PK}</text>
+    <text class="attr" x="1795" y="2360" font-size="25">+ course_id: bigint {FK}</text>
+    <text class="attr" x="1795" y="2400" font-size="25">+ teacher_id: bigint {FK}</text>
+    <text class="attr" x="1795" y="2440" font-size="25">+ title: varchar</text>
+    <text class="attr" x="1795" y="2480" font-size="25">+ description: text</text>
+    <text class="attr" x="1795" y="2520" font-size="25">+ deadline: datetime {indexed}</text>
+    <text class="attr" x="2420" y="2320" font-size="25">+ created_at: timestamp</text>
+    <text class="attr" x="2420" y="2360" font-size="25">+ updated_at: timestamp</text>
+    <text class="method" x="1795" y="2650" font-size="25">+ course(): BelongsTo&lt;Course&gt;</text>
+    <text class="method" x="1795" y="2695" font-size="25">+ teacher(): BelongsTo&lt;Teacher&gt;</text>
+    <text class="method" x="1795" y="2740" font-size="25">+ submissions(): HasMany</text>
+    <text class="method" x="1795" y="2785" font-size="25">- casts(): array</text>
+  </g>
+
+  <!-- StudyMaterial -->
+  <g filter="url(#shadow)">
+    <rect x="3150" y="2180" width="1000" height="680" rx="22" fill="#ffffff" stroke="#0f766e" stroke-width="5"/>
+    <rect x="3150" y="2180" width="1000" height="92" rx="22" fill="#0f766e"/>
+    <rect x="3150" y="2245" width="1000" height="27" fill="#0f766e"/>
+    <text x="3650" y="2239" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="38" font-weight="800" fill="#ffffff">StudyMaterial</text>
+    <line x1="3150" y1="2570" x2="4150" y2="2570" stroke="#99f6e4" stroke-width="3"/>
+    <text class="attr" x="3195" y="2320" font-size="25">+ id: bigint {PK}</text>
+    <text class="attr" x="3195" y="2360" font-size="25">+ course_id: bigint {FK}</text>
+    <text class="attr" x="3195" y="2400" font-size="25">+ teacher_id: bigint {FK}</text>
+    <text class="attr" x="3195" y="2440" font-size="25">+ title: varchar</text>
+    <text class="attr" x="3195" y="2480" font-size="25">+ description: text [0..1]</text>
+    <text class="attr" x="3195" y="2520" font-size="25">+ file_path: varchar [0..1]</text>
+    <text class="method" x="3195" y="2630" font-size="25">+ course(): BelongsTo&lt;Course&gt;</text>
+    <text class="method" x="3195" y="2675" font-size="25">+ teacher(): BelongsTo&lt;Teacher&gt;</text>
+    <text class="attr" x="3195" y="2745" font-size="23">+ created_at / updated_at: timestamp</text>
+  </g>
+
+  <!-- Routine -->
+  <g filter="url(#shadow)">
+    <rect x="4250" y="2160" width="900" height="760" rx="22" fill="#ffffff" stroke="#0f766e" stroke-width="5"/>
+    <rect x="4250" y="2160" width="900" height="92" rx="22" fill="#0f766e"/>
+    <rect x="4250" y="2225" width="900" height="27" fill="#0f766e"/>
+    <text x="4700" y="2219" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="38" font-weight="800" fill="#ffffff">Routine</text>
+    <line x1="4250" y1="2620" x2="5150" y2="2620" stroke="#99f6e4" stroke-width="3"/>
+    <text class="attr" x="4295" y="2300" font-size="24">+ id: bigint {PK}</text>
+    <text class="attr" x="4295" y="2340" font-size="24">+ course_id: bigint {FK}</text>
+    <text class="attr" x="4295" y="2380" font-size="24">+ teacher_id: bigint {FK}</text>
+    <text class="attr" x="4295" y="2420" font-size="24">+ semester: varchar</text>
+    <text class="attr" x="4295" y="2460" font-size="24">+ batch: varchar</text>
+    <text class="attr" x="4295" y="2500" font-size="24">+ day: varchar</text>
+    <text class="attr" x="4295" y="2540" font-size="24">+ start_time: time</text>
+    <text class="attr" x="4295" y="2580" font-size="24">+ end_time: time</text>
+    <text class="attr" x="4725" y="2300" font-size="24">+ room: varchar</text>
+    <text class="attr" x="4725" y="2340" font-size="24">+ created_at: timestamp</text>
+    <text class="attr" x="4725" y="2380" font-size="24">+ updated_at: timestamp</text>
+    <text class="method" x="4295" y="2680" font-size="24">+ course(): BelongsTo&lt;Course&gt;</text>
+    <text class="method" x="4295" y="2725" font-size="24">+ teacher(): BelongsTo&lt;Teacher&gt;</text>
+    <text class="text" x="4295" y="2800" font-size="22" font-style="italic" fill="#64748b">{index: semester + batch + day}</text>
+  </g>
+</svg>
